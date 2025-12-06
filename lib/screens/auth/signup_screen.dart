@@ -4,9 +4,14 @@ import 'package:fintrack_app/components/button/secondary_button.dart';
 import 'package:fintrack_app/components/fields/input_field.dart';
 import 'package:fintrack_app/components/arrow/back_arrow.dart';
 import 'package:fintrack_app/screens/auth/login_screen.dart';
+import 'package:fintrack_app/screens/home/homepage_screen.dart';
 
 class CreateAccountScreen extends StatelessWidget {
-  const CreateAccountScreen({super.key});
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  CreateAccountScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,16 +53,35 @@ class CreateAccountScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 40),
 
-                      InputField(hint: "Full name"),
+                      InputField(hint: "Full name", controller: nameController),
                       const SizedBox(height: 16),
 
-                      InputField(hint: "Email address"),
+                      InputField(
+                        hint: "Email address",
+                        controller: emailController,
+                      ),
                       const SizedBox(height: 16),
 
-                      InputField(hint: "Password", isPassword: true),
+                      InputField(
+                        hint: "Password",
+                        isPassword: true,
+                        controller: passwordController,
+                      ),
                       const SizedBox(height: 32),
 
-                      PrimaryButton(label: "Create account", onPressed: () {}),
+                      PrimaryButton(
+                        label: "Create account",
+                        onPressed: () {
+                          final userName = nameController.text.trim();
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen(name: userName),
+                            ),
+                          );
+                        },
+                      ),
 
                       const SizedBox(height: 28),
 
@@ -65,11 +89,11 @@ class CreateAccountScreen extends StatelessWidget {
                         label: "Already have an account?",
                         onPressed: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoginScreen(),
-                              ),
-                            );
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginScreen(),
+                            ),
+                          );
                         },
                       ),
                     ],

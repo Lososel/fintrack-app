@@ -70,8 +70,7 @@ class SignUpIntroScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const CreateAccountScreen(),
+                                builder: (context) => CreateAccountScreen(),
                               ),
                             );
                           },

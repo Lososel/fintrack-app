@@ -5,17 +5,20 @@ class InputField extends StatelessWidget {
   final bool isPassword;
   final double verticalPadding;
   final double horizontalPadding;
+  final TextEditingController? controller;
 
   const InputField({
     required this.hint,
     this.isPassword = false,
     this.verticalPadding = 23,
     this.horizontalPadding = 23,
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       obscureText: isPassword,
       decoration: InputDecoration(
         hintText: hint,
