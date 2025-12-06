@@ -3,6 +3,7 @@ import 'package:fintrack_app/components/button/primary_button.dart';
 import 'package:fintrack_app/components/button/secondary_button.dart';
 import 'package:fintrack_app/components/fields/input_field.dart';
 import 'package:fintrack_app/components/arrow/back_arrow.dart';
+import 'package:fintrack_app/screens/auth/login_screen.dart';
 
 class CreateAccountScreen extends StatelessWidget {
   const CreateAccountScreen({super.key});
@@ -18,17 +19,17 @@ class CreateAccountScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const BackArrow(),
-              const SizedBox(height: 80),
+              const SizedBox(height: 90),
 
               Align(
                 alignment: Alignment.topCenter,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0),
-                  
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text(
+
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
                         "Create an account",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -62,13 +63,19 @@ class CreateAccountScreen extends StatelessWidget {
 
                       SecondaryButton(
                         label: "Already have an account?",
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
+                        },
                       ),
                     ],
                   ),
                 ),
               ),
-              
             ],
           ),
         ),

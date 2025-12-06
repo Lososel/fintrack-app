@@ -1,7 +1,9 @@
-import 'package:fintrack_app/components/button/secondary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:fintrack_app/components/button/primary_button.dart';
+import 'package:fintrack_app/components/button/secondary_button.dart';
 import 'package:fintrack_app/components/fields/input_field.dart';
+import 'package:fintrack_app/components/arrow/back_arrow.dart';
+import 'package:fintrack_app/screens/auth/signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -16,59 +18,59 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const BackArrow(),
+              const SizedBox(height: 130),
 
-              Padding(
-                padding: const EdgeInsets.only(top: 12, bottom: 40),
-                child: GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: const Icon(Icons.arrow_back, size: 26),
-                ),
-              ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 0),
 
-
-              const Center(
-                child: Column(
-                  children: [
-                    Text(
-                      "Create an account",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w800,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        "Login",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 34,
+                          fontWeight: FontWeight.w900,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      "Manage your money wisely",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16, color: Colors.black54),
-                    ),
-                  ],
-                ),
-              ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        "Manage your money wisely",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 40),
 
-              const SizedBox(height: 40),
+                      InputField(hint: "Email address"),
+                      const SizedBox(height: 16),
 
+                      InputField(hint: "Password", isPassword: true),
+                      const SizedBox(height: 32),
 
-              InputField(hint: "Full name"),
-              const SizedBox(height: 16),
-              InputField(hint: "Email address"),
-              const SizedBox(height: 16),
-              InputField(hint: "Password", isPassword: true),
-              const SizedBox(height: 32),
+                      PrimaryButton(label: "Login", onPressed: () {}),
 
+                      const SizedBox(height: 28),
 
-              Center(
-                child: PrimaryButton(label: "Create account", onPressed: () {}),
-              ),
-
-              const SizedBox(height: 28),
-
-
-              Center(
-                child: SecondaryButton(
-                  label: "Already have an account?",
-                  onPressed: () {},
+                      SecondaryButton(
+                        label: "Create account",
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CreateAccountScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
