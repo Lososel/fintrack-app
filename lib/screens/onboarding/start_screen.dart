@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../utils/responsive.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
@@ -6,35 +7,39 @@ class StartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox.expand( 
+      child: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/start.jpg'),
             fit: BoxFit.cover,
+            alignment: Alignment.center,
+            colorFilter: ColorFilter.mode(
+              Color.fromRGBO(0, 0, 0, 0.2),
+              BlendMode.darken,
+            ),
           ),
         ),
         child: SafeArea(
-          child: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 24, top: 80),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Spendly',
                   style: TextStyle(
+                    fontSize: rs(context, 64),
+                    fontWeight: FontWeight.w900,
                     color: Colors.white,
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.2,
                   ),
                 ),
-                const SizedBox(height: 12),
-                const Text(
+                Text(
                   'your personal finance manager',
                   style: TextStyle(
+                    fontSize: rs(context, 28),
+                    fontWeight: FontWeight.w600,
                     color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300,
-                    letterSpacing: 0.5,
                   ),
                 ),
               ],
@@ -42,7 +47,7 @@ class StartScreen extends StatelessWidget {
           ),
         ),
       ),
+    ),
     );
   }
 }
-
