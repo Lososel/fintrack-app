@@ -8,7 +8,7 @@ class HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       "Good morning, $name.",
-      style: TextStyle(fontSize: 34, fontWeight: FontWeight.w800),
+      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
     );
   }
 }

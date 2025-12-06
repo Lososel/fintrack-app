@@ -46,7 +46,7 @@ class RecentTransactions extends StatelessWidget {
           "Recent Transactions",
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 5),
 
         for (var tx in transactions) TransactionItem(transaction: tx),
       ],
