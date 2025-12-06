@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fintrack_app/components/primary_button.dart';
-import 'package:fintrack_app/components/secondary_button.dart';
+import 'package:fintrack_app/components/button/primary_button.dart';
+import 'package:fintrack_app/components/button/secondary_button.dart';
+import 'package:fintrack_app/screens/auth/signup_screen.dart';
+import 'package:fintrack_app/screens/auth/login_screen.dart';
 
 class SignUpIntroScreen extends StatelessWidget {
   const SignUpIntroScreen({super.key});
@@ -62,14 +64,30 @@ class SignUpIntroScreen extends StatelessWidget {
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-
-                        
                         PrimaryButton(
                           label: "Create account",
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const CreateAccountScreen(),
+                              ),
+                            );
+                          },
                         ),
                         SizedBox(height: 20),
-                        SecondaryButton(label: "Login", onPressed: () {}),
+                        SecondaryButton(
+                          label: "Login",
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ],
