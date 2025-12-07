@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:fintrack_app/models/transaction_model.dart';
 import 'package:fintrack_app/services/transaction_service.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 
 class MonthlyComparison extends StatefulWidget {
   const MonthlyComparison({super.key});
@@ -53,6 +54,7 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final now = DateTime.now();
     final currentMonth = now.month;
     final currentYear = now.year;
@@ -85,16 +87,16 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Monthly Comparison",
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+          Text(
+            localizations.monthlyComparison,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
           ),
           const SizedBox(height: 5),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
             child: Text(
-              "No transactions yet",
-              style: TextStyle(color: Colors.black54),
+              localizations.noTransactionsYet,
+              style: const TextStyle(color: Colors.black54),
             ),
           ),
         ],
@@ -104,9 +106,9 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Monthly Comparison",
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+        Text(
+          localizations.monthlyComparison,
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
         ),
         const SizedBox(height: 16),
         Container(
@@ -134,8 +136,9 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
                               : _getMonthAbbreviation(currentMonth);
                           final isIncome = rodIndex == 0;
                           final value = rod.toY;
+                          final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
                           return BarTooltipItem(
-                            '$monthName\n${isIncome ? "income" : "expense"} : \$${value.toStringAsFixed(2)}',
+                            '$monthName\n${isIncome ? localizations.income : localizations.expense} : \$${value.toStringAsFixed(2)}',
                             TextStyle(
                               color: isIncome ? Colors.green : Colors.red,
                               fontWeight: FontWeight.w600,
@@ -280,9 +283,9 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildLegendItem('Income', Colors.green),
+                  _buildLegendItem(localizations.income, Colors.green),
                   const SizedBox(width: 24),
-                  _buildLegendItem('Expense', Colors.red),
+                  _buildLegendItem(localizations.expense, Colors.red),
                 ],
               ),
             ],

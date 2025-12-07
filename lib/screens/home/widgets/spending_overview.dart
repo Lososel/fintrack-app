@@ -3,6 +3,7 @@ import 'package:fintrack_app/services/transaction_service.dart';
 import 'package:fintrack_app/utils/spending_calculator.dart';
 import 'package:fintrack_app/utils/category_colors.dart';
 import 'package:fintrack_app/utils/currency.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 import 'package:fintrack_app/components/charts/spending_pie_chart.dart';
 import '../../analytics/analytics_screen.dart';
 
@@ -34,6 +35,7 @@ class _SpendingOverviewState extends State<SpendingOverview> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final spendingByCategory = SpendingCalculator.calculateSpendingByCategory(
       _transactionService.transactions,
     );
@@ -44,14 +46,14 @@ class _SpendingOverviewState extends State<SpendingOverview> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text(
-                "Spending Overview",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+                localizations.spendingOverview,
+                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
               ),
               Text(
-                "View Details →",
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+                "${localizations.viewDetails} →",
+                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
               ),
             ],
           ),
@@ -60,8 +62,8 @@ class _SpendingOverviewState extends State<SpendingOverview> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "No expenses yet",
-                style: TextStyle(
+                localizations.noExpensesYet,
+                style: const TextStyle(
                   fontSize: 14,
                   color: Colors.black54,
                 ),
@@ -78,9 +80,9 @@ class _SpendingOverviewState extends State<SpendingOverview> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
-              "Spending Overview",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+            Text(
+              localizations.spendingOverview,
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
             ),
           
             GestureDetector(
@@ -93,9 +95,9 @@ class _SpendingOverviewState extends State<SpendingOverview> {
                   ),
                 );
               },
-              child: const Text(
-                "View Details →",
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+              child: Text(
+                "${localizations.viewDetails} →",
+                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
               ),
             ),
           ],

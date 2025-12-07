@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fintrack_app/services/transaction_service.dart';
 import 'package:fintrack_app/utils/spending_calculator.dart';
 import 'package:fintrack_app/utils/currency.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 import 'package:fintrack_app/components/charts/spending_pie_chart.dart';
 import 'package:fintrack_app/models/transaction_model.dart';
 import 'spending_empty_state.dart';
@@ -105,12 +106,14 @@ class _SpendingOverviewState extends State<SpendingOverview> {
     );
     final currency = _getCurrency(filteredTransactions);
 
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Spending Overview",
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+        Text(
+          localizations.spendingOverview,
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
         ),
         const SizedBox(height: 30),
         Center(

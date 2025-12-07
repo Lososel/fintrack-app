@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 
 enum TimePeriod { day, week, month, year }
 
@@ -14,20 +15,22 @@ class TimePeriodSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    
     return Row(
       children: [
-        _buildPeriodButton('Day', TimePeriod.day),
+        _buildPeriodButton(context, localizations.day, TimePeriod.day),
         const SizedBox(width: 8),
-        _buildPeriodButton('Week', TimePeriod.week),
+        _buildPeriodButton(context, localizations.week, TimePeriod.week),
         const SizedBox(width: 8),
-        _buildPeriodButton('Month', TimePeriod.month),
+        _buildPeriodButton(context, localizations.month, TimePeriod.month),
         const SizedBox(width: 8),
-        _buildPeriodButton('Year', TimePeriod.year),
+        _buildPeriodButton(context, localizations.year, TimePeriod.year),
       ],
     );
   }
 
-  Widget _buildPeriodButton(String label, TimePeriod period) {
+  Widget _buildPeriodButton(BuildContext context, String label, TimePeriod period) {
     final isSelected = selectedPeriod == period;
     return Expanded(
       child: GestureDetector(

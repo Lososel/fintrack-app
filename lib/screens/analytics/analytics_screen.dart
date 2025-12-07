@@ -3,6 +3,7 @@ import 'package:fintrack_app/components/nav/bottom_nav.dart';
 import 'package:fintrack_app/components/cards/balance_card.dart';
 import 'package:fintrack_app/services/transaction_service.dart';
 import 'package:fintrack_app/utils/analytics_calculator.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 import 'widgets/spending_overview.dart';
 import 'widgets/time_period_selector.dart';
 import 'widgets/income_expense_trend_chart.dart';
@@ -36,6 +37,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final totals = AnalyticsCalculator.calculatePeriodTotals(
       _transactionService.transactions,
       _selectedPeriod,
@@ -51,14 +53,14 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 16),
-              const Text(
-                "Analytics",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+              Text(
+                localizations.analytics,
+                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
               ),
               const SizedBox(height: 4),
-              const Text(
-                "Track your financial insights",
-                style: TextStyle(
+              Text(
+                localizations.trackYourFinancialInsights,
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.black,
                   fontWeight: FontWeight.w400,
@@ -78,7 +80,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 totalBalance: totals['total']!,
                 income: totals['income']!,
                 expense: totals['expense']!,
-                title: "Total Savings",
+                title: localizations.totalSavings,
                 showSavingsPercentage: true,
               ),
               const SizedBox(height: 30),

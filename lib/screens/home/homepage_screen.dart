@@ -7,11 +7,12 @@ import 'package:fintrack_app/screens/home/widgets/balance_card_section.dart';
 import 'package:fintrack_app/components/nav/bottom_nav.dart';
 import 'package:fintrack_app/screens/home/widgets/recent_transactions.dart';
 import 'package:fintrack_app/services/transaction_service.dart';
+import 'package:fintrack_app/services/user_service.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String name;
+  final String? name;
 
-  const HomeScreen({super.key, required this.name});
+  const HomeScreen({super.key, this.name});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -19,16 +20,19 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TransactionService _transactionService = TransactionService();
+  final UserService _userService = UserService();
 
   @override
   void initState() {
     super.initState();
     _transactionService.addListener(_refreshTransactions);
+    _userService.addListener(_refreshTransactions);
   }
 
   @override
   void dispose() {
     _transactionService.removeListener(_refreshTransactions);
+    _userService.removeListener(_refreshTransactions);
     super.dispose();
   }
 
@@ -41,11 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
     final recentTransactions = _transactionService.recentTransactions;
     final allTransactions = _transactionService.transactions;
 
+    final userName = _userService.name ?? widget.name ?? "User";
+
     return Scaffold(
       backgroundColor: const Color(0xfFF6F6F9),
-      bottomNavigationBar: HomeBottomNav(
+      bottomNavigationBar: const HomeBottomNav(
         currentIndex: 0,
-        userName: widget.name,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -54,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 16),
-              HomeHeader(name: widget.name),
+              HomeHeader(),
 
               const SizedBox(height: 16),
               BalanceCardSection(transactions: allTransactions),

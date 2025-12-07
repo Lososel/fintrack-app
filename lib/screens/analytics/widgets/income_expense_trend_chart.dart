@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:fintrack_app/models/transaction_model.dart';
 import 'package:fintrack_app/screens/analytics/widgets/time_period_selector.dart';
@@ -188,12 +189,17 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Center(
-          child: Text(
-            'No transactions yet',
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.black54,
-            ),
+          child: Builder(
+            builder: (context) {
+              final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+              return Text(
+                localizations.noTransactionsYet,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.black54,
+                ),
+              );
+            },
           ),
         ),
       );
@@ -210,13 +216,18 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           const Text(
-            "Income & Expense Trend",
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w900,
-              color: Colors.black,
-            ),
+          Builder(
+            builder: (context) {
+              final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+              return Text(
+                localizations.incomeExpenseTrend,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.black,
+                ),
+              );
+            },
           ),
          
           const SizedBox(height: 16),
@@ -366,13 +377,18 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
               ),
             ),
           const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildLegendItem('Income', Colors.green),
-              const SizedBox(width: 20),
-              _buildLegendItem('Expense', Colors.red),
-            ],
+          Builder(
+            builder: (context) {
+              final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildLegendItem(localizations.income, Colors.green),
+                  const SizedBox(width: 20),
+                  _buildLegendItem(localizations.expense, Colors.red),
+                ],
+              );
+            },
           ),
         ],
       ),

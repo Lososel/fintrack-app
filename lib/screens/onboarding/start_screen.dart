@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../utils/responsive.dart';
+import '../../../utils/app_localizations.dart';
 import 'dart:async';
 import 'welcome_screen.dart';
 
@@ -33,6 +34,8 @@ class _StartScreenState extends State<StartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    
     return Scaffold(
       body: SizedBox.expand(
         child: Container(
@@ -53,16 +56,16 @@ class _StartScreenState extends State<StartScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Spendly',
                     style: TextStyle(
-                      fontSize: rs(context, 64),
+                      fontSize: 64,
                       fontWeight: FontWeight.w900,
                       color: Colors.white,
                     ),
                   ),
                   Text(
-                    'your personal finance manager',
+                    localizations.yourPersonalFinanceManager,
                     style: TextStyle(
                       fontSize: rs(context, 28),
                       fontWeight: FontWeight.w600,

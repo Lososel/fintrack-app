@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fintrack_app/utils/spending_calculator.dart';
 import 'package:fintrack_app/utils/currency.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 import 'category_item.dart';
 
 class CategoryBreakdownList extends StatelessWidget {
@@ -17,12 +18,14 @@ class CategoryBreakdownList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "Expenses Breakdown",
-          style: TextStyle(
+        Text(
+          localizations.expensesBreakdown,
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w800,
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 
 class ActionButtons extends StatelessWidget {
   final VoidCallback onAddTransaction;
@@ -12,15 +13,17 @@ class ActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    
     return Row(
       children: [
         Expanded(
           child: ElevatedButton.icon(
             onPressed: onAddTransaction,
             icon: const Icon(Icons.add, color: Colors.white, size: 13),
-            label: const Text(
-              "Add Transaction",
-              style: TextStyle(
+            label: Text(
+              localizations.addTransaction,
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
@@ -48,9 +51,9 @@ class ActionButtons extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
-            child: const Text(
-              "View all",
-              style: TextStyle(
+            child: Text(
+              localizations.viewAll,
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 13,
                 fontWeight: FontWeight.w600,

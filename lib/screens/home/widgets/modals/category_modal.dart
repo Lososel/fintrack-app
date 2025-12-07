@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fintrack_app/components/modal/app_modal.dart';
 import 'package:fintrack_app/components/modal/animated_selectable_tile.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 
 class CategorySelectModal extends StatelessWidget {
   final List<String> categories;
@@ -16,8 +17,9 @@ class CategorySelectModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     return AppModal(
-      title: "Select Category",
+      title: localizations.selectCategory,
       child: ConstrainedBox(
         constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height * 0.7,

@@ -5,6 +5,8 @@ import 'package:fintrack_app/components/fields/input_field.dart';
 import 'package:fintrack_app/components/arrow/back_arrow.dart';
 import 'package:fintrack_app/screens/auth/signup_screen.dart';
 import 'package:fintrack_app/screens/home/homepage_screen.dart';
+import 'package:fintrack_app/services/user_service.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -40,6 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -55,19 +59,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(
-                      "Login",
+                    Text(
+                      localizations.login,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 34,
                         fontWeight: FontWeight.w900,
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Text(
-                      "Manage your money wisely",
+                    Text(
+                      localizations.manageYourMoneyWisely,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
                       ),
@@ -76,27 +80,27 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     // Use InputField with controller (ensure your InputField accepts controller)
                     InputField(
-                      hint: "Email address",
+                      hint: localizations.emailAddress,
                       controller: emailController,
                     ),
                     const SizedBox(height: 16),
                     InputField(
-                      hint: "Password",
+                      hint: localizations.password,
                       isPassword: true,
                       controller: passwordController,
                     ),
                     const SizedBox(height: 32),
 
                     PrimaryButton(
-                      label: "Login",
+                      label: localizations.login,
                       onPressed: () async {
                         final email = emailController.text.trim();
                         final password = passwordController.text;
                         // simple validation
                         if (email.isEmpty || password.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Please enter email and password'),
+                            SnackBar(
+                              content: Text(localizations.pleaseEnterEmailAndPassword),
                             ),
                           );
                           return;
@@ -104,6 +108,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         // perform login & get a name (replace this with real auth)
                         final userName = await _performLogin(email, password);
+                        
+                        // Store user data in service
+                        UserService().setUser(userName, email);
 
                         Navigator.pushReplacement(
                           context,
@@ -117,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 28),
 
                     SecondaryButton(
-                      label: "Create account",
+                      label: localizations.createAccount,
                       onPressed: () {
                         Navigator.push(
                           context,

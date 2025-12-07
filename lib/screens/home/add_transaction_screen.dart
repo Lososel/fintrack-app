@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 import 'package:fintrack_app/components/arrow/back_arrow.dart';
 import 'package:fintrack_app/components/button/primary_button.dart';
 import 'package:fintrack_app/components/button/secondary_button.dart';
@@ -157,9 +158,14 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               const BackArrow(),
               const SizedBox(height: 10),
 
-              const Text(
-                "Add Transaction",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+              Builder(
+                builder: (context) {
+                  final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+                  return Text(
+                    localizations.addTransaction,
+                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+                  );
+                },
               ),
 
               const SizedBox(height: 20),
@@ -171,9 +177,15 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
               const SizedBox(height: 20),
 
-              const Text(
-                "Amount",
-                style: TextStyle(fontWeight: FontWeight.w600),
+              Builder(
+                builder: (context) {
+                  final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        localizations.amount,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 5),
               AmountInputWithCurrency(
@@ -184,39 +196,39 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
               const SizedBox(height: 20),
 
-              const Text(
-                "Category",
-                style: TextStyle(fontWeight: FontWeight.w600),
+                      Text(
+                        localizations.category,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 5),
               CategoryDropdown(
-                current: selectedCategory ?? "Select category",
+                        current: selectedCategory ?? localizations.selectCategory,
                 onTap: _openCategorySheet,
               ),
 
               const SizedBox(height: 20),
 
-              const Text(
-                "Description",
-                style: TextStyle(fontWeight: FontWeight.w600),
+                      Text(
+                        localizations.description,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 5),
               InputField(
-                hint: "Enter description",
+                        hint: localizations.enterDescription,
                 controller: descriptionController,
               ),
 
               const SizedBox(height: 20),
 
-              const Text("Date", style: TextStyle(fontWeight: FontWeight.w600)),
+                      Text(localizations.date, style: const TextStyle(fontWeight: FontWeight.w600)),
               const SizedBox(height: 5),
               DatePickerField(date: selectedDate, onTap: _openDatePickerSheet),
 
               const SizedBox(height: 20),
 
-              const Text(
-                "Payment Method",
-                style: TextStyle(fontWeight: FontWeight.w600),
+                      Text(
+                        localizations.paymentMethod,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 5),
               CategoryDropdown(
@@ -227,7 +239,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               const SizedBox(height: 40),
 
               PrimaryButton(
-                label: "Add Transaction",
+                        label: localizations.addTransaction,
                 onPressed: () {
                   _validateAndSubmit();
                 },
@@ -236,8 +248,12 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               const SizedBox(height: 16),
 
               SecondaryButton(
-                label: "Cancel",
+                        label: localizations.cancel,
                 onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),

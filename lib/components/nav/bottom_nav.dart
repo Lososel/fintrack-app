@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fintrack_app/screens/home/homepage_screen.dart';
 import 'package:fintrack_app/screens/analytics/analytics_screen.dart';
+import 'package:fintrack_app/screens/settings/settings_screen.dart';
 
 class HomeBottomNav extends StatelessWidget {
   final int currentIndex;
-  final String? userName;
 
   const HomeBottomNav({
     super.key,
     this.currentIndex = 0,
-    this.userName,
   });
 
   void _onItemTapped(BuildContext context, int index) {
@@ -21,7 +20,7 @@ class HomeBottomNav extends StatelessWidget {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => HomeScreen(name: userName ?? "User"),
+            builder: (context) => const HomeScreen(),
           ),
         );
         break;
@@ -38,7 +37,13 @@ class HomeBottomNav extends StatelessWidget {
         // Budget - TODO: implement budget screen
         break;
       case 3:
-        // Settings - TODO: implement settings screen
+        // Settings - navigate to settings screen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SettingsScreen(),
+          ),
+        );
         break;
     }
   }

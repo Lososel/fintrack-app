@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 
 class TransactionToggle extends StatelessWidget {
   final bool isExpense;
@@ -48,14 +49,19 @@ class TransactionToggle extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () => onChanged(true),
                       child: Center(
-                        child: AnimatedDefaultTextStyle(
-                          duration: duration,
-                          style: TextStyle(
-                            color: isExpense ? Colors.white : Color(0xff9CA3AF),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w900,
-                          ),
-                          child: const Text("Expense"),
+                        child: Builder(
+                          builder: (context) {
+                            final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+                            return AnimatedDefaultTextStyle(
+                              duration: duration,
+                              style: TextStyle(
+                                color: isExpense ? Colors.white : Color(0xff9CA3AF),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w900,
+                              ),
+                              child: Text(localizations.expense),
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -65,16 +71,21 @@ class TransactionToggle extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () => onChanged(false),
                       child: Center(
-                        child: AnimatedDefaultTextStyle(
-                          duration: duration,
-                          style: TextStyle(
-                            color: !isExpense
-                                ? Colors.white
-                                : Color(0xff9CA3AF),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w900,
-                          ),
-                          child: const Text("Income"),
+                        child: Builder(
+                          builder: (context) {
+                            final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+                            return AnimatedDefaultTextStyle(
+                              duration: duration,
+                              style: TextStyle(
+                                color: !isExpense
+                                    ? Colors.white
+                                    : Color(0xff9CA3AF),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w900,
+                              ),
+                              child: Text(localizations.income),
+                            );
+                          },
                         ),
                       ),
                     ),

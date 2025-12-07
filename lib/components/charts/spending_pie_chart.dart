@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:fintrack_app/utils/spending_calculator.dart';
 import 'package:fintrack_app/utils/category_colors.dart';
@@ -40,12 +41,17 @@ class _SpendingPieChartState extends State<SpendingPieChart> {
     // Handle empty data
     if (widget.spendingByCategory.isEmpty) {
       return Center(
-        child: Text(
-          'No expenses yet',
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.black54,
-          ),
+        child: Builder(
+          builder: (context) {
+            final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+            return Text(
+              localizations.noExpensesYet,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.black54,
+              ),
+            );
+          },
         ),
       );
     }

@@ -5,6 +5,8 @@ import 'package:fintrack_app/components/fields/input_field.dart';
 import 'package:fintrack_app/components/arrow/back_arrow.dart';
 import 'package:fintrack_app/screens/auth/login_screen.dart';
 import 'package:fintrack_app/screens/home/homepage_screen.dart';
+import 'package:fintrack_app/services/user_service.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 
 class CreateAccountScreen extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
@@ -15,6 +17,8 @@ class CreateAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -34,45 +38,49 @@ class CreateAccountScreen extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
-                        "Create an account",
+                      Text(
+                        localizations.createAnAccount,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 34,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        "Manage your money wisely",
+                      Text(
+                        localizations.manageYourMoneyWisely,
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(height: 40),
 
-                      InputField(hint: "Full name", controller: nameController),
+                      InputField(hint: localizations.fullName, controller: nameController),
                       const SizedBox(height: 16),
 
                       InputField(
-                        hint: "Email address",
+                        hint: localizations.emailAddress,
                         controller: emailController,
                       ),
                       const SizedBox(height: 16),
 
                       InputField(
-                        hint: "Password",
+                        hint: localizations.password,
                         isPassword: true,
                         controller: passwordController,
                       ),
                       const SizedBox(height: 32),
 
                       PrimaryButton(
-                        label: "Create account",
+                        label: localizations.createAccount,
                         onPressed: () {
                           final userName = nameController.text.trim();
+                          final userEmail = emailController.text.trim();
+
+                          // Store user data in service
+                          UserService().setUser(userName, userEmail);
 
                           Navigator.push(
                             context,
@@ -86,7 +94,7 @@ class CreateAccountScreen extends StatelessWidget {
                       const SizedBox(height: 28),
 
                       SecondaryButton(
-                        label: "Already have an account?",
+                        label: localizations.alreadyHaveAnAccount,
                         onPressed: () {
                           Navigator.push(
                             context,

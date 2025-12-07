@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 
 class BalanceCard extends StatelessWidget {
   final double totalBalance;
@@ -18,7 +19,8 @@ class BalanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final displayTitle = title ?? "Total Balance";
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final displayTitle = title ?? localizations.totalBalance;
     final savingsPercentage = income > 0 ? (totalBalance / income) * 100 : 0.0;
 
     return Container(
@@ -77,9 +79,9 @@ class BalanceCard extends StatelessWidget {
           const SizedBox(height: 20),
           Row(
             children: [
-              _info("Income", income),
+              _info(localizations.income, income),
               const SizedBox(width: 50),
-              _info("Expense", expense),
+              _info(localizations.expense, expense),
             ],
           ),
         ],
