@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:fintrack_app/services/transaction_service.dart';
 import 'package:fintrack_app/utils/spending_calculator.dart';
 import 'package:fintrack_app/utils/category_colors.dart';
 import 'package:fintrack_app/utils/currency.dart';
+import 'package:fintrack_app/components/charts/spending_pie_chart.dart';
+import '../../analytics/analytics_screen.dart';
 
 class SpendingOverview extends StatefulWidget {
   const SpendingOverview({super.key});
@@ -14,7 +15,6 @@ class SpendingOverview extends StatefulWidget {
 
 class _SpendingOverviewState extends State<SpendingOverview> {
   final TransactionService _transactionService = TransactionService();
-  int? _touchedIndex;
 
   @override
   void initState() {
@@ -56,21 +56,17 @@ class _SpendingOverviewState extends State<SpendingOverview> {
             ],
           ),
           const SizedBox(height: 20),
-          Center(
-            child: Container(
-              width: 180,
-              height: 180,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xffF4F4F7),
-              ),
-              child: const Center(
-                child: Text(
-                  "No expenses yet",
-                  style: TextStyle(color: Colors.black54),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "No expenses yet",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
                 ),
               ),
-            ),
+            ],
           ),
         ],
       );
@@ -81,14 +77,25 @@ class _SpendingOverviewState extends State<SpendingOverview> {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
+          children: [
+            const Text(
               "Spending Overview",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
             ),
-            Text(
-              "View Details →",
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+            GestureDetector(
+              onTap: () {
+                // Navigate to analytics screen
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AnalyticsScreen(),
+                  ),
+                );
+              },
+              child: const Text(
+                "View Details →",
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+              ),
             ),
           ],
         ),
@@ -97,78 +104,13 @@ class _SpendingOverviewState extends State<SpendingOverview> {
           child: Column(
             children: [
               // Pie Chart
-              SizedBox(
-                width: 180,
-                height: 180,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    PieChart(
-                      PieChartData(
-                        sectionsSpace: 2,
-                        centerSpaceRadius: 50,
-                        sections: _buildPieChartSections(
-                          spendingByCategory,
-                          _touchedIndex,
-                        ),
-                        pieTouchData: PieTouchData(
-                          touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                            setState(() {
-                              if (!event.isInterestedForInteractions ||
-                                  pieTouchResponse == null ||
-                                  pieTouchResponse.touchedSection == null) {
-                                _touchedIndex = null;
-                                return;
-                              }
-                              final index = pieTouchResponse.touchedSection!.touchedSectionIndex;
-                              // Validate index is within bounds
-                              if (index >= 0 && index < spendingByCategory.length) {
-                                _touchedIndex = index;
-                              } else {
-                                _touchedIndex = null;
-                              }
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                    if (_touchedIndex != null &&
-                        _touchedIndex! >= 0 &&
-                        _touchedIndex! < spendingByCategory.length)
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            spendingByCategory[_touchedIndex!].category,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            CurrencyHelper.formatAmount(
-                              spendingByCategory[_touchedIndex!].amount,
-                              _getCurrency(),
-                            ),
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                        ],
-                      )
-                    else
-                      const Text(
-                        'Tap to see amount',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black54,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                  ],
-                ),
+              SpendingPieChart(
+                spendingByCategory: spendingByCategory,
+                currency: _getCurrency(),
+                size: 180,
+                centerSpaceRadius: 50,
+                baseRadius: 60,
+                touchedRadius: 65,
               ),
               const SizedBox(height: 20),
               // Legend
@@ -194,26 +136,6 @@ class _SpendingOverviewState extends State<SpendingOverview> {
       orElse: () => transactions.first,
     );
     return expense.currency;
-  }
-
-  List<PieChartSectionData> _buildPieChartSections(
-    List<CategorySpending> spendingByCategory,
-    int? touchedIndex,
-  ) {
-    return spendingByCategory.asMap().entries.map((entry) {
-      final index = entry.key;
-      final categorySpending = entry.value;
-      final color = CategoryColors.getColor(categorySpending.category);
-      final isTouched = index == touchedIndex;
-      final radius = isTouched ? 65.0 : 60.0;
-
-      return PieChartSectionData(
-        value: categorySpending.amount,
-        title: '',
-        color: color,
-        radius: radius,
-      );
-    }).toList();
   }
 
   List<Widget> _buildLegend(List<CategorySpending> spendingByCategory) {

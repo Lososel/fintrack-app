@@ -41,8 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
     final recentTransactions = _transactionService.recentTransactions;
 
     return Scaffold(
-      backgroundColor: const Color(0xfF6F6F9),
-      bottomNavigationBar: const HomeBottomNav(),
+      backgroundColor: const Color(0xfFF6F6F9),
+      bottomNavigationBar: HomeBottomNav(
+        currentIndex: 0,
+        userName: widget.name,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),

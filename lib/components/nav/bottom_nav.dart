@@ -1,7 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:fintrack_app/screens/home/homepage_screen.dart';
+import 'package:fintrack_app/screens/analytics/analytics_screen.dart';
 
 class HomeBottomNav extends StatelessWidget {
-  const HomeBottomNav({super.key});
+  final int currentIndex;
+  final String? userName;
+
+  const HomeBottomNav({
+    super.key,
+    this.currentIndex = 0,
+    this.userName,
+  });
+
+  void _onItemTapped(BuildContext context, int index) {
+    if (index == currentIndex) return; // Already on this screen
+
+    switch (index) {
+      case 0:
+        // Home - navigate to home screen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(name: userName ?? "User"),
+          ),
+        );
+        break;
+      case 1:
+        // Analytics - navigate to analytics screen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const AnalyticsScreen(),
+          ),
+        );
+        break;
+      case 2:
+        // Budget - TODO: implement budget screen
+        break;
+      case 3:
+        // Settings - TODO: implement settings screen
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +51,10 @@ class HomeBottomNav extends StatelessWidget {
       showUnselectedLabels: false,
       elevation: 0,
       backgroundColor: Colors.transparent,
-      currentIndex: 0,
+      currentIndex: currentIndex,
       selectedItemColor: Colors.black,
       unselectedItemColor: Colors.grey,
-
+      onTap: (index) => _onItemTapped(context, index),
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
         BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: ""),

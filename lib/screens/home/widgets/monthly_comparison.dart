@@ -14,9 +14,19 @@ class MonthlyComparison extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Container(
-          height: 180,
-          color: const Color.fromARGB(255, 238, 238, 238),
-          child: const Center(child: Text("Bar Chart Here")),
+          
+          child: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "No expenses yet",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
