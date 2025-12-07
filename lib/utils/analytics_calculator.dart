@@ -18,7 +18,9 @@ class AnalyticsCalculator {
         startDate = DateTime(startDate.year, startDate.month, startDate.day);
         break;
       case TimePeriod.month:
-        startDate = DateTime(now.year, now.month, 1);
+        // Rolling 30 days including today (from 29 days ago to today)
+        startDate = now.subtract(const Duration(days: 29));
+        startDate = DateTime(startDate.year, startDate.month, startDate.day);
         break;
       case TimePeriod.year:
         startDate = DateTime(now.year, 1, 1);

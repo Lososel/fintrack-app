@@ -188,7 +188,7 @@ class _SpendingPieChartState extends State<SpendingPieChart> {
       );
     } else {
       return const Text(
-        'Tap to see amount',
+        'Tap',
         style: TextStyle(
           fontSize: 12,
           color: Colors.black54,

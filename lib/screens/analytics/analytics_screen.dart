@@ -5,6 +5,7 @@ import 'package:fintrack_app/services/transaction_service.dart';
 import 'package:fintrack_app/utils/analytics_calculator.dart';
 import 'widgets/spending_overview.dart';
 import 'widgets/time_period_selector.dart';
+import 'widgets/income_expense_trend_chart.dart';
 
 class AnalyticsScreen extends StatefulWidget {
   const AnalyticsScreen({super.key});
@@ -77,6 +78,14 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 totalBalance: totals['total']!,
                 income: totals['income']!,
                 expense: totals['expense']!,
+                title: "Total Savings",
+                showSavingsPercentage: true,
+              ),
+              const SizedBox(height: 30),
+              
+              IncomeExpenseTrendChart(
+                transactions: _transactionService.transactions,
+                selectedPeriod: _selectedPeriod,
               ),
               const SizedBox(height: 30),
               const SpendingOverview(),

@@ -4,16 +4,23 @@ class BalanceCard extends StatelessWidget {
   final double totalBalance;
   final double income;
   final double expense;
+  final String? title;
+  final bool showSavingsPercentage;
 
   const BalanceCard({
     super.key,
     required this.totalBalance,
     required this.income,
     required this.expense,
+    this.title,
+    this.showSavingsPercentage = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final displayTitle = title ?? "Total Balance";
+    final savingsPercentage = income > 0 ? (totalBalance / income) * 100 : 0.0;
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -23,15 +30,15 @@ class BalanceCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Total Balance",
-            style: TextStyle(
+          Text(
+            displayTitle,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
-              fontWeight: FontWeight.w100,
+              fontWeight: FontWeight.w900,
             ),
           ),
-
+          const SizedBox(height: 8),
           Text(
             "\$${totalBalance.toStringAsFixed(2)}",
             style: const TextStyle(
@@ -40,7 +47,34 @@ class BalanceCard extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-
+          if (showSavingsPercentage && income > 0) ...[
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: LinearProgressIndicator(
+                      value: savingsPercentage / 100,
+                      minHeight: 8,
+                      backgroundColor: Colors.white.withOpacity(0.2),
+                      valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  "${savingsPercentage.toStringAsFixed(1)}%",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ],
+          const SizedBox(height: 20),
           Row(
             children: [
               _info("Income", income),

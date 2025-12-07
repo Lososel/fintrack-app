@@ -4,7 +4,6 @@ import 'package:fintrack_app/utils/spending_calculator.dart';
 import 'package:fintrack_app/utils/currency.dart';
 import 'package:fintrack_app/components/charts/spending_pie_chart.dart';
 import 'spending_empty_state.dart';
-import 'total_spending_card.dart';
 import 'category_breakdown_list.dart';
 
 class SpendingOverview extends StatefulWidget {
@@ -67,11 +66,6 @@ class _SpendingOverviewState extends State<SpendingOverview> {
         const Text(
           "Spending Overview",
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
-        ),
-        const SizedBox(height: 30),
-        TotalSpendingCard(
-          totalSpending: totalSpending,
-          currency: currency,
         ),
         const SizedBox(height: 30),
         Center(

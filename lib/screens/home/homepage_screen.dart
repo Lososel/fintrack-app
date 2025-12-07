@@ -39,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final recentTransactions = _transactionService.recentTransactions;
+    final allTransactions = _transactionService.transactions;
 
     return Scaffold(
       backgroundColor: const Color(0xfFF6F6F9),
@@ -56,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
               HomeHeader(name: widget.name),
 
               const SizedBox(height: 16),
-              const BalanceCardSection(),
+              BalanceCardSection(transactions: allTransactions),
 
               const SizedBox(height: 20),
               const HomeActions(),
