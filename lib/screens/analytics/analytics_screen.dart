@@ -88,7 +88,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 selectedPeriod: _selectedPeriod,
               ),
               const SizedBox(height: 30),
-              const SpendingOverview(),
+              SpendingOverview(selectedPeriod: _selectedPeriod),
               const SizedBox(height: 30),
             ],
           ),

@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
               SpendingOverview(),
 
               const SizedBox(height: 30),
-              const MonthlyComparison(),
+              MonthlyComparison(),
 
               const SizedBox(height: 30),
               RecentTransactions(transactions: recentTransactions),
