@@ -47,7 +47,7 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
   @override
   Widget build(BuildContext context) {
     final bool isHint = widget.current == "Select category";
-    
+
     return InputField(
       hint: isHint ? widget.current : "",
       controller: _controller,
@@ -57,5 +57,3 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
     );
   }
 }
-
-

@@ -60,12 +60,24 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
   DateTime selectedDate = DateTime.now();
 
+  Future<T?> _showSmoothModal<T>({
+    required BuildContext context,
+    required Widget child,
+  }) {
+    return Navigator.of(context).push<T>(
+      _SmoothModalRoute<T>(
+        builder: (_) => child,
+        barrierColor: Colors.black.withOpacity(0.5),
+        isDismissible: true,
+        enableDrag: true,
+      ),
+    );
+  }
+
   void _openCategorySheet() {
-    showModalBottomSheet(
+    _showSmoothModal(
       context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (_) => CategorySelectModal(
+      child: CategorySelectModal(
         categories: categories,
         icons: categoryIcons,
         onSelected: (value) {
@@ -76,10 +88,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   }
 
   void _openPaymentMethodSheet() {
-    showModalBottomSheet(
+    _showSmoothModal(
       context: context,
-      backgroundColor: Colors.transparent,
-      builder: (_) => PaymentMethodModal(
+      child: PaymentMethodModal(
         methods: paymentMethods,
         onSelected: (value) {
           setState(() => selectedPayment = value);
@@ -89,11 +100,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   }
 
   void _openDatePickerSheet() {
-    showModalBottomSheet(
+    _showSmoothModal(
       context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (_) => DatePickerModal(
+      child: DatePickerModal(
         initialDate: selectedDate,
         firstDate: DateTime(2020),
         lastDate: DateTime(2030),
@@ -146,7 +155,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
         backgroundColor: Colors.green,
       ),
     );
-    
+
     // Optionally navigate back after successful submission
     // Navigator.pop(context);
   }
@@ -186,7 +195,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               InputField(
                 hint: "0.00",
                 controller: amountController,
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
               ),
 
               const SizedBox(height: 20),
@@ -217,10 +228,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
               const Text("Date", style: TextStyle(fontWeight: FontWeight.w600)),
               const SizedBox(height: 5),
-              DatePickerField(
-                date: selectedDate,
-                onTap: _openDatePickerSheet,
-              ),
+              DatePickerField(date: selectedDate, onTap: _openDatePickerSheet),
 
               const SizedBox(height: 20),
 
@@ -253,6 +261,91 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _SmoothModalRoute<T> extends ModalRoute<T> {
+  final WidgetBuilder builder;
+  final Color? _barrierColor;
+  final bool isDismissible;
+  final bool enableDrag;
+
+  _SmoothModalRoute({
+    required this.builder,
+    Color? barrierColor,
+    this.isDismissible = true,
+    this.enableDrag = true,
+  }) : _barrierColor = barrierColor;
+
+  @override
+  Color? get barrierColor => _barrierColor;
+
+  @override
+  bool get opaque => false;
+
+  @override
+  String? get barrierLabel => 'Dismiss';
+
+  @override
+  bool get barrierDismissible => isDismissible;
+
+  @override
+  bool get maintainState => false;
+
+  @override
+  Duration get transitionDuration => const Duration(milliseconds: 300);
+
+  @override
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
+    return MediaQuery.removePadding(
+      context: context,
+      removeTop: true,
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Material(
+          color: Colors.transparent,
+          child: SafeArea(
+            child: Container(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.9,
+              ),
+              decoration: const BoxDecoration(
+                color: Color(0xffF4F4F7),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+              ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(25),
+                ),
+                child: builder(context),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    const begin = Offset(0.0, 1.0);
+    const end = Offset.zero;
+    final curve = Curves.easeOutCubic;
+    final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+    return SlideTransition(
+      position: animation.drive(tween),
+      child: FadeTransition(opacity: animation, child: child),
     );
   }
 }

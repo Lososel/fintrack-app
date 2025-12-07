@@ -11,8 +11,7 @@ class InputField extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
 
-
-   InputField({
+  InputField({
     super.key,
     required this.hint,
     this.controller,
@@ -56,7 +55,10 @@ class InputField extends StatelessWidget {
           borderSide: const BorderSide(color: Colors.black),
         ),
         suffixIcon: suffixIcon,
-        errorText: validator != null && controller != null && controller!.text.isNotEmpty
+        errorText:
+            validator != null &&
+                controller != null &&
+                controller!.text.isNotEmpty
             ? validator!(controller!.text)
             : null,
       ),

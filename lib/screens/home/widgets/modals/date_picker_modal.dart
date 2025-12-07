@@ -34,4 +34,3 @@ class DatePickerModal extends StatelessWidget {
     );
   }
 }
-
