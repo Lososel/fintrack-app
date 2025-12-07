@@ -7,7 +7,7 @@ import 'package:fintrack_app/components/toggle/transaction_toggle.dart';
 import 'widgets/category_dropdown.dart';
 import 'widgets/date_picker_field.dart';
 import 'widgets/modals/category_modal.dart';
-
+import 'widgets/modals/date_picker_modal.dart';
 import 'widgets/modals/payment_method_modal.dart';
 
 final List<String> paymentMethods = [
@@ -83,6 +83,22 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
         methods: paymentMethods,
         onSelected: (value) {
           setState(() => selectedPayment = value);
+        },
+      ),
+    );
+  }
+
+  void _openDatePickerSheet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (_) => DatePickerModal(
+        initialDate: selectedDate,
+        firstDate: DateTime(2020),
+        lastDate: DateTime(2030),
+        onDateSelected: (date) {
+          setState(() => selectedDate = date);
         },
       ),
     );
@@ -203,17 +219,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               const SizedBox(height: 5),
               DatePickerField(
                 date: selectedDate,
-                onTap: () async {
-                  final picked = await showDatePicker(
-                    context: context,
-                    initialDate: selectedDate,
-                    firstDate: DateTime(2020),
-                    lastDate: DateTime(2030),
-                  );
-                  if (picked != null) {
-                    setState(() => selectedDate = picked);
-                  }
-                },
+                onTap: _openDatePickerSheet,
               ),
 
               const SizedBox(height: 20),
