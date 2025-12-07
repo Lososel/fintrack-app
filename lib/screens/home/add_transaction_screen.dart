@@ -4,6 +4,8 @@ import 'package:fintrack_app/components/button/primary_button.dart';
 import 'package:fintrack_app/components/button/secondary_button.dart';
 import 'package:fintrack_app/components/fields/input_field.dart';
 import 'package:fintrack_app/components/toggle/transaction_toggle.dart';
+import 'package:fintrack_app/models/transaction_model.dart';
+import 'package:fintrack_app/services/transaction_service.dart';
 import 'widgets/category_dropdown.dart';
 import 'widgets/date_picker_field.dart';
 import 'widgets/modals/category_modal.dart';
@@ -149,8 +151,24 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
     }
 
     // If validation passes, proceed with submission
-    // TODO: Implement actual transaction saving logic
-    
+    final description = descriptionController.text.trim().isEmpty
+        ? "No description"
+        : descriptionController.text.trim();
+
+    // Create and save transaction
+    final transaction = TransactionModel(
+      title: description,
+      category: selectedCategory!,
+      amount: amount,
+      date: selectedDate,
+      isIncome: !isExpense,
+      paymentMethod: selectedPayment,
+      description: description,
+    );
+
+    // Save transaction
+    TransactionService().addTransaction(transaction);
+
     // Navigate to transaction details screen
     Navigator.pushReplacement(
       context,
@@ -161,9 +179,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
           date: selectedDate,
           isExpense: isExpense,
           paymentMethod: selectedPayment,
-          description: descriptionController.text.trim().isEmpty
-              ? "No description"
-              : descriptionController.text.trim(),
+          description: description,
         ),
       ),
     );

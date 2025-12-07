@@ -29,7 +29,8 @@ class InputField extends StatelessWidget {
     return TextField(
       controller: controller,
       readOnly: readOnly,
-      onTap: onTap,
+      onTap: readOnly && onTap != null ? onTap : null,
+      enabled: true,
       obscureText: isPassword,
       keyboardType: keyboardType,
       style: const TextStyle(fontSize: 16),
