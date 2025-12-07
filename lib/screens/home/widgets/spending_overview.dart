@@ -82,6 +82,7 @@ class _SpendingOverviewState extends State<SpendingOverview> {
               "Spending Overview",
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
             ),
+          
             GestureDetector(
               onTap: () {
                 // Navigate to analytics screen
@@ -99,7 +100,7 @@ class _SpendingOverviewState extends State<SpendingOverview> {
             ),
           ],
         ),
-        const SizedBox(height: 20),
+        const SizedBox(height: 40),
         Center(
           child: Column(
             children: [

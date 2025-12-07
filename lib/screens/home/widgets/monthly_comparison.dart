@@ -89,21 +89,12 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
             "Monthly Comparison",
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
           ),
-          const SizedBox(height: 16),
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: const Center(
-              child: Text(
-                "No transactions yet",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.black54,
-                ),
-              ),
+          const SizedBox(height: 5),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Text(
+              "No transactions yet",
+              style: TextStyle(color: Colors.black54),
             ),
           ),
         ],
