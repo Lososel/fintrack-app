@@ -9,6 +9,7 @@ import 'widgets/date_picker_field.dart';
 import 'widgets/modals/category_modal.dart';
 import 'widgets/modals/date_picker_modal.dart';
 import 'widgets/modals/payment_method_modal.dart';
+import 'transaction_details_screen.dart';
 
 final List<String> paymentMethods = [
   "Cash",
@@ -149,15 +150,23 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
     // If validation passes, proceed with submission
     // TODO: Implement actual transaction saving logic
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Transaction added successfully!"),
-        backgroundColor: Colors.green,
+    
+    // Navigate to transaction details screen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TransactionDetailsScreen(
+          category: selectedCategory!,
+          amount: amount,
+          date: selectedDate,
+          isExpense: isExpense,
+          paymentMethod: selectedPayment,
+          description: descriptionController.text.trim().isEmpty
+              ? "No description"
+              : descriptionController.text.trim(),
+        ),
       ),
     );
-
-    // Optionally navigate back after successful submission
-    // Navigator.pop(context);
   }
 
   @override
