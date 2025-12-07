@@ -7,44 +7,17 @@ import 'package:fintrack_app/components/toggle/transaction_toggle.dart';
 import 'package:fintrack_app/models/transaction_model.dart';
 import 'package:fintrack_app/services/transaction_service.dart';
 import 'package:fintrack_app/utils/currency.dart';
+import 'package:fintrack_app/utils/modal_helper.dart';
+import 'widgets/amount_input_with_currency.dart';
 import 'widgets/category_dropdown.dart';
 import 'widgets/date_picker_field.dart';
 import 'widgets/modals/category_modal.dart';
 import 'widgets/modals/date_picker_modal.dart';
 import 'widgets/modals/payment_method_modal.dart';
 import 'widgets/modals/currency_modal.dart';
+import 'widgets/utils/transaction_constants.dart';
+import 'widgets/transaction_form_validator.dart';
 import 'transaction_details_screen.dart';
-
-final List<String> paymentMethods = [
-  "Cash",
-  "Credit Card",
-  "Debit Card",
-  "Bank Transfer",
-  "Mobile Wallet",
-  "Other",
-];
-final List<String> categories = [
-  "Travel",
-  "Dining",
-  "Groceries",
-  "Utilities",
-  "Shopping",
-  "Entertainment",
-  "Health",
-  "Salary",
-  "Other",
-];
-final Map<String, IconData> categoryIcons = {
-  "Travel": Icons.flight_takeoff,
-  "Dining": Icons.restaurant,
-  "Groceries": Icons.local_grocery_store,
-  "Utilities": Icons.lightbulb_outline,
-  "Shopping": Icons.shopping_bag,
-  "Entertainment": Icons.movie,
-  "Health": Icons.favorite_outline,
-  "Salary": Icons.attach_money,
-  "Other": Icons.more_horiz,
-};
 
 class AddTransactionScreen extends StatefulWidget {
   const AddTransactionScreen({super.key});
@@ -58,7 +31,6 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
   final TextEditingController amountController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String? selectedCategory;
   String selectedPayment = "Cash";
@@ -66,26 +38,12 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
   DateTime selectedDate = DateTime.now();
 
-  Future<T?> _showSmoothModal<T>({
-    required BuildContext context,
-    required Widget child,
-  }) {
-    return Navigator.of(context).push<T>(
-      _SmoothModalRoute<T>(
-        builder: (_) => child,
-        barrierColor: Colors.black.withOpacity(0.5),
-        isDismissible: true,
-        enableDrag: true,
-      ),
-    );
-  }
-
   void _openCategorySheet() {
-    _showSmoothModal(
+    ModalHelper.showSmoothModal(
       context: context,
       child: CategorySelectModal(
-        categories: categories,
-        icons: categoryIcons,
+        categories: TransactionConstants.categories,
+        icons: TransactionConstants.categoryIcons,
         onSelected: (value) {
           setState(() => selectedCategory = value);
         },
@@ -94,10 +52,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   }
 
   void _openPaymentMethodSheet() {
-    _showSmoothModal(
+    ModalHelper.showSmoothModal(
       context: context,
       child: PaymentMethodModal(
-        methods: paymentMethods,
+        methods: TransactionConstants.paymentMethods,
         onSelected: (value) {
           setState(() => selectedPayment = value);
         },
@@ -106,7 +64,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   }
 
   void _openDatePickerSheet() {
-    _showSmoothModal(
+    ModalHelper.showSmoothModal(
       context: context,
       child: DatePickerModal(
         initialDate: selectedDate,
@@ -120,7 +78,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   }
 
   void _openCurrencySheet() {
-    _showSmoothModal(
+    ModalHelper.showSmoothModal(
       context: context,
       child: CurrencyModal(
         selectedCurrency: selectedCurrency,
@@ -133,39 +91,23 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
   void _validateAndSubmit() {
     // Validate amount
-    if (amountController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please enter an amount"),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return;
-    }
-
-    final amount = double.tryParse(amountController.text.trim());
-    if (amount == null || amount <= 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please enter a valid amount"),
-          backgroundColor: Colors.red,
-        ),
-      );
+    final amountError = TransactionFormValidator.validateAmount(
+      amountController.text.trim(),
+    );
+    if (amountError != null) {
+      TransactionFormValidator.showErrorSnackBar(context, amountError);
       return;
     }
 
     // Validate category
-    if (selectedCategory == null || selectedCategory!.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please select a category"),
-          backgroundColor: Colors.red,
-        ),
-      );
+    final categoryError = TransactionFormValidator.validateCategory(selectedCategory);
+    if (categoryError != null) {
+      TransactionFormValidator.showErrorSnackBar(context, categoryError);
       return;
     }
 
     // If validation passes, proceed with submission
+    final amount = double.parse(amountController.text.trim());
     final description = descriptionController.text.trim().isEmpty
         ? "No description"
         : descriptionController.text.trim();
@@ -234,46 +176,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 5),
-              Row(
-                children: [
-                  Expanded(
-                    child: InputField(
-                      hint: "0.00",
-                      controller: amountController,
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  GestureDetector(
-                    onTap: _openCurrencySheet,
-                    child: Container(
-                      height: 56,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.black26),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            selectedCurrency.symbol,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          const Icon(Icons.keyboard_arrow_down, size: 20),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+              AmountInputWithCurrency(
+                amountController: amountController,
+                selectedCurrency: selectedCurrency,
+                onCurrencyTap: _openCurrencySheet,
               ),
 
               const SizedBox(height: 20),
@@ -337,91 +243,6 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _SmoothModalRoute<T> extends ModalRoute<T> {
-  final WidgetBuilder builder;
-  final Color? _barrierColor;
-  final bool isDismissible;
-  final bool enableDrag;
-
-  _SmoothModalRoute({
-    required this.builder,
-    Color? barrierColor,
-    this.isDismissible = true,
-    this.enableDrag = true,
-  }) : _barrierColor = barrierColor;
-
-  @override
-  Color? get barrierColor => _barrierColor;
-
-  @override
-  bool get opaque => false;
-
-  @override
-  String? get barrierLabel => 'Dismiss';
-
-  @override
-  bool get barrierDismissible => isDismissible;
-
-  @override
-  bool get maintainState => false;
-
-  @override
-  Duration get transitionDuration => const Duration(milliseconds: 300);
-
-  @override
-  Widget buildPage(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-  ) {
-    return MediaQuery.removePadding(
-      context: context,
-      removeTop: true,
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Material(
-          color: Colors.transparent,
-          child: SafeArea(
-            child: Container(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height * 0.9,
-              ),
-              decoration: const BoxDecoration(
-                color: Color(0xffF4F4F7),
-                borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
-              ),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(25),
-                ),
-                child: builder(context),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget buildTransitions(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) {
-    const begin = Offset(0.0, 1.0);
-    const end = Offset.zero;
-    final curve = Curves.easeOutCubic;
-    final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-    return SlideTransition(
-      position: animation.drive(tween),
-      child: FadeTransition(opacity: animation, child: child),
     );
   }
 }
