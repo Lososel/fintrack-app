@@ -1,3 +1,5 @@
+import 'package:fintrack_app/utils/currency.dart';
+
 class TransactionModel {
   final String title;
   final String category;
@@ -6,6 +8,7 @@ class TransactionModel {
   final bool isIncome;
   final String? paymentMethod;
   final String? description;
+  final Currency currency;
 
   TransactionModel({
     required this.title,
@@ -15,5 +18,6 @@ class TransactionModel {
     required this.isIncome,
     this.paymentMethod,
     this.description,
+    this.currency = Currency.dollar,
   });
 }

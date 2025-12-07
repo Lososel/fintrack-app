@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fintrack_app/components/arrow/back_arrow.dart';
 import 'package:fintrack_app/components/nav/bottom_nav.dart';
+import 'package:fintrack_app/utils/currency.dart';
 import 'widgets/transaction_amount_header.dart';
 import 'widgets/transaction_details_card.dart';
 import 'widgets/transaction_action_buttons.dart';
@@ -12,6 +13,7 @@ class TransactionDetailsScreen extends StatelessWidget {
   final bool isExpense;
   final String paymentMethod;
   final String description;
+  final Currency currency;
 
   const TransactionDetailsScreen({
     super.key,
@@ -21,6 +23,7 @@ class TransactionDetailsScreen extends StatelessWidget {
     required this.isExpense,
     required this.paymentMethod,
     required this.description,
+    this.currency = Currency.dollar,
   });
 
   @override
@@ -46,6 +49,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                     TransactionAmountHeader(
                       amount: amount,
                       isExpense: isExpense,
+                      currency: currency,
                     ),
                     const SizedBox(height: 30),
                     TransactionDetailsCard(

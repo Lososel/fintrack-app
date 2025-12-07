@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fintrack_app/models/transaction_model.dart';
+import 'package:fintrack_app/utils/currency.dart';
 
 class TransactionItem extends StatelessWidget {
   final TransactionModel transaction;
@@ -58,7 +59,11 @@ class TransactionItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                "${transaction.isIncome ? '+' : '-'}\$${transaction.amount.toStringAsFixed(2)}",
+                CurrencyHelper.formatAmountWithSign(
+                  transaction.amount,
+                  transaction.currency,
+                  transaction.isIncome,
+                ),
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w900,

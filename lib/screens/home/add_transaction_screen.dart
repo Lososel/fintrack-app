@@ -6,11 +6,13 @@ import 'package:fintrack_app/components/fields/input_field.dart';
 import 'package:fintrack_app/components/toggle/transaction_toggle.dart';
 import 'package:fintrack_app/models/transaction_model.dart';
 import 'package:fintrack_app/services/transaction_service.dart';
+import 'package:fintrack_app/utils/currency.dart';
 import 'widgets/category_dropdown.dart';
 import 'widgets/date_picker_field.dart';
 import 'widgets/modals/category_modal.dart';
 import 'widgets/modals/date_picker_modal.dart';
 import 'widgets/modals/payment_method_modal.dart';
+import 'widgets/modals/currency_modal.dart';
 import 'transaction_details_screen.dart';
 
 final List<String> paymentMethods = [
@@ -60,6 +62,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
   String? selectedCategory;
   String selectedPayment = "Cash";
+  Currency selectedCurrency = Currency.dollar;
 
   DateTime selectedDate = DateTime.now();
 
@@ -116,6 +119,18 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
     );
   }
 
+  void _openCurrencySheet() {
+    _showSmoothModal(
+      context: context,
+      child: CurrencyModal(
+        selectedCurrency: selectedCurrency,
+        onSelected: (currency) {
+          setState(() => selectedCurrency = currency);
+        },
+      ),
+    );
+  }
+
   void _validateAndSubmit() {
     // Validate amount
     if (amountController.text.trim().isEmpty) {
@@ -164,6 +179,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       isIncome: !isExpense,
       paymentMethod: selectedPayment,
       description: description,
+      currency: selectedCurrency,
     );
 
     // Save transaction
@@ -180,6 +196,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
           isExpense: isExpense,
           paymentMethod: selectedPayment,
           description: description,
+          currency: selectedCurrency,
         ),
       ),
     );
@@ -217,12 +234,46 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 5),
-              InputField(
-                hint: "0.00",
-                controller: amountController,
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    child: InputField(
+                      hint: "0.00",
+                      controller: amountController,
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  GestureDetector(
+                    onTap: _openCurrencySheet,
+                    child: Container(
+                      height: 56,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.black26),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            selectedCurrency.symbol,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          const Icon(Icons.keyboard_arrow_down, size: 20),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
               const SizedBox(height: 20),

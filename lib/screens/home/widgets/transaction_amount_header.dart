@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:fintrack_app/utils/currency.dart';
 
 class TransactionAmountHeader extends StatelessWidget {
   final double amount;
   final bool isExpense;
+  final Currency currency;
 
   const TransactionAmountHeader({
     super.key,
     required this.amount,
     required this.isExpense,
+    this.currency = Currency.dollar,
   });
 
   @override
@@ -46,7 +49,7 @@ class TransactionAmountHeader extends StatelessWidget {
               ),
       
               Text(
-                "${isExpense ? '-' : '+'}\$${amount.toStringAsFixed(2)}",
+                CurrencyHelper.formatAmountWithSign(amount, currency, !isExpense),
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.w900,
