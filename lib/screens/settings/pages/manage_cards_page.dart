@@ -39,10 +39,10 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final cards = _cardService.cards;
     final totalBalance = _calculateTotalBalance();
 
@@ -128,20 +128,22 @@ class _ManageCardsPageState extends State<ManageCardsPage> {
               ),
               const SizedBox(height: 16),
               // Cards List
-              ...cards.map((card) => Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: CardItemWidget(
-                      card: card,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditCardPage(card: card),
-                          ),
-                        );
-                      },
-                    ),
-                  )),
+              ...cards.map(
+                (card) => Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: CardItemWidget(
+                    card: card,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditCardPage(card: card),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
               const SizedBox(height: 20),
               // Add New Card Button
               SizedBox(

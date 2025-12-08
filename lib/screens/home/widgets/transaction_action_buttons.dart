@@ -16,18 +16,10 @@ class TransactionActionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        PrimaryButton(
-          label: "Edit",
-          onPressed: onEdit,
-        ),
+        PrimaryButton(label: "Edit", onPressed: onEdit),
         const SizedBox(height: 16),
-        SecondaryButton(
-          label: "Delete",
-          onPressed: onDelete,
-
-        ),
+        SecondaryButton(label: "Delete", onPressed: onDelete),
       ],
     );
   }
 }
-

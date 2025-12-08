@@ -30,7 +30,11 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
     setState(() {});
   }
 
-  Map<String, double> _calculateMonthTotals(List<TransactionModel> transactions, int year, int month) {
+  Map<String, double> _calculateMonthTotals(
+    List<TransactionModel> transactions,
+    int year,
+    int month,
+  ) {
     double income = 0;
     double expense = 0;
 
@@ -48,25 +52,47 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
   }
 
   String _getMonthAbbreviation(int month) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     return months[month - 1];
   }
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final now = DateTime.now();
     final currentMonth = now.month;
     final currentYear = now.year;
-    
+
     // Calculate previous month
     final previousMonth = currentMonth == 1 ? 12 : currentMonth - 1;
     final previousYear = currentMonth == 1 ? currentYear - 1 : currentYear;
 
     final transactions = _transactionService.transactions;
-    
-    final currentMonthData = _calculateMonthTotals(transactions, currentYear, currentMonth);
-    final previousMonthData = _calculateMonthTotals(transactions, previousYear, previousMonth);
+
+    final currentMonthData = _calculateMonthTotals(
+      transactions,
+      currentYear,
+      currentMonth,
+    );
+    final previousMonthData = _calculateMonthTotals(
+      transactions,
+      previousYear,
+      previousMonth,
+    );
 
     final currentIncome = currentMonthData['income']!;
     final currentExpense = currentMonthData['expense']!;
@@ -113,7 +139,7 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
         const SizedBox(height: 16),
         Container(
           width: double.infinity,
-          
+
           child: Column(
             children: [
               SizedBox(
@@ -131,12 +157,14 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
                         tooltipMargin: 8,
                         getTooltipItem: (group, groupIndex, rod, rodIndex) {
                           final monthIndex = group.x.toInt();
-                          final monthName = monthIndex == 0 
+                          final monthName = monthIndex == 0
                               ? _getMonthAbbreviation(previousMonth)
                               : _getMonthAbbreviation(currentMonth);
                           final isIncome = rodIndex == 0;
                           final value = rod.toY;
-                          final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+                          final localizations =
+                              AppLocalizations.of(context) ??
+                              AppLocalizations(const Locale('en'));
                           return BarTooltipItem(
                             '$monthName\n${isIncome ? localizations.income : localizations.expense} : \$${value.toStringAsFixed(2)}',
                             TextStyle(
@@ -301,10 +329,7 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
         Container(
           width: 12,
           height: 12,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         const SizedBox(width: 8),
         Text(

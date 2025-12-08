@@ -36,16 +36,10 @@ class LanguageOptionWidget extends StatelessWidget {
                 ),
               ),
             ),
-            if (isSelected)
-              Icon(
-                Icons.check,
-                size: 20,
-                color: Colors.black,
-              ),
+            if (isSelected) Icon(Icons.check, size: 20, color: Colors.black),
           ],
         ),
       ),
     );
   }
 }
-

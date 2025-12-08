@@ -6,15 +6,13 @@ import 'package:fintrack_app/utils/app_localizations.dart';
 class RecentTransactions extends StatelessWidget {
   final List<TransactionModel> transactions;
 
-  const RecentTransactions({
-    super.key,
-    required this.transactions,
-  });
+  const RecentTransactions({super.key, required this.transactions});
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
-    
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

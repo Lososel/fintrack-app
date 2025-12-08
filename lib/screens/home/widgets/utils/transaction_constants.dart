@@ -34,4 +34,3 @@ class TransactionConstants {
     "Other": Icons.more_horiz,
   };
 }
-

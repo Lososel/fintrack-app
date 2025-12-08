@@ -15,7 +15,9 @@ class CurrencyPage extends StatefulWidget {
 class _CurrencyPageState extends State<CurrencyPage> {
   Currency _fromCurrency = Currency.dollar;
   Currency _toCurrency = Currency.euro;
-  final TextEditingController _fromAmountController = TextEditingController(text: "100");
+  final TextEditingController _fromAmountController = TextEditingController(
+    text: "100",
+  );
 
   @override
   void initState() {
@@ -37,7 +39,7 @@ class _CurrencyPageState extends State<CurrencyPage> {
 
   double _getExchangeRate(Currency from, Currency to) {
     if (from == to) return 1.0;
-    
+
     // Simple exchange rates (in production, fetch from API)
     // Base: USD
     if (from == Currency.dollar && to == Currency.euro) {
@@ -53,7 +55,7 @@ class _CurrencyPageState extends State<CurrencyPage> {
     } else if (from == Currency.tenge && to == Currency.euro) {
       return 0.0020; // 1 / 489
     }
-    
+
     return 1.0;
   }
 
@@ -70,7 +72,10 @@ class _CurrencyPageState extends State<CurrencyPage> {
       _toCurrency = temp;
       // Swap amounts - calculate with old currencies first
       final currentAmount = double.tryParse(_fromAmountController.text) ?? 0.0;
-      final oldRate = _getExchangeRate(_toCurrency, _fromCurrency); // Reverse rate
+      final oldRate = _getExchangeRate(
+        _toCurrency,
+        _fromCurrency,
+      ); // Reverse rate
       final swappedAmount = currentAmount * oldRate;
       _fromAmountController.text = swappedAmount.toStringAsFixed(2);
     });
@@ -117,7 +122,8 @@ class _CurrencyPageState extends State<CurrencyPage> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final convertedAmount = _getConvertedAmount();
     final currentRate = _getExchangeRate(_fromCurrency, _toCurrency);
 
@@ -207,7 +213,10 @@ class _CurrencyPageState extends State<CurrencyPage> {
               GestureDetector(
                 onTap: _openFromCurrencyModal,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 18,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -234,11 +243,16 @@ class _CurrencyPageState extends State<CurrencyPage> {
               const SizedBox(height: 12),
               TextField(
                 controller: _fromAmountController,
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 style: const TextStyle(fontSize: 16),
                 decoration: InputDecoration(
                   hintText: "0",
-                  hintStyle: const TextStyle(color: Colors.black54, fontSize: 16),
+                  hintStyle: const TextStyle(
+                    color: Colors.black54,
+                    fontSize: 16,
+                  ),
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 18,
@@ -293,7 +307,10 @@ class _CurrencyPageState extends State<CurrencyPage> {
               GestureDetector(
                 onTap: _openToCurrencyModal,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 18,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -319,7 +336,10 @@ class _CurrencyPageState extends State<CurrencyPage> {
               ),
               const SizedBox(height: 12),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 18,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),

@@ -84,4 +84,3 @@ class SmoothModalRoute<T> extends ModalRoute<T> {
     );
   }
 }
-

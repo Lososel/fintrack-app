@@ -15,9 +15,12 @@ class CurrencyHelper {
     return '${currency.symbol}${amount.toStringAsFixed(2)}';
   }
 
-  static String formatAmountWithSign(double amount, Currency currency, bool isIncome) {
+  static String formatAmountWithSign(
+    double amount,
+    Currency currency,
+    bool isIncome,
+  ) {
     final sign = isIncome ? '+' : '-';
     return '$sign${currency.symbol}${amount.toStringAsFixed(2)}';
   }
 }
-

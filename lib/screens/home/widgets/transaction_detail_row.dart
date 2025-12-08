@@ -21,11 +21,7 @@ class TransactionDetailRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(
-          icon,
-          size: 28,
-          color: Colors.black38,
-        ),
+        Icon(icon, size: 28, color: Colors.black38),
         const SizedBox(width: 16),
         Expanded(
           child: Column(
@@ -44,11 +40,7 @@ class TransactionDetailRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   if (showValueIcon && valueIcon != null) ...[
-                    Icon(
-                      valueIcon,
-                      size: 24,
-                      color: Colors.black87,
-                    ),
+                    Icon(valueIcon, size: 24, color: Colors.black87),
                     const SizedBox(width: 8),
                   ],
                   Expanded(
@@ -70,4 +62,3 @@ class TransactionDetailRow extends StatelessWidget {
     );
   }
 }
-

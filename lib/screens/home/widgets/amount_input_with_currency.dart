@@ -22,9 +22,7 @@ class AmountInputWithCurrency extends StatelessWidget {
           child: InputField(
             hint: "0.00",
             controller: amountController,
-            keyboardType: const TextInputType.numberWithOptions(
-              decimal: true,
-            ),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
           ),
         ),
         const SizedBox(width: 12),
@@ -59,4 +57,3 @@ class AmountInputWithCurrency extends StatelessWidget {
     );
   }
 }
-

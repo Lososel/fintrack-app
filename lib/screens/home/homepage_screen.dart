@@ -49,9 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xfFF6F6F9),
-      bottomNavigationBar: const HomeBottomNav(
-        currentIndex: 0,
-      ),
+      bottomNavigationBar: const HomeBottomNav(currentIndex: 0),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),

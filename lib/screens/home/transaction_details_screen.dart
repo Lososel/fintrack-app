@@ -43,7 +43,10 @@ class TransactionDetailsScreen extends StatelessWidget {
                     const SizedBox(height: 10),
                     const Text(
                       "Transaction Details",
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                     const SizedBox(height: 30),
                     TransactionAmountHeader(
@@ -95,4 +98,3 @@ class TransactionDetailsScreen extends StatelessWidget {
     );
   }
 }
-

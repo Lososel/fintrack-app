@@ -42,8 +42,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
-    
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -100,7 +101,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (email.isEmpty || password.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text(localizations.pleaseEnterEmailAndPassword),
+                              content: Text(
+                                localizations.pleaseEnterEmailAndPassword,
+                              ),
                             ),
                           );
                           return;
@@ -108,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         // perform login & get a name (replace this with real auth)
                         final userName = await _performLogin(email, password);
-                        
+
                         // Store user data in service
                         UserService().setUser(userName, email);
 

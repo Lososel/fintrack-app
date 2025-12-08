@@ -35,7 +35,8 @@ class _SpendingOverviewState extends State<SpendingOverview> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final spendingByCategory = SpendingCalculator.calculateSpendingByCategory(
       _transactionService.transactions,
     );
@@ -49,11 +50,17 @@ class _SpendingOverviewState extends State<SpendingOverview> {
             children: [
               Text(
                 localizations.spendingOverview,
-                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
               Text(
                 "${localizations.viewDetails} →",
-                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ],
           ),
@@ -63,10 +70,7 @@ class _SpendingOverviewState extends State<SpendingOverview> {
             children: [
               Text(
                 localizations.noExpensesYet,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.black54,
-                ),
+                style: const TextStyle(fontSize: 14, color: Colors.black54),
               ),
             ],
           ),
@@ -84,7 +88,7 @@ class _SpendingOverviewState extends State<SpendingOverview> {
               localizations.spendingOverview,
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
             ),
-          
+
             GestureDetector(
               onTap: () {
                 // Navigate to analytics screen
@@ -97,7 +101,10 @@ class _SpendingOverviewState extends State<SpendingOverview> {
               },
               child: Text(
                 "${localizations.viewDetails} →",
-                style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w400),
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
           ],
@@ -151,10 +158,7 @@ class _SpendingOverviewState extends State<SpendingOverview> {
             Container(
               width: 12,
               height: 12,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: color,
-              ),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: color),
             ),
             const SizedBox(width: 8),
             Expanded(

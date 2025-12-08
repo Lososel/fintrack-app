@@ -323,7 +323,8 @@ class AppLocalizations {
       'manageYourMoneyWisely': 'Ақшаңызды дана басқарыңыз',
       'emailAddress': 'Электрондық пошта мекенжайы',
       'password': 'Құпия сөз',
-      'pleaseEnterEmailAndPassword': 'Электрондық пошта мен құпия сөзді енгізіңіз',
+      'pleaseEnterEmailAndPassword':
+          'Электрондық пошта мен құпия сөзді енгізіңіз',
       'createAccount': 'Тіркелгі құру',
       'createAnAccount': 'Тіркелгі құру',
       'fullName': 'Толық аты',
@@ -399,7 +400,8 @@ class AppLocalizations {
   String get goodAfternoon => translate('goodAfternoon');
   String get goodEvening => translate('goodEvening');
   String get goodNight => translate('goodNight');
-  String get yourPersonalFinanceManager => translate('yourPersonalFinanceManager');
+  String get yourPersonalFinanceManager =>
+      translate('yourPersonalFinanceManager');
   String get home => translate('home');
   String get analytics => translate('analytics');
   String get budget => translate('budget');
@@ -438,7 +440,8 @@ class AppLocalizations {
   String get incomeExpenseTrend => translate('incomeExpenseTrend');
   String get expensesBreakdown => translate('expensesBreakdown');
   String get user => translate('user');
-  String get trackYourFinancialInsights => translate('trackYourFinancialInsights');
+  String get trackYourFinancialInsights =>
+      translate('trackYourFinancialInsights');
   String get totalSavings => translate('totalSavings');
   String get day => translate('day');
   String get week => translate('week');
@@ -448,7 +451,8 @@ class AppLocalizations {
   String get manageYourMoneyWisely => translate('manageYourMoneyWisely');
   String get emailAddress => translate('emailAddress');
   String get password => translate('password');
-  String get pleaseEnterEmailAndPassword => translate('pleaseEnterEmailAndPassword');
+  String get pleaseEnterEmailAndPassword =>
+      translate('pleaseEnterEmailAndPassword');
   String get createAccount => translate('createAccount');
   String get createAnAccount => translate('createAnAccount');
   String get fullName => translate('fullName');
@@ -467,10 +471,12 @@ class AppLocalizations {
   String get egDailySpending => translate('egDailySpending');
   String get cardNameRequired => translate('cardNameRequired');
   String get last4DigitsRequiredError => translate('last4DigitsRequiredError');
-  String get pleaseEnterExactly4Digits => translate('pleaseEnterExactly4Digits');
+  String get pleaseEnterExactly4Digits =>
+      translate('pleaseEnterExactly4Digits');
   String get balanceRequired => translate('balanceRequired');
   String get pleaseEnterValidNumber => translate('pleaseEnterValidNumber');
-  String get primaryPurposeRequiredError => translate('primaryPurposeRequiredError');
+  String get primaryPurposeRequiredError =>
+      translate('primaryPurposeRequiredError');
   String get cardAddedSuccessfully => translate('cardAddedSuccessfully');
   String get editCard => translate('editCard');
   String get summary => translate('summary');
@@ -496,13 +502,15 @@ class AppLocalizations {
   String get checkingAccount => translate('checkingAccount');
   String get languageChangedTo => translate('languageChangedTo');
   String get cardUpdatedSuccessfully => translate('cardUpdatedSuccessfully');
-  String get areYouSureYouWantToLogout => translate('areYouSureYouWantToLogout');
+  String get areYouSureYouWantToLogout =>
+      translate('areYouSureYouWantToLogout');
   String get transactions => translate('transactions');
   String get selectCurrency => translate('selectCurrency');
   String get selectPaymentMethod => translate('selectPaymentMethod');
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override

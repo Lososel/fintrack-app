@@ -15,7 +15,8 @@ class IncomeExpenseTrendChart extends StatefulWidget {
   });
 
   @override
-  State<IncomeExpenseTrendChart> createState() => _IncomeExpenseTrendChartState();
+  State<IncomeExpenseTrendChart> createState() =>
+      _IncomeExpenseTrendChartState();
 }
 
 class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
@@ -70,7 +71,9 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
 
     // Filter transactions for the selected period
     final filteredTransactions = widget.transactions.where((transaction) {
-      return transaction.date.isAfter(startDate.subtract(const Duration(days: 1))) &&
+      return transaction.date.isAfter(
+            startDate.subtract(const Duration(days: 1)),
+          ) &&
           transaction.date.isBefore(endDate.add(const Duration(days: 1)));
     }).toList();
 
@@ -133,17 +136,29 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
     // Create FlSpot lists - ensure all values are >= 0
     _incomeSpots = List.generate(
       numberOfPoints,
-      (index) => FlSpot(index.toDouble(), incomeData[index].clamp(0.0, double.infinity)),
+      (index) => FlSpot(
+        index.toDouble(),
+        incomeData[index].clamp(0.0, double.infinity),
+      ),
     );
     _expenseSpots = List.generate(
       numberOfPoints,
-      (index) => FlSpot(index.toDouble(), expenseData[index].clamp(0.0, double.infinity)),
+      (index) => FlSpot(
+        index.toDouble(),
+        expenseData[index].clamp(0.0, double.infinity),
+      ),
     );
 
     // Calculate max Y value
-    final maxIncome = incomeData.isEmpty ? 0 : incomeData.reduce((a, b) => a > b ? a : b);
-    final maxExpense = expenseData.isEmpty ? 0 : expenseData.reduce((a, b) => a > b ? a : b);
-    _maxY = (maxIncome > maxExpense ? maxIncome : maxExpense) * 1.2; // Add 20% padding
+    final maxIncome = incomeData.isEmpty
+        ? 0
+        : incomeData.reduce((a, b) => a > b ? a : b);
+    final maxExpense = expenseData.isEmpty
+        ? 0
+        : expenseData.reduce((a, b) => a > b ? a : b);
+    _maxY =
+        (maxIncome > maxExpense ? maxIncome : maxExpense) *
+        1.2; // Add 20% padding
     if (_maxY! < 100) _maxY = 100; // Minimum scale
 
     _xAxisLabels = labels;
@@ -156,7 +171,20 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
   }
 
   String _getMonthAbbreviation(int month) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     return months[month - 1];
   }
 
@@ -191,13 +219,12 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
         child: Center(
           child: Builder(
             builder: (context) {
-              final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+              final localizations =
+                  AppLocalizations.of(context) ??
+                  AppLocalizations(const Locale('en'));
               return Text(
                 localizations.noTransactionsYet,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.black54,
-                ),
+                style: const TextStyle(fontSize: 12, color: Colors.black54),
               );
             },
           ),
@@ -210,15 +237,15 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
 
     return Container(
       width: double.infinity,
-     
-      
-      
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Builder(
             builder: (context) {
-              final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+              final localizations =
+                  AppLocalizations.of(context) ??
+                  AppLocalizations(const Locale('en'));
               return Text(
                 localizations.incomeExpenseTrend,
                 style: const TextStyle(
@@ -229,157 +256,167 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
               );
             },
           ),
-         
+
           const SizedBox(height: 16),
           SizedBox(
             height: 200,
             child: LineChart(
-                LineChartData(
-                  gridData: FlGridData(
-                    show: true,
-                    drawVerticalLine: false,
-                    horizontalInterval: yAxisInterval,
-                    getDrawingHorizontalLine: (value) {
-                      return FlLine(
-                        color: const Color(0xFFAAA6A6),
-                        strokeWidth: 1,
-                      );
-                    },
+              LineChartData(
+                gridData: FlGridData(
+                  show: true,
+                  drawVerticalLine: false,
+                  horizontalInterval: yAxisInterval,
+                  getDrawingHorizontalLine: (value) {
+                    return FlLine(
+                      color: const Color(0xFFAAA6A6),
+                      strokeWidth: 1,
+                    );
+                  },
+                ),
+                titlesData: FlTitlesData(
+                  show: true,
+                  rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
                   ),
-                  titlesData: FlTitlesData(
-                    show: true,
-                    rightTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    topTitles: const AxisTitles(
-                      sideTitles: SideTitles(showTitles: false),
-                    ),
-                    bottomTitles: AxisTitles(
-                      axisNameSize: 0,
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        reservedSize: widget.selectedPeriod == TimePeriod.month ? 35 : 24,
-                        interval: 1, // Use interval of 1 to get all values, then filter in getTitlesWidget
-                        getTitlesWidget: (value, meta) {
-                          final index = value.toInt();
-                          final lastIndex = _xAxisLabels!.length - 1;
-                          // Show labels at intervals OR the last label
-                          final isAtInterval = index % xAxisInterval == 0;
-                          final isLastLabel = index == lastIndex;
-                          final shouldShow = index >= 0 && 
-                              index < _xAxisLabels!.length && 
-                              (isAtInterval || isLastLabel);
-                          
-                          if (shouldShow) {
-                            // Use wider width for day view (time format "00:00" needs more space)
-                            final labelWidth = widget.selectedPeriod == TimePeriod.day ? 35.0 : 25.0;
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 4.0),
-                              child: SizedBox(
-                                width: labelWidth,
-                                child: Text(
-                                  _xAxisLabels![index],
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 9,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.visible,
-                                ),
-                              ),
-                            );
-                          }
-                          return const SizedBox.shrink();
-                        },
-                      ),
-                    ),
-                    leftTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        reservedSize: 45,
-                        interval: yAxisInterval,
-                        getTitlesWidget: (value, meta) {
-                          // Format large numbers more compactly
-                          String formattedValue;
-                          if (value >= 1000) {
-                            formattedValue = '\$${(value / 1000).toStringAsFixed(value >= 10000 ? 0 : 1)}k';
-                          } else {
-                            formattedValue = '\$${value.toStringAsFixed(0)}';
-                          }
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  bottomTitles: AxisTitles(
+                    axisNameSize: 0,
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: widget.selectedPeriod == TimePeriod.month
+                          ? 35
+                          : 24,
+                      interval:
+                          1, // Use interval of 1 to get all values, then filter in getTitlesWidget
+                      getTitlesWidget: (value, meta) {
+                        final index = value.toInt();
+                        final lastIndex = _xAxisLabels!.length - 1;
+                        // Show labels at intervals OR the last label
+                        final isAtInterval = index % xAxisInterval == 0;
+                        final isLastLabel = index == lastIndex;
+                        final shouldShow =
+                            index >= 0 &&
+                            index < _xAxisLabels!.length &&
+                            (isAtInterval || isLastLabel);
+
+                        if (shouldShow) {
+                          // Use wider width for day view (time format "00:00" needs more space)
+                          final labelWidth =
+                              widget.selectedPeriod == TimePeriod.day
+                              ? 35.0
+                              : 25.0;
                           return Padding(
-                            padding: const EdgeInsets.only(right: 4.0),
-                            child: Text(
-                              formattedValue,
-                              style: const TextStyle(
-                                color:  Color.fromARGB(255, 0, 0, 0),
-                                fontSize: 9,
-                                fontWeight: FontWeight.w500,
+                            padding: const EdgeInsets.only(top: 4.0),
+                            child: SizedBox(
+                              width: labelWidth,
+                              child: Text(
+                                _xAxisLabels![index],
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                                overflow: TextOverflow.visible,
                               ),
-                              textAlign: TextAlign.right,
                             ),
                           );
-                        },
-                      ),
+                        }
+                        return const SizedBox.shrink();
+                      },
                     ),
                   ),
-                  borderData: FlBorderData(
-                    show: true,
-                    border: Border.all(color: const Color(0xFFAAA6A6), width: 1),
-                  ),
-                  clipData: FlClipData(
-                    top: false,
-                    bottom: false,
-                    left: false,
-                    right: false,
-                  ),
-                  minX: 0,
-                  maxX: (_incomeSpots!.length - 1).toDouble(),
-                  minY: 0,
-                  maxY: _maxY,
-                  lineTouchData: const LineTouchData(enabled: false),
-                  lineBarsData: [
-                    LineChartBarData(
-                      spots: _incomeSpots!,
-                      isCurved: true,
-                      curveSmoothness: 0.35,
-                      preventCurveOverShooting: true,
-                      color: Colors.green,
-                      barWidth: 2.5,
-                      isStrokeCapRound: true,
-                      dotData: const FlDotData(show: false),
-                      belowBarData: BarAreaData(
-                        show: true,
-                        color: Colors.green.withOpacity(0.1),
-                        cutOffY: 0,
-                        applyCutOffY: true,
-                      ),
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      reservedSize: 45,
+                      interval: yAxisInterval,
+                      getTitlesWidget: (value, meta) {
+                        // Format large numbers more compactly
+                        String formattedValue;
+                        if (value >= 1000) {
+                          formattedValue =
+                              '\$${(value / 1000).toStringAsFixed(value >= 10000 ? 0 : 1)}k';
+                        } else {
+                          formattedValue = '\$${value.toStringAsFixed(0)}';
+                        }
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 4.0),
+                          child: Text(
+                            formattedValue,
+                            style: const TextStyle(
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 9,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                        );
+                      },
                     ),
-                    LineChartBarData(
-                      spots: _expenseSpots!,
-                      isCurved: true,
-                      curveSmoothness: 0.35,
-                      preventCurveOverShooting: true,
-                      color: Colors.red,
-                      barWidth: 2.5,
-                      isStrokeCapRound: true,
-                      dotData: const FlDotData(show: false),
-                      belowBarData: BarAreaData(
-                        show: true,
-                        color: Colors.red.withOpacity(0.1),
-                        cutOffY: 0,
-                        applyCutOffY: true,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
+                borderData: FlBorderData(
+                  show: true,
+                  border: Border.all(color: const Color(0xFFAAA6A6), width: 1),
+                ),
+                clipData: FlClipData(
+                  top: false,
+                  bottom: false,
+                  left: false,
+                  right: false,
+                ),
+                minX: 0,
+                maxX: (_incomeSpots!.length - 1).toDouble(),
+                minY: 0,
+                maxY: _maxY,
+                lineTouchData: const LineTouchData(enabled: false),
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: _incomeSpots!,
+                    isCurved: true,
+                    curveSmoothness: 0.35,
+                    preventCurveOverShooting: true,
+                    color: Colors.green,
+                    barWidth: 2.5,
+                    isStrokeCapRound: true,
+                    dotData: const FlDotData(show: false),
+                    belowBarData: BarAreaData(
+                      show: true,
+                      color: Colors.green.withOpacity(0.1),
+                      cutOffY: 0,
+                      applyCutOffY: true,
+                    ),
+                  ),
+                  LineChartBarData(
+                    spots: _expenseSpots!,
+                    isCurved: true,
+                    curveSmoothness: 0.35,
+                    preventCurveOverShooting: true,
+                    color: Colors.red,
+                    barWidth: 2.5,
+                    isStrokeCapRound: true,
+                    dotData: const FlDotData(show: false),
+                    belowBarData: BarAreaData(
+                      show: true,
+                      color: Colors.red.withOpacity(0.1),
+                      cutOffY: 0,
+                      applyCutOffY: true,
+                    ),
+                  ),
+                ],
               ),
             ),
+          ),
           const SizedBox(height: 12),
           Builder(
             builder: (context) {
-              final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+              final localizations =
+                  AppLocalizations.of(context) ??
+                  AppLocalizations(const Locale('en'));
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -401,10 +438,7 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
         Container(
           width: 10,
           height: 10,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         const SizedBox(width: 6),
         Text(
@@ -419,4 +453,3 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
     );
   }
 }
-

@@ -29,9 +29,7 @@ class TransactionAmountHeader extends StatelessWidget {
           child: Icon(
             Icons.monetization_on,
             size: 30,
-            color: isExpense
-                ? Colors.red.shade700
-                : Colors.green.shade700,
+            color: isExpense ? Colors.red.shade700 : Colors.green.shade700,
           ),
         ),
         const SizedBox(width: 16),
@@ -47,9 +45,13 @@ class TransactionAmountHeader extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-      
+
               Text(
-                CurrencyHelper.formatAmountWithSign(amount, currency, !isExpense),
+                CurrencyHelper.formatAmountWithSign(
+                  amount,
+                  currency,
+                  !isExpense,
+                ),
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.w900,
@@ -63,4 +65,3 @@ class TransactionAmountHeader extends StatelessWidget {
     );
   }
 }
-

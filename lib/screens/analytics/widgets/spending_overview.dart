@@ -12,10 +12,7 @@ import 'time_period_selector.dart';
 class SpendingOverview extends StatefulWidget {
   final TimePeriod selectedPeriod;
 
-  const SpendingOverview({
-    super.key,
-    required this.selectedPeriod,
-  });
+  const SpendingOverview({super.key, required this.selectedPeriod});
 
   @override
   State<SpendingOverview> createState() => _SpendingOverviewState();
@@ -68,7 +65,9 @@ class _SpendingOverviewState extends State<SpendingOverview> {
     final endDate = DateTime(now.year, now.month, now.day, 23, 59, 59);
 
     return transactions.where((transaction) {
-      return transaction.date.isAfter(startDate.subtract(const Duration(days: 1))) &&
+      return transaction.date.isAfter(
+            startDate.subtract(const Duration(days: 1)),
+          ) &&
           transaction.date.isBefore(endDate.add(const Duration(days: 1)));
     }).toList();
   }
@@ -106,8 +105,9 @@ class _SpendingOverviewState extends State<SpendingOverview> {
     );
     final currency = _getCurrency(filteredTransactions);
 
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
-    
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

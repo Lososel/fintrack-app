@@ -31,7 +31,8 @@ class _LanguagePageState extends State<LanguagePage> {
   }
 
   void _selectLanguage(String languageCode, String languageName) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     _languageService.setLanguageByCode(languageCode);
     // Pop the language page
     Navigator.pop(context);
@@ -47,7 +48,8 @@ class _LanguagePageState extends State<LanguagePage> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final currentLanguageCode = _languageService.currentLanguageCode;
 
     return Scaffold(

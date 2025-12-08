@@ -26,7 +26,10 @@ class TransactionService {
     notifyListeners();
   }
 
-  void updateTransaction(TransactionModel oldTransaction, TransactionModel newTransaction) {
+  void updateTransaction(
+    TransactionModel oldTransaction,
+    TransactionModel newTransaction,
+  ) {
     final index = _transactions.indexOf(oldTransaction);
     if (index != -1) {
       _transactions[index] = newTransaction;
@@ -50,4 +53,3 @@ class TransactionService {
     }
   }
 }
-

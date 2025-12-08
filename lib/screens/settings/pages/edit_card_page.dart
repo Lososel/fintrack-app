@@ -7,10 +7,7 @@ import 'package:fintrack_app/utils/app_localizations.dart';
 class EditCardPage extends StatefulWidget {
   final CardModel card;
 
-  const EditCardPage({
-    super.key,
-    required this.card,
-  });
+  const EditCardPage({super.key, required this.card});
 
   @override
   State<EditCardPage> createState() => _EditCardPageState();
@@ -19,12 +16,12 @@ class EditCardPage extends StatefulWidget {
 class _EditCardPageState extends State<EditCardPage> {
   final CardService _cardService = CardService();
   final _formKey = GlobalKey<FormState>();
-  
+
   late TextEditingController _cardNameController;
   late TextEditingController _lastDigitsController;
   late TextEditingController _balanceController;
   late TextEditingController _purposeController;
-  
+
   late String _selectedAccountType;
   final List<String> _accountTypes = ["Debit", "Credit", "Savings", "Checking"];
 
@@ -33,9 +30,11 @@ class _EditCardPageState extends State<EditCardPage> {
     super.initState();
     _cardNameController = TextEditingController(text: widget.card.bankName);
     _lastDigitsController = TextEditingController(text: widget.card.cardNumber);
-    _balanceController = TextEditingController(text: widget.card.balance.toStringAsFixed(2));
+    _balanceController = TextEditingController(
+      text: widget.card.balance.toStringAsFixed(2),
+    );
     _purposeController = TextEditingController(text: widget.card.category);
-    
+
     // Convert display name back to short form for selection
     final accountType = widget.card.accountType;
     if (accountType.contains("Debit")) {
@@ -61,7 +60,8 @@ class _EditCardPageState extends State<EditCardPage> {
   }
 
   String _getAccountTypeDisplay(String accountType, BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     switch (accountType) {
       case "Debit":
         return localizations.debitCard;
@@ -77,7 +77,8 @@ class _EditCardPageState extends State<EditCardPage> {
   }
 
   String? _validateCardName(String? value, BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     if (value == null || value.trim().isEmpty) {
       return localizations.cardNameRequired;
     }
@@ -85,18 +86,21 @@ class _EditCardPageState extends State<EditCardPage> {
   }
 
   String? _validateLastDigits(String? value, BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     if (value == null || value.trim().isEmpty) {
       return localizations.last4DigitsRequiredError;
     }
-    if (value.trim().length != 4 || !RegExp(r'^\d{4}$').hasMatch(value.trim())) {
+    if (value.trim().length != 4 ||
+        !RegExp(r'^\d{4}$').hasMatch(value.trim())) {
       return localizations.pleaseEnterExactly4Digits;
     }
     return null;
   }
 
   String? _validateBalance(String? value, BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     if (value == null || value.trim().isEmpty) {
       return localizations.balanceRequired;
     }
@@ -107,7 +111,8 @@ class _EditCardPageState extends State<EditCardPage> {
   }
 
   String? _validatePurpose(String? value, BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     if (value == null || value.trim().isEmpty) {
       return localizations.primaryPurposeRequiredError;
     }
@@ -116,14 +121,18 @@ class _EditCardPageState extends State<EditCardPage> {
 
   void _handleSaveChanges() {
     if (_formKey.currentState!.validate()) {
-      final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+      final localizations =
+          AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
       final cardName = _cardNameController.text.trim();
       final lastDigits = _lastDigitsController.text.trim();
       final balance = double.tryParse(_balanceController.text.trim()) ?? 0.0;
       final purpose = _purposeController.text.trim();
-      
-      final accountTypeDisplay = _getAccountTypeDisplay(_selectedAccountType, context);
-      
+
+      final accountTypeDisplay = _getAccountTypeDisplay(
+        _selectedAccountType,
+        context,
+      );
+
       final updatedCard = CardModel(
         id: widget.card.id,
         cardName: widget.card.cardName,
@@ -136,14 +145,14 @@ class _EditCardPageState extends State<EditCardPage> {
       );
 
       _cardService.updateCard(updatedCard);
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(localizations.cardUpdatedSuccessfully),
           duration: const Duration(seconds: 2),
         ),
       );
-      
+
       Navigator.pop(context);
     }
   }
@@ -154,14 +163,19 @@ class _EditCardPageState extends State<EditCardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
-    
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+
     // Create validator wrappers that capture context
-    String? Function(String?) validateCardName = (value) => _validateCardName(value, context);
-    String? Function(String?) validateLastDigits = (value) => _validateLastDigits(value, context);
-    String? Function(String?) validateBalance = (value) => _validateBalance(value, context);
-    String? Function(String?) validatePurpose = (value) => _validatePurpose(value, context);
-    
+    String? Function(String?) validateCardName = (value) =>
+        _validateCardName(value, context);
+    String? Function(String?) validateLastDigits = (value) =>
+        _validateLastDigits(value, context);
+    String? Function(String?) validateBalance = (value) =>
+        _validateBalance(value, context);
+    String? Function(String?) validatePurpose = (value) =>
+        _validatePurpose(value, context);
+
     return Scaffold(
       backgroundColor: const Color(0xffF6F6F9),
       bottomNavigationBar: const HomeBottomNav(currentIndex: 3),
@@ -219,12 +233,13 @@ class _EditCardPageState extends State<EditCardPage> {
                                     child: Image.asset(
                                       widget.card.assetPath,
                                       fit: BoxFit.cover,
-                                      errorBuilder: (context, error, stackTrace) {
-                                        return const Icon(
-                                          Icons.account_balance,
-                                          color: Colors.grey,
-                                        );
-                                      },
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                            return const Icon(
+                                              Icons.account_balance,
+                                              color: Colors.grey,
+                                            );
+                                          },
                                     ),
                                   )
                                 : const Icon(
@@ -336,7 +351,10 @@ class _EditCardPageState extends State<EditCardPage> {
                   controller: _cardNameController,
                   decoration: InputDecoration(
                     hintText: localizations.egKaspiGold,
-                    hintStyle: const TextStyle(color: Colors.black54, fontSize: 16),
+                    hintStyle: const TextStyle(
+                      color: Colors.black54,
+                      fontSize: 16,
+                    ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 18,
@@ -374,7 +392,10 @@ class _EditCardPageState extends State<EditCardPage> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     hintText: localizations.eg1234,
-                    hintStyle: const TextStyle(color: Colors.black54, fontSize: 16),
+                    hintStyle: const TextStyle(
+                      color: Colors.black54,
+                      fontSize: 16,
+                    ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 18,
@@ -476,10 +497,15 @@ class _EditCardPageState extends State<EditCardPage> {
                 const SizedBox(height: 8),
                 TextFormField(
                   controller: _balanceController,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
                   decoration: InputDecoration(
                     hintText: "0.00",
-                    hintStyle: const TextStyle(color: Colors.black54, fontSize: 16),
+                    hintStyle: const TextStyle(
+                      color: Colors.black54,
+                      fontSize: 16,
+                    ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 18,
@@ -516,7 +542,10 @@ class _EditCardPageState extends State<EditCardPage> {
                   controller: _purposeController,
                   decoration: InputDecoration(
                     hintText: localizations.egDailySpending,
-                    hintStyle: const TextStyle(color: Colors.black54, fontSize: 16),
+                    hintStyle: const TextStyle(
+                      color: Colors.black54,
+                      fontSize: 16,
+                    ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 18,

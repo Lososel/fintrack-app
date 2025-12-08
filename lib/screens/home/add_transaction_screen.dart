@@ -100,7 +100,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
     }
 
     // Validate category
-    final categoryError = TransactionFormValidator.validateCategory(selectedCategory);
+    final categoryError = TransactionFormValidator.validateCategory(
+      selectedCategory,
+    );
     if (categoryError != null) {
       TransactionFormValidator.showErrorSnackBar(context, categoryError);
       return;
@@ -146,8 +148,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
-    
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+
     return Scaffold(
       backgroundColor: const Color(0xffF4F4F7),
       body: SafeArea(
@@ -185,77 +188,86 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
               Builder(
                 builder: (context) {
-                  final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+                  final localizations =
+                      AppLocalizations.of(context) ??
+                      AppLocalizations(const Locale('en'));
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         localizations.amount,
                         style: const TextStyle(fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 5),
-              AmountInputWithCurrency(
-                amountController: amountController,
-                selectedCurrency: selectedCurrency,
-                onCurrencyTap: _openCurrencySheet,
-              ),
+                      ),
+                      const SizedBox(height: 5),
+                      AmountInputWithCurrency(
+                        amountController: amountController,
+                        selectedCurrency: selectedCurrency,
+                        onCurrencyTap: _openCurrencySheet,
+                      ),
 
-              const SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
                       Text(
                         localizations.category,
                         style: const TextStyle(fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 5),
-              CategoryDropdown(
-                        current: selectedCategory ?? localizations.selectCategory,
-                onTap: _openCategorySheet,
-              ),
+                      ),
+                      const SizedBox(height: 5),
+                      CategoryDropdown(
+                        current:
+                            selectedCategory ?? localizations.selectCategory,
+                        onTap: _openCategorySheet,
+                      ),
 
-              const SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
                       Text(
                         localizations.description,
                         style: const TextStyle(fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 5),
-              InputField(
+                      ),
+                      const SizedBox(height: 5),
+                      InputField(
                         hint: localizations.enterDescription,
-                controller: descriptionController,
-              ),
+                        controller: descriptionController,
+                      ),
 
-              const SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
-                      Text(localizations.date, style: const TextStyle(fontWeight: FontWeight.w600)),
-              const SizedBox(height: 5),
-              DatePickerField(date: selectedDate, onTap: _openDatePickerSheet),
+                      Text(
+                        localizations.date,
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(height: 5),
+                      DatePickerField(
+                        date: selectedDate,
+                        onTap: _openDatePickerSheet,
+                      ),
 
-              const SizedBox(height: 20),
+                      const SizedBox(height: 20),
 
                       Text(
                         localizations.paymentMethod,
                         style: const TextStyle(fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 5),
-              CategoryDropdown(
-                current: selectedPayment,
-                onTap: _openPaymentMethodSheet,
-              ),
+                      ),
+                      const SizedBox(height: 5),
+                      CategoryDropdown(
+                        current: selectedPayment,
+                        onTap: _openPaymentMethodSheet,
+                      ),
 
-              const SizedBox(height: 40),
+                      const SizedBox(height: 40),
 
-              PrimaryButton(
+                      PrimaryButton(
                         label: localizations.addTransaction,
-                onPressed: () {
-                  _validateAndSubmit();
-                },
-              ),
+                        onPressed: () {
+                          _validateAndSubmit();
+                        },
+                      ),
 
-              const SizedBox(height: 16),
+                      const SizedBox(height: 16),
 
-              SecondaryButton(
+                      SecondaryButton(
                         label: localizations.cancel,
-                onPressed: () => Navigator.pop(context),
+                        onPressed: () => Navigator.pop(context),
                       ),
                     ],
                   );

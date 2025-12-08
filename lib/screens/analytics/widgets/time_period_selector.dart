@@ -15,8 +15,9 @@ class TimePeriodSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
-    
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+
     return Row(
       children: [
         _buildPeriodButton(context, localizations.day, TimePeriod.day),
@@ -30,7 +31,11 @@ class TimePeriodSelector extends StatelessWidget {
     );
   }
 
-  Widget _buildPeriodButton(BuildContext context, String label, TimePeriod period) {
+  Widget _buildPeriodButton(
+    BuildContext context,
+    String label,
+    TimePeriod period,
+  ) {
     final isSelected = selectedPeriod == period;
     return Expanded(
       child: GestureDetector(
@@ -60,4 +65,3 @@ class TimePeriodSelector extends StatelessWidget {
     );
   }
 }
-

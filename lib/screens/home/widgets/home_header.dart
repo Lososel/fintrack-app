@@ -30,7 +30,8 @@ class _HomeHeaderState extends State<HomeHeader> {
   }
 
   String _getTimeBasedGreeting(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final now = DateTime.now();
     final hour = now.hour;
 
@@ -57,7 +58,8 @@ class _HomeHeaderState extends State<HomeHeader> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final name = _userService.name ?? localizations.user;
     final greeting = _getTimeBasedGreeting(context);
     return Text(
