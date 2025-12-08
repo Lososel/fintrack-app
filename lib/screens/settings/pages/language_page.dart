@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fintrack_app/components/nav/bottom_nav.dart';
 import 'package:fintrack_app/services/language_service.dart';
+import 'package:fintrack_app/screens/settings/widgets/language_option_widget.dart';
 import 'package:fintrack_app/utils/app_localizations.dart';
 
 class LanguagePage extends StatefulWidget {
@@ -80,21 +81,21 @@ class _LanguagePageState extends State<LanguagePage> {
                 ],
               ),
               const SizedBox(height: 24),
-              _LanguageOption(
+              LanguageOptionWidget(
                 languageCode: 'en',
                 languageName: 'English',
                 isSelected: currentLanguageCode == 'en',
                 onTap: () => _selectLanguage('en', 'English'),
               ),
               const SizedBox(height: 12),
-              _LanguageOption(
+              LanguageOptionWidget(
                 languageCode: 'ru',
                 languageName: 'Russian',
                 isSelected: currentLanguageCode == 'ru',
                 onTap: () => _selectLanguage('ru', 'Russian'),
               ),
               const SizedBox(height: 12),
-              _LanguageOption(
+              LanguageOptionWidget(
                 languageCode: 'kk',
                 languageName: 'Kazakh',
                 isSelected: currentLanguageCode == 'kk',
@@ -103,54 +104,6 @@ class _LanguagePageState extends State<LanguagePage> {
               const SizedBox(height: 80),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _LanguageOption extends StatelessWidget {
-  final String languageCode;
-  final String languageName;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _LanguageOption({
-    required this.languageCode,
-    required this.languageName,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                languageName,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.grey.shade800,
-                ),
-              ),
-            ),
-            if (isSelected)
-              Icon(
-                Icons.check,
-                size: 20,
-                color: Colors.black,
-              ),
-          ],
         ),
       ),
     );

@@ -4,9 +4,9 @@ import 'package:fintrack_app/components/nav/bottom_nav.dart';
 import 'package:fintrack_app/services/transaction_service.dart';
 import 'package:fintrack_app/services/user_service.dart';
 import 'package:fintrack_app/services/card_service.dart';
-import 'package:fintrack_app/screens/settings/manage_cards_page.dart';
-import 'package:fintrack_app/screens/settings/edit_card_page.dart';
-import 'package:fintrack_app/models/card_model.dart';
+import 'package:fintrack_app/screens/settings/pages/manage_cards_page.dart';
+import 'package:fintrack_app/screens/settings/pages/edit_card_page.dart';
+import 'package:fintrack_app/screens/settings/widgets/bank_card_widget.dart';
 import 'package:fintrack_app/utils/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -368,8 +368,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
               // Bank Cards List
               ..._cardService.cards.map((card) => Padding(
                     padding: const EdgeInsets.only(bottom: 12),
-                    child: _BankCard(
+                    child: BankCardWidget(
                       card: card,
+                      backgroundColor: Colors.grey.shade200,
                       onTap: () {
                         Navigator.push(
                           context,
@@ -435,104 +436,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(height: 80),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _BankCard extends StatelessWidget {
-  final CardModel card;
-  final VoidCallback onTap;
-
-  const _BankCard({
-    required this.card,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.grey.shade100,
-              ),
-              child: card.assetPath.isNotEmpty
-                  ? ClipOval(
-                      child: Image.asset(
-                        card.assetPath,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(Icons.account_balance, color: Colors.grey);
-                        },
-                      ),
-                    )
-                  : const Icon(Icons.account_balance, color: Colors.grey),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          card.bankName,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        "... ${card.cardNumber}",
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    card.category,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Flexible(
-              child: Text(
-                "\$${card.balance.toStringAsFixed(2)}",
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
-                ),
-                textAlign: TextAlign.right,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
         ),
       ),
     );

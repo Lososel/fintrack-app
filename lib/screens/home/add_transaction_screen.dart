@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fintrack_app/utils/app_localizations.dart';
-import 'package:fintrack_app/components/arrow/back_arrow.dart';
 import 'package:fintrack_app/components/button/primary_button.dart';
 import 'package:fintrack_app/components/button/secondary_button.dart';
 import 'package:fintrack_app/components/fields/input_field.dart';
@@ -147,6 +146,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    
     return Scaffold(
       backgroundColor: const Color(0xffF4F4F7),
       body: SafeArea(
@@ -155,19 +156,24 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const BackArrow(),
-              const SizedBox(height: 10),
-
-              Builder(
-                builder: (context) {
-                  final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
-                  return Text(
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.black),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
                     localizations.addTransaction,
-                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
-                  );
-                },
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
               ),
-
               const SizedBox(height: 20),
 
               TransactionToggle(

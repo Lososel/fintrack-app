@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fintrack_app/components/nav/bottom_nav.dart';
-import 'package:fintrack_app/screens/settings/profile_page.dart';
-import 'package:fintrack_app/screens/settings/currency_page.dart';
-import 'package:fintrack_app/screens/settings/language_page.dart';
+import 'package:fintrack_app/screens/settings/pages/profile_page.dart';
+import 'package:fintrack_app/screens/settings/pages/currency_page.dart';
+import 'package:fintrack_app/screens/settings/pages/language_page.dart';
+import 'package:fintrack_app/screens/settings/widgets/settings_item_widget.dart';
 import 'package:fintrack_app/services/user_service.dart';
 import 'package:fintrack_app/utils/app_localizations.dart';
 
@@ -64,7 +65,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              _SettingsItem(
+              SettingsItemWidget(
                 icon: Icons.person,
                 title: localizations.profile,
                 onTap: () {
@@ -77,7 +78,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               const SizedBox(height: 8),
-              _SettingsItem(
+              SettingsItemWidget(
                 icon: Icons.currency_exchange,
                 title: localizations.currencyConverter,
                 onTap: () {
@@ -90,7 +91,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               const SizedBox(height: 8),
-              _SettingsItem(
+              SettingsItemWidget(
                 icon: Icons.notifications_outlined,
                 title: localizations.notifications,
                 onTap: () {
@@ -98,7 +99,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               const SizedBox(height: 8),
-              _SettingsItem(
+              SettingsItemWidget(
                 icon: Icons.language,
                 title: localizations.language,
                 onTap: () {
@@ -111,7 +112,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               const SizedBox(height: 8),
-              _SettingsItem(
+              SettingsItemWidget(
                 icon: Icons.brightness_6,
                 title: localizations.theme,
                 onTap: () {
@@ -119,7 +120,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               const SizedBox(height: 8),
-              _SettingsItem(
+              SettingsItemWidget(
                 icon: Icons.help_outline,
                 title: localizations.helpAndFAQ,
                 onTap: () {
@@ -127,7 +128,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               const SizedBox(height: 8),
-              _SettingsItem(
+              SettingsItemWidget(
                 icon: Icons.privacy_tip_outlined,
                 title: localizations.privacyPolicy,
                 onTap: () {
@@ -135,7 +136,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               const SizedBox(height: 8),
-              _SettingsItem(
+              SettingsItemWidget(
                 icon: Icons.info_outline,
                 title: localizations.about,
                 onTap: () {
@@ -169,57 +170,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 80),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _SettingsItem extends StatelessWidget {
-  final IconData icon;
-  final String title;
-  final VoidCallback onTap;
-
-  const _SettingsItem({
-    required this.icon,
-    required this.title,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              size: 24,
-              color: Colors.grey.shade700,
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.grey.shade800,
-                ),
-              ),
-            ),
-            Icon(
-              Icons.chevron_right,
-              size: 20,
-              color: Colors.grey.shade600,
-            ),
-          ],
         ),
       ),
     );
