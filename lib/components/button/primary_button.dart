@@ -6,7 +6,7 @@ class PrimaryButton extends StatelessWidget {
   final double borderRadius;
   final double verticalPadding;
   final TextStyle? textStyle;
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   const PrimaryButton({
     super.key,
@@ -15,17 +15,23 @@ class PrimaryButton extends StatelessWidget {
     this.borderRadius = 23,
     this.verticalPadding = 30,
     this.textStyle,
-    this.backgroundColor = Colors.black,
+    this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final buttonColor = backgroundColor ?? 
+        (isDark ? Colors.grey.shade800 : Colors.black);
+    final textColor = isDark ? Colors.white : Colors.white;
+    
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor,
+          backgroundColor: buttonColor,
           padding: EdgeInsets.symmetric(vertical: verticalPadding),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
@@ -35,10 +41,10 @@ class PrimaryButton extends StatelessWidget {
           label,
           style:
               textStyle ??
-              const TextStyle(
+              TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w700,
-                color: Colors.white,
+                color: textColor,
               ),
         ),
       ),

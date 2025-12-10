@@ -9,6 +9,11 @@ class TransactionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : Colors.black;
+    final secondaryTextColor = isDark ? Colors.grey.shade400 : Colors.black54;
+    
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
@@ -40,15 +45,19 @@ class TransactionItem extends StatelessWidget {
               children: [
                 Text(
                   transaction.title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w900,
+                    color: textColor,
                   ),
                 ),
 
                 Text(
                   transaction.category,
-                  style: const TextStyle(fontSize: 13, color: Colors.black54),
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: secondaryTextColor,
+                  ),
                 ),
               ],
             ),
@@ -73,7 +82,10 @@ class TransactionItem extends StatelessWidget {
 
               Text(
                 transaction.date.toIso8601String().split("T")[0],
-                style: const TextStyle(fontSize: 13, color: Colors.black45),
+                style: TextStyle(
+                  fontSize: 13,
+                  color: secondaryTextColor,
+                ),
               ),
             ],
           ),

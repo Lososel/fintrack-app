@@ -47,13 +47,16 @@ class _CategoryDropdownState extends State<CategoryDropdown> {
   @override
   Widget build(BuildContext context) {
     final bool isHint = widget.current == "Select category";
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final iconColor = isDark ? Colors.white : Colors.black;
 
     return InputField(
       hint: isHint ? widget.current : "",
       controller: _controller,
       readOnly: true,
       onTap: widget.onTap,
-      suffixIcon: const Icon(Icons.keyboard_arrow_down),
+      suffixIcon: Icon(Icons.keyboard_arrow_down, color: iconColor),
     );
   }
 }

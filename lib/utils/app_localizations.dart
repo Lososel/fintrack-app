@@ -159,6 +159,14 @@ class AppLocalizations {
       'neverMissAPaymentDeadline': 'Never miss a payment deadline',
       'doNotDisturb': 'Do Not Disturb',
       'silenceNotificationsDuringSpecificHours': 'Silence notifications during specific hours',
+      'lightMode': 'Light Mode',
+      'brightAndCleanInterface': 'Bright and clean interface',
+      'darkMode': 'Dark Mode',
+      'easyOnTheEyes': 'Easy on the eyes',
+      'textSize': 'Text Size',
+      'adjustFontSize': 'Adjust font size',
+      'small': 'Small',
+      'large': 'Large',
     },
     'ru': {
       'allTransactions': 'Все транзакции',
@@ -305,6 +313,14 @@ class AppLocalizations {
       'neverMissAPaymentDeadline': 'Никогда не пропускайте срок оплаты',
       'doNotDisturb': 'Не беспокоить',
       'silenceNotificationsDuringSpecificHours': 'Отключать уведомления в определенные часы',
+      'lightMode': 'Светлая тема',
+      'brightAndCleanInterface': 'Яркий и чистый интерфейс',
+      'darkMode': 'Темная тема',
+      'easyOnTheEyes': 'Комфортно для глаз',
+      'textSize': 'Размер текста',
+      'adjustFontSize': 'Настроить размер шрифта',
+      'small': 'Маленький',
+      'large': 'Большой',
     },
     'kk': {
       'allTransactions': 'Барлық транзакциялар',
@@ -452,6 +468,14 @@ class AppLocalizations {
       'neverMissAPaymentDeadline': 'Төлем мерзімін ешқашан жіберіп алмаңыз',
       'doNotDisturb': 'Мазаламау',
       'silenceNotificationsDuringSpecificHours': 'Белгілі бір сағаттарда хабарландыруларды өшіру',
+      'lightMode': 'Жарық тақырып',
+      'brightAndCleanInterface': 'Жарқын және таза интерфейс',
+      'darkMode': 'Қараңғы тақырып',
+      'easyOnTheEyes': 'Көзге ыңғайлы',
+      'textSize': 'Мәтін өлшемі',
+      'adjustFontSize': 'Қаріп өлшемін реттеу',
+      'small': 'Кіші',
+      'large': 'Үлкен',
     },
   };
 
@@ -610,6 +634,14 @@ class AppLocalizations {
   String get neverMissAPaymentDeadline => translate('neverMissAPaymentDeadline');
   String get doNotDisturb => translate('doNotDisturb');
   String get silenceNotificationsDuringSpecificHours => translate('silenceNotificationsDuringSpecificHours');
+  String get lightMode => translate('lightMode');
+  String get brightAndCleanInterface => translate('brightAndCleanInterface');
+  String get darkMode => translate('darkMode');
+  String get easyOnTheEyes => translate('easyOnTheEyes');
+  String get textSize => translate('textSize');
+  String get adjustFontSize => translate('adjustFontSize');
+  String get small => translate('small');
+  String get large => translate('large');
 }
 
 class _AppLocalizationsDelegate

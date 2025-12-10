@@ -4,6 +4,7 @@ import 'package:fintrack_app/screens/settings/pages/profile_page.dart';
 import 'package:fintrack_app/screens/settings/pages/currency_page.dart';
 import 'package:fintrack_app/screens/settings/pages/language_page.dart';
 import 'package:fintrack_app/screens/settings/pages/notifications_page.dart';
+import 'package:fintrack_app/screens/settings/pages/theme_page.dart';
 import 'package:fintrack_app/screens/settings/widgets/settings_item_widget.dart';
 import 'package:fintrack_app/services/user_service.dart';
 import 'package:fintrack_app/utils/app_localizations.dart';
@@ -38,9 +39,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final theme = Theme.of(context);
+    final textColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
 
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F9),
+      backgroundColor: theme.scaffoldBackgroundColor,
       bottomNavigationBar: const HomeBottomNav(currentIndex: 3),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -51,18 +54,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 16),
               Text(
                 localizations.settings,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w900,
-                  color: Colors.black,
+                  color: textColor,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
                 localizations.manageYourPreferences,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
-                  color: Colors.black,
+                  color: textColor,
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -123,7 +126,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 icon: Icons.brightness_6,
                 title: localizations.theme,
                 onTap: () {
-                  // TODO: Navigate to theme settings screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ThemePage(),
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 8),
@@ -154,21 +162,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Center(
                 child: Column(
                   children: [
-                    const Text(
+                    Text(
                       "Spendly",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        color: Colors.black87,
+                        color: textColor,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       localizations.version,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: Colors.black87,
+                        color: textColor,
                       ),
                     ),
                   ],

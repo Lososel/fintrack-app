@@ -71,8 +71,13 @@ class _ProfilePageState extends State<ProfilePage> {
       (sum, card) => sum + card.balance,
     );
 
+    final theme = Theme.of(context);
+    final textColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
+    final iconColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
+    final cardColor = theme.cardColor;
+
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F9),
+      backgroundColor: theme.scaffoldBackgroundColor,
       bottomNavigationBar: const HomeBottomNav(currentIndex: 3),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -84,16 +89,16 @@ class _ProfilePageState extends State<ProfilePage> {
               Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+                    icon: Icon(Icons.arrow_back_ios, color: iconColor),
                     onPressed: () => Navigator.pop(context),
                   ),
                   const SizedBox(width: 8),
                   Text(
                     localizations.profile,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w900,
-                      color: Colors.black,
+                      color: textColor,
                     ),
                   ),
                 ],
@@ -103,7 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: cardColor,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Row(
@@ -128,10 +133,10 @@ class _ProfilePageState extends State<ProfilePage> {
                         children: [
                           Text(
                             _userService.name ?? localizations.user,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
-                              color: Colors.black,
+                              color: textColor,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -160,9 +165,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.edit_outlined,
-                        color: Colors.black,
+                        color: iconColor,
                       ),
                       onPressed: () {
                         Navigator.push(
@@ -187,17 +192,19 @@ class _ProfilePageState extends State<ProfilePage> {
                         horizontal: 12,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
+                        color: theme.brightness == Brightness.dark 
+                            ? Colors.grey.shade800 
+                            : Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
                         children: [
                           Text(
                             "$transactionCount",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
-                              color: Colors.black,
+                              color: textColor,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -220,17 +227,19 @@ class _ProfilePageState extends State<ProfilePage> {
                         horizontal: 12,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
+                        color: theme.brightness == Brightness.dark 
+                            ? Colors.grey.shade800 
+                            : Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
                         children: [
                           Text(
                             "\$${totals['income']!.toStringAsFixed(0)}",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
-                              color: Colors.black,
+                              color: textColor,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -253,17 +262,19 @@ class _ProfilePageState extends State<ProfilePage> {
                         horizontal: 12,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
+                        color: theme.brightness == Brightness.dark 
+                            ? Colors.grey.shade800 
+                            : Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
                         children: [
                           Text(
                             "\$${totals['expense']!.toStringAsFixed(0)}",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
-                              color: Colors.black,
+                              color: textColor,
                             ),
                           ),
                           const SizedBox(height: 4),

@@ -42,12 +42,16 @@ class _DatePickerFieldState extends State<DatePickerField> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final iconColor = isDark ? Colors.white : Colors.black;
+    
     return InputField(
       hint: "",
       controller: _controller,
       readOnly: true,
       onTap: widget.onTap,
-      suffixIcon: const Icon(Icons.calendar_today, size: 20),
+      suffixIcon: Icon(Icons.calendar_today, size: 20, color: iconColor),
     );
   }
 }

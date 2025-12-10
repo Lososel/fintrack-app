@@ -14,13 +14,17 @@ class TransactionToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const duration = Duration(milliseconds: 260);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final backgroundColor = isDark ? Colors.grey.shade800 : Colors.grey.shade200;
+    final borderColor = isDark ? Colors.grey.shade700 : Color(0xff9CA3AF);
 
     return Container(
       height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(40),
-        border: Border.all(color: Color(0xff9CA3AF)),
-        color: const Color(0xFFF4F4F6),
+        border: Border.all(color: borderColor),
+        color: backgroundColor,
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {

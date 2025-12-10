@@ -73,6 +73,10 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
   Widget build(BuildContext context) {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : Colors.black;
+    final secondaryTextColor = isDark ? Colors.grey.shade400 : Colors.black54;
     final now = DateTime.now();
     final currentMonth = now.month;
     final currentYear = now.year;
@@ -115,14 +119,18 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
         children: [
           Text(
             localizations.monthlyComparison,
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w900,
+              color: textColor,
+            ),
           ),
           const SizedBox(height: 5),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Text(
               localizations.noTransactionsYet,
-              style: const TextStyle(color: Colors.black54),
+              style: TextStyle(color: secondaryTextColor),
             ),
           ),
         ],
@@ -134,7 +142,11 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
       children: [
         Text(
           localizations.monthlyComparison,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w900,
+            color: textColor,
+          ),
         ),
         const SizedBox(height: 16),
         Container(
@@ -151,7 +163,7 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
                     barTouchData: BarTouchData(
                       enabled: true,
                       touchTooltipData: BarTouchTooltipData(
-                        getTooltipColor: (group) => Colors.white,
+                        getTooltipColor: (group) => isDark ? Colors.grey.shade800 : Colors.white,
                         tooltipRoundedRadius: 8,
                         tooltipPadding: const EdgeInsets.all(8),
                         tooltipMargin: 8,
@@ -192,8 +204,8 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
                             if (index == 0) {
                               return Text(
                                 _getMonthAbbreviation(previousMonth),
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: textColor,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -201,8 +213,8 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
                             } else if (index == 1) {
                               return Text(
                                 _getMonthAbbreviation(currentMonth),
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: textColor,
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -221,8 +233,8 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
                             if (value >= 1000) {
                               return Text(
                                 '\$${(value / 1000).toStringAsFixed(value >= 10000 ? 0 : 1)}k',
-                                style: const TextStyle(
-                                  color: Colors.black54,
+                                style: TextStyle(
+                                  color: secondaryTextColor,
                                   fontSize: 10,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -230,8 +242,8 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
                             }
                             return Text(
                               '\$${value.toStringAsFixed(0)}',
-                              style: const TextStyle(
-                                color: Colors.black54,
+                              style: TextStyle(
+                                color: secondaryTextColor,
                                 fontSize: 10,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -246,7 +258,7 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
                       horizontalInterval: yAxisInterval,
                       getDrawingHorizontalLine: (value) {
                         return FlLine(
-                          color: const Color(0xFFAAA6A6),
+                          color: isDark ? Colors.grey.shade700 : const Color(0xFFAAA6A6),
                           strokeWidth: 1,
                         );
                       },
@@ -254,7 +266,7 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
                     borderData: FlBorderData(
                       show: true,
                       border: Border.all(
-                        color: const Color(0xFFAAA6A6),
+                        color: isDark ? Colors.grey.shade700 : const Color(0xFFAAA6A6),
                         width: 1,
                       ),
                     ),
@@ -324,6 +336,10 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
   }
 
   Widget _buildLegendItem(String label, Color color) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : Colors.black87;
+    
     return Row(
       children: [
         Container(
@@ -334,9 +350,9 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
         const SizedBox(width: 8),
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 12,
-            color: Colors.black87,
+            color: textColor,
             fontWeight: FontWeight.w500,
           ),
         ),

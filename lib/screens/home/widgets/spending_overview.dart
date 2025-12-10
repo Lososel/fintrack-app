@@ -37,6 +37,10 @@ class _SpendingOverviewState extends State<SpendingOverview> {
   Widget build(BuildContext context) {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : Colors.black;
+    final secondaryTextColor = isDark ? Colors.grey.shade400 : Colors.black54;
     final spendingByCategory = SpendingCalculator.calculateSpendingByCategory(
       _transactionService.transactions,
     );
@@ -47,9 +51,10 @@ class _SpendingOverviewState extends State<SpendingOverview> {
         children: [
           Text(
             localizations.spendingOverview,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w900,
+              color: textColor,
             ),
           ),
           const SizedBox(height: 20),
@@ -58,7 +63,10 @@ class _SpendingOverviewState extends State<SpendingOverview> {
             children: [
               Text(
                 localizations.noExpensesYet,
-                style: const TextStyle(fontSize: 14, color: Colors.black54),
+                style: TextStyle(
+                  fontSize: 14,
+                  color: secondaryTextColor,
+                ),
               ),
             ],
           ),
@@ -74,7 +82,11 @@ class _SpendingOverviewState extends State<SpendingOverview> {
           children: [
             Text(
               localizations.spendingOverview,
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w900,
+                color: textColor,
+              ),
             ),
 
             GestureDetector(
@@ -89,9 +101,10 @@ class _SpendingOverviewState extends State<SpendingOverview> {
               },
               child: Text(
                 "${localizations.viewDetails} →",
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w400,
+                  color: textColor,
                 ),
               ),
             ),
@@ -137,6 +150,10 @@ class _SpendingOverviewState extends State<SpendingOverview> {
   }
 
   List<Widget> _buildLegend(List<CategorySpending> spendingByCategory) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : Colors.black;
+    
     return spendingByCategory.map((categorySpending) {
       final color = CategoryColors.getColor(categorySpending.category);
       return Padding(
@@ -152,9 +169,10 @@ class _SpendingOverviewState extends State<SpendingOverview> {
             Expanded(
               child: Text(
                 categorySpending.category,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
+                  color: textColor,
                 ),
               ),
             ),

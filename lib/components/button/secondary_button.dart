@@ -16,6 +16,10 @@ class SecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : Colors.black;
+    
     return Align(
       alignment: alignment,
       child: GestureDetector(
@@ -24,10 +28,10 @@ class SecondaryButton extends StatelessWidget {
           label,
           style:
               textStyle ??
-              const TextStyle(
+              TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w700,
-                color: Colors.black,
+                color: textColor,
               ),
         ),
       ),

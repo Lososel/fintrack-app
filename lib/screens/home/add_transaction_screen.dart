@@ -199,9 +199,12 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
   Widget build(BuildContext context) {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final theme = Theme.of(context);
+    final textColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
+    final iconColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
 
     return Scaffold(
-      backgroundColor: const Color(0xffF4F4F7),
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -212,7 +215,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+                    icon: Icon(Icons.arrow_back_ios, color: iconColor),
                     onPressed: () => Navigator.pop(context),
                   ),
                   const SizedBox(width: 8),
@@ -220,10 +223,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                     _originalTransaction != null
                         ? localizations.editTransaction
                         : localizations.addTransaction,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w900,
-                      color: Colors.black,
+                      color: textColor,
                     ),
                   ),
                 ],
@@ -247,7 +250,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                     children: [
                       Text(
                         localizations.amount,
-                        style: const TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: textColor,
+                        ),
                       ),
                       const SizedBox(height: 5),
                       AmountInputWithCurrency(
@@ -260,7 +266,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
                       Text(
                         localizations.category,
-                        style: const TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: textColor,
+                        ),
                       ),
                       const SizedBox(height: 5),
                       CategoryDropdown(
@@ -273,7 +282,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
                       Text(
                         localizations.description,
-                        style: const TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: textColor,
+                        ),
                       ),
                       const SizedBox(height: 5),
                       InputField(
@@ -285,7 +297,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
                       Text(
                         localizations.date,
-                        style: const TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: textColor,
+                        ),
                       ),
                       const SizedBox(height: 5),
                       DatePickerField(
@@ -297,7 +312,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
 
                       Text(
                         localizations.paymentMethod,
-                        style: const TextStyle(fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: textColor,
+                        ),
                       ),
                       const SizedBox(height: 5),
                       CategoryDropdown(

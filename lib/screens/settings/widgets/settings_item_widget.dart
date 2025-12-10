@@ -14,17 +14,23 @@ class SettingsItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final backgroundColor = isDark ? Colors.grey.shade800 : Colors.grey.shade200;
+    final textColor = isDark ? Colors.white : Colors.grey.shade800;
+    final iconColor = isDark ? Colors.grey.shade300 : Colors.grey.shade700;
+    
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         decoration: BoxDecoration(
-          color: Colors.grey.shade200,
+          color: backgroundColor,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           children: [
-            Icon(icon, size: 24, color: Colors.grey.shade700),
+            Icon(icon, size: 24, color: iconColor),
             const SizedBox(width: 16),
             Expanded(
               child: Text(
@@ -32,11 +38,11 @@ class SettingsItemWidget extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
-                  color: Colors.grey.shade800,
+                  color: textColor,
                 ),
               ),
             ),
-            Icon(Icons.chevron_right, size: 20, color: Colors.grey.shade600),
+            Icon(Icons.chevron_right, size: 20, color: iconColor),
           ],
         ),
       ),

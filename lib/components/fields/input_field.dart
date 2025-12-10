@@ -7,7 +7,7 @@ class InputField extends StatelessWidget {
   final bool readOnly;
   final Widget? suffixIcon;
   final VoidCallback? onTap;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
 
@@ -19,13 +19,22 @@ class InputField extends StatelessWidget {
     this.readOnly = false,
     this.onTap,
     this.suffixIcon,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor,
     this.keyboardType,
     this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final fieldBackgroundColor = backgroundColor ?? 
+        (isDark ? Colors.grey.shade800 : Colors.grey.shade200);
+    final textColor = isDark ? Colors.white : Colors.black;
+    final hintColor = isDark ? Colors.grey.shade400 : Colors.black54;
+    final borderColor = isDark ? Colors.grey.shade700 : Colors.black26;
+    final focusedBorderColor = isDark ? Colors.white : Colors.black;
+    
     return TextField(
       controller: controller,
       readOnly: readOnly,
@@ -33,27 +42,27 @@ class InputField extends StatelessWidget {
       enabled: true,
       obscureText: isPassword,
       keyboardType: keyboardType,
-      style: const TextStyle(fontSize: 16),
+      style: TextStyle(fontSize: 16, color: textColor),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(color: Colors.black54, fontSize: 16),
+        hintStyle: TextStyle(color: hintColor, fontSize: 16),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 18,
         ),
         filled: true,
-        fillColor: backgroundColor,
+        fillColor: fieldBackgroundColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
-          borderSide: const BorderSide(color: Colors.black26),
+          borderSide: BorderSide(color: borderColor),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
-          borderSide: const BorderSide(color: Colors.black26),
+          borderSide: BorderSide(color: borderColor),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
-          borderSide: const BorderSide(color: Colors.black),
+          borderSide: BorderSide(color: focusedBorderColor),
         ),
         suffixIcon: suffixIcon,
         errorText:

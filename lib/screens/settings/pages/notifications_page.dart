@@ -67,8 +67,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
 
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
+    final textColor = isDarkMode ? Colors.white : Colors.black;
+    final backgroundColor = theme.scaffoldBackgroundColor;
+    final iconColor = isDarkMode ? Colors.white : Colors.black;
+
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F9),
+      backgroundColor: backgroundColor,
       bottomNavigationBar: const HomeBottomNav(currentIndex: 3),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -80,17 +86,17 @@ class _NotificationsPageState extends State<NotificationsPage> {
               Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+                    icon: Icon(Icons.arrow_back_ios, color: iconColor),
                     onPressed: () => Navigator.pop(context),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       localizations.notifications,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w900,
-                        color: Colors.black,
+                        color: textColor,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -123,10 +129,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
               // Notification Types Section
               Text(
                 localizations.notificationTypes,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
-                  color: Colors.black,
+                  color: textColor,
                 ),
               ),
               const SizedBox(height: 16),
@@ -219,10 +225,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
     required bool value,
     required ValueChanged<bool> onChanged,
   }) {
+    final theme = Theme.of(context);
+    final cardColor = theme.cardColor;
+    final textColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
+    
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardColor,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -233,10 +243,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black,
+                    color: textColor,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -267,12 +277,16 @@ class _NotificationsPageState extends State<NotificationsPage> {
     required TimeOfDay time,
     required VoidCallback onTap,
   }) {
+    final theme = Theme.of(context);
+    final cardColor = theme.cardColor;
+    final textColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
+    
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: cardColor,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -289,10 +303,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
             const SizedBox(height: 8),
             Text(
               _formatTime(time),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: Colors.black,
+                color: textColor,
               ),
             ),
           ],

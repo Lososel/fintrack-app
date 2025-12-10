@@ -44,11 +44,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final recentTransactions = _transactionService.recentTransactions.take(5).toList();
     final allTransactions = _transactionService.transactions;
-
-    final userName = _userService.name ?? widget.name ?? "User";
+    final theme = Theme.of(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xfFF6F6F9),
+      backgroundColor: theme.scaffoldBackgroundColor,
       bottomNavigationBar: const HomeBottomNav(currentIndex: 0),
       body: SafeArea(
         child: SingleChildScrollView(

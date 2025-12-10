@@ -209,7 +209,7 @@ class _SwipeableTransactionItemState extends State<SwipeableTransactionItem>
           Transform.translate(
             offset: Offset(_dragOffset, 0),
             child: Container(
-              color: const Color(0xffF6F6F9),
+              color: Theme.of(context).scaffoldBackgroundColor,
               child: TransactionItem(transaction: widget.transaction),
             ),
           ),

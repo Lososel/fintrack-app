@@ -16,6 +16,12 @@ class AmountInputWithCurrency extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final buttonBackgroundColor = isDark ? Colors.grey.shade800 : Colors.grey.shade200;
+    final textColor = isDark ? Colors.white : Colors.black;
+    final borderColor = isDark ? Colors.grey.shade700 : Colors.black26;
+    
     return Row(
       children: [
         Expanded(
@@ -32,9 +38,9 @@ class AmountInputWithCurrency extends StatelessWidget {
             height: 56,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: buttonBackgroundColor,
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.black26),
+              border: Border.all(color: borderColor),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -42,13 +48,14 @@ class AmountInputWithCurrency extends StatelessWidget {
               children: [
                 Text(
                   selectedCurrency.symbol,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
+                    color: textColor,
                   ),
                 ),
                 const SizedBox(width: 4),
-                const Icon(Icons.keyboard_arrow_down, size: 20),
+                Icon(Icons.keyboard_arrow_down, size: 20, color: textColor),
               ],
             ),
           ),

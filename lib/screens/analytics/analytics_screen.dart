@@ -39,13 +39,15 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   Widget build(BuildContext context) {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final theme = Theme.of(context);
+    final textColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
     final totals = AnalyticsCalculator.calculatePeriodTotals(
       _transactionService.transactions,
       _selectedPeriod,
     );
 
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F9),
+      backgroundColor: theme.scaffoldBackgroundColor,
       bottomNavigationBar: const HomeBottomNav(currentIndex: 1),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -56,17 +58,18 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               const SizedBox(height: 16),
               Text(
                 localizations.analytics,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w900,
+                  color: textColor,
                 ),
               ),
               const SizedBox(height: 4),
               Text(
                 localizations.trackYourFinancialInsights,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
-                  color: Colors.black,
+                  color: textColor,
                   fontWeight: FontWeight.w400,
                 ),
               ),

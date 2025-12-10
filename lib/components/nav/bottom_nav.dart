@@ -41,6 +41,11 @@ class HomeBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final selectedColor = isDark ? Colors.white : Colors.black;
+    final unselectedColor = isDark ? Colors.grey.shade400 : Colors.grey;
+    
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       showSelectedLabels: false,
@@ -48,8 +53,8 @@ class HomeBottomNav extends StatelessWidget {
       elevation: 0,
       backgroundColor: Colors.transparent,
       currentIndex: currentIndex,
-      selectedItemColor: Colors.black,
-      unselectedItemColor: Colors.grey,
+      selectedItemColor: selectedColor,
+      unselectedItemColor: unselectedColor,
       onTap: (index) => _onItemTapped(context, index),
       items: const [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),

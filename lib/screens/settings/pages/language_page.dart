@@ -51,9 +51,12 @@ class _LanguagePageState extends State<LanguagePage> {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final currentLanguageCode = _languageService.currentLanguageCode;
+    final theme = Theme.of(context);
+    final textColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
+    final iconColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
 
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F9),
+      backgroundColor: theme.scaffoldBackgroundColor,
       bottomNavigationBar: const HomeBottomNav(currentIndex: 3),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -65,17 +68,17 @@ class _LanguagePageState extends State<LanguagePage> {
               Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+                    icon: Icon(Icons.arrow_back_ios, color: iconColor),
                     onPressed: () => Navigator.pop(context),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       localizations.language,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w900,
-                        color: Colors.black,
+                        color: textColor,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),

@@ -12,13 +12,21 @@ class RecentTransactions extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : Colors.black;
+    final secondaryTextColor = isDark ? Colors.grey.shade400 : Colors.black54;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           localizations.recentTransactions,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w800,
+            color: textColor,
+          ),
         ),
         const SizedBox(height: 5),
         if (transactions.isEmpty)
@@ -26,7 +34,7 @@ class RecentTransactions extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Text(
               localizations.noTransactionsYet,
-              style: const TextStyle(color: Colors.black54),
+              style: TextStyle(color: secondaryTextColor),
             ),
           )
         else

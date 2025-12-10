@@ -16,12 +16,18 @@ class LanguageOptionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final backgroundColor = isDark ? Colors.grey.shade800 : Colors.grey.shade200;
+    final textColor = isDark ? Colors.white : Colors.grey.shade800;
+    final checkColor = isDark ? Colors.white : Colors.black;
+    
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         decoration: BoxDecoration(
-          color: Colors.grey.shade200,
+          color: backgroundColor,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -32,11 +38,11 @@ class LanguageOptionWidget extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
-                  color: Colors.grey.shade800,
+                  color: textColor,
                 ),
               ),
             ),
-            if (isSelected) Icon(Icons.check, size: 20, color: Colors.black),
+            if (isSelected) Icon(Icons.check, size: 20, color: checkColor),
           ],
         ),
       ),
