@@ -22,4 +22,3 @@ class CategoryColors {
     return categories.map((cat) => getColor(cat)).toList();
   }
 }
-

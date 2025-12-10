@@ -6,8 +6,9 @@ class SpendingEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
-    
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -21,14 +22,11 @@ class SpendingEmptyState extends StatelessWidget {
           children: [
             Text(
               localizations.noExpensesYet,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.black54,
-              ),
+              style: const TextStyle(fontSize: 14, color: Colors.black54),
             ),
           ],
         ),
       ],
     );
-    }
+  }
 }

@@ -6,10 +6,7 @@ import 'package:fintrack_app/screens/settings/settings_screen.dart';
 class HomeBottomNav extends StatelessWidget {
   final int currentIndex;
 
-  const HomeBottomNav({
-    super.key,
-    this.currentIndex = 0,
-  });
+  const HomeBottomNav({super.key, this.currentIndex = 0});
 
   void _onItemTapped(BuildContext context, int index) {
     if (index == currentIndex) return; // Already on this screen
@@ -19,18 +16,14 @@ class HomeBottomNav extends StatelessWidget {
         // Home - navigate to home screen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
-          ),
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
         );
         break;
       case 1:
         // Analytics - navigate to analytics screen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => const AnalyticsScreen(),
-          ),
+          MaterialPageRoute(builder: (context) => const AnalyticsScreen()),
         );
         break;
       case 2:
@@ -40,9 +33,7 @@ class HomeBottomNav extends StatelessWidget {
         // Settings - navigate to settings screen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => const SettingsScreen(),
-          ),
+          MaterialPageRoute(builder: (context) => const SettingsScreen()),
         );
         break;
     }

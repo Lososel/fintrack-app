@@ -34,7 +34,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _cardService.addListener(_refresh);
     _nameController = TextEditingController(text: _userService.name ?? "");
     _emailController = TextEditingController(text: _userService.email ?? "");
-    
+
     // Load profile image if exists
     if (_userService.profileImagePath != null) {
       _profileImage = File(_userService.profileImagePath!);
@@ -77,12 +77,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
         });
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error picking image: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error picking image: $e')));
     }
   }
-
 
   Map<String, double> _calculateTotals() {
     double income = 0;
@@ -96,17 +95,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
       }
     }
 
-    return {
-      'income': income,
-      'expense': expense,
-      'total': income - expense,
-    };
+    return {'income': income, 'expense': expense, 'total': income - expense};
   }
 
   void _saveProfile() {
     final name = _nameController.text.trim();
     final email = _emailController.text.trim();
-    
+
     if (name.isNotEmpty && email.isNotEmpty) {
       _userService.setUser(name, email);
     }
@@ -114,7 +109,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   void _handleLogout() {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -142,7 +138,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final totals = _calculateTotals();
     final totalBalance = totals['total']!;
 
@@ -159,7 +156,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.black),
+                    icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
                     onPressed: () {
                       _saveProfile();
                     },
@@ -262,11 +259,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: const BorderSide(color: Colors.black26),
+                              borderSide: const BorderSide(
+                                color: Colors.black26,
+                              ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: const BorderSide(color: Colors.black26),
+                              borderSide: const BorderSide(
+                                color: Colors.black26,
+                              ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -297,11 +298,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             fillColor: Colors.white,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: const BorderSide(color: Colors.black26),
+                              borderSide: const BorderSide(
+                                color: Colors.black26,
+                              ),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: const BorderSide(color: Colors.black26),
+                              borderSide: const BorderSide(
+                                color: Colors.black26,
+                              ),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -366,21 +371,23 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
               const SizedBox(height: 16),
               // Bank Cards List
-              ..._cardService.cards.map((card) => Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: BankCardWidget(
-                      card: card,
-                      backgroundColor: Colors.grey.shade200,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditCardPage(card: card),
-                          ),
-                        );
-                      },
-                    ),
-                  )),
+              ..._cardService.cards.map(
+                (card) => Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: BankCardWidget(
+                    card: card,
+                    backgroundColor: Colors.grey.shade200,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditCardPage(card: card),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
               const SizedBox(height: 20),
               // Action Buttons
               SizedBox(

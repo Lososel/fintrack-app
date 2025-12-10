@@ -38,7 +38,10 @@ class BankCardWidget extends StatelessWidget {
                         card.assetPath,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
-                          return const Icon(Icons.account_balance, color: Colors.grey);
+                          return const Icon(
+                            Icons.account_balance,
+                            color: Colors.grey,
+                          );
                         },
                       ),
                     )
@@ -75,10 +78,7 @@ class BankCardWidget extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     card.category,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    ),
+                    style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                 ],
               ),
@@ -101,4 +101,3 @@ class BankCardWidget extends StatelessWidget {
     );
   }
 }
-

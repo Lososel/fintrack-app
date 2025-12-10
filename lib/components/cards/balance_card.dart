@@ -19,7 +19,8 @@ class BalanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final displayTitle = title ?? localizations.totalBalance;
     final savingsPercentage = income > 0 ? (totalBalance / income) * 100 : 0.0;
 
@@ -60,7 +61,9 @@ class BalanceCard extends StatelessWidget {
                       value: savingsPercentage / 100,
                       minHeight: 8,
                       backgroundColor: Colors.white.withOpacity(0.2),
-                      valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
+                      valueColor: const AlwaysStoppedAnimation<Color>(
+                        Colors.white,
+                      ),
                     ),
                   ),
                 ),

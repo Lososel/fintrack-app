@@ -6,14 +6,11 @@ class CardItemWidget extends StatelessWidget {
   final CardModel card;
   final VoidCallback onTap;
 
-  const CardItemWidget({
-    super.key,
-    required this.card,
-    required this.onTap,
-  });
+  const CardItemWidget({super.key, required this.card, required this.onTap});
 
   String _getAccountTypeDisplay(String accountType, BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     switch (accountType) {
       case "Debit":
         return localizations.debitCard;
@@ -30,7 +27,8 @@ class CardItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -164,4 +162,3 @@ class CardItemWidget extends StatelessWidget {
     );
   }
 }
-

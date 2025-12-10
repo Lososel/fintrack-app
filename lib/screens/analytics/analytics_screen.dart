@@ -37,7 +37,8 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final totals = AnalyticsCalculator.calculatePeriodTotals(
       _transactionService.transactions,
       _selectedPeriod,
@@ -55,7 +56,10 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               const SizedBox(height: 16),
               Text(
                 localizations.analytics,
-                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
               const SizedBox(height: 4),
               Text(
@@ -84,7 +88,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 showSavingsPercentage: true,
               ),
               const SizedBox(height: 30),
-              
+
               IncomeExpenseTrendChart(
                 transactions: _transactionService.transactions,
                 selectedPeriod: _selectedPeriod,
@@ -99,4 +103,3 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     );
   }
 }
-

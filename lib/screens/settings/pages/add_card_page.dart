@@ -14,12 +14,12 @@ class AddCardPage extends StatefulWidget {
 class _AddCardPageState extends State<AddCardPage> {
   final CardService _cardService = CardService();
   final _formKey = GlobalKey<FormState>();
-  
+
   final TextEditingController _cardNameController = TextEditingController();
   final TextEditingController _lastDigitsController = TextEditingController();
   final TextEditingController _balanceController = TextEditingController();
   final TextEditingController _purposeController = TextEditingController();
-  
+
   String _selectedAccountType = "Debit";
   final List<String> _accountTypes = ["Debit", "Credit", "Savings", "Checking"];
 
@@ -52,7 +52,8 @@ class _AddCardPageState extends State<AddCardPage> {
   }
 
   String? _validateCardName(String? value, BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     if (value == null || value.trim().isEmpty) {
       return localizations.cardNameRequired;
     }
@@ -60,18 +61,21 @@ class _AddCardPageState extends State<AddCardPage> {
   }
 
   String? _validateLastDigits(String? value, BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     if (value == null || value.trim().isEmpty) {
       return localizations.last4DigitsRequiredError;
     }
-    if (value.trim().length != 4 || !RegExp(r'^\d{4}$').hasMatch(value.trim())) {
+    if (value.trim().length != 4 ||
+        !RegExp(r'^\d{4}$').hasMatch(value.trim())) {
       return localizations.pleaseEnterExactly4Digits;
     }
     return null;
   }
 
   String? _validateBalance(String? value, BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     if (value == null || value.trim().isEmpty) {
       return localizations.balanceRequired;
     }
@@ -82,7 +86,8 @@ class _AddCardPageState extends State<AddCardPage> {
   }
 
   String? _validatePurpose(String? value, BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     if (value == null || value.trim().isEmpty) {
       return localizations.primaryPurposeRequiredError;
     }
@@ -95,18 +100,19 @@ class _AddCardPageState extends State<AddCardPage> {
       final lastDigits = _lastDigitsController.text.trim();
       final balance = double.tryParse(_balanceController.text.trim()) ?? 0.0;
       final purpose = _purposeController.text.trim();
-      
+
       final bankName = _extractBankName(cardName);
       final assetPath = _getAssetPathForBank(cardName);
-      
-      final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+
+      final localizations =
+          AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
       final accountTypeDisplay = _selectedAccountType == "Debit"
           ? localizations.debitCard
           : _selectedAccountType == "Credit"
-              ? localizations.creditCard
-              : _selectedAccountType == "Savings"
-                  ? localizations.savingsAccount
-                  : localizations.checkingAccount;
+          ? localizations.creditCard
+          : _selectedAccountType == "Savings"
+          ? localizations.savingsAccount
+          : localizations.checkingAccount;
 
       final newCard = CardModel(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -120,22 +126,23 @@ class _AddCardPageState extends State<AddCardPage> {
       );
 
       _cardService.addCard(newCard);
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(localizations.cardAddedSuccessfully),
           duration: const Duration(seconds: 2),
         ),
       );
-      
+
       Navigator.pop(context);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
-    
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+
     return Scaffold(
       backgroundColor: const Color(0xffF6F6F9),
       bottomNavigationBar: const HomeBottomNav(currentIndex: 3),
@@ -151,7 +158,7 @@ class _AddCardPageState extends State<AddCardPage> {
                 Row(
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.black),
+                      icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
                       onPressed: () => Navigator.pop(context),
                     ),
                     const SizedBox(width: 8),
@@ -183,7 +190,10 @@ class _AddCardPageState extends State<AddCardPage> {
                   controller: _cardNameController,
                   decoration: InputDecoration(
                     hintText: localizations.egKaspiGold,
-                    hintStyle: const TextStyle(color: Colors.black54, fontSize: 16),
+                    hintStyle: const TextStyle(
+                      color: Colors.black54,
+                      fontSize: 16,
+                    ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 18,
@@ -221,7 +231,10 @@ class _AddCardPageState extends State<AddCardPage> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     hintText: localizations.eg1234,
-                    hintStyle: const TextStyle(color: Colors.black54, fontSize: 16),
+                    hintStyle: const TextStyle(
+                      color: Colors.black54,
+                      fontSize: 16,
+                    ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 18,
@@ -323,10 +336,15 @@ class _AddCardPageState extends State<AddCardPage> {
                 const SizedBox(height: 8),
                 TextFormField(
                   controller: _balanceController,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  keyboardType: const TextInputType.numberWithOptions(
+                    decimal: true,
+                  ),
                   decoration: InputDecoration(
                     hintText: "0.00",
-                    hintStyle: const TextStyle(color: Colors.black54, fontSize: 16),
+                    hintStyle: const TextStyle(
+                      color: Colors.black54,
+                      fontSize: 16,
+                    ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 18,
@@ -363,7 +381,10 @@ class _AddCardPageState extends State<AddCardPage> {
                   controller: _purposeController,
                   decoration: InputDecoration(
                     hintText: localizations.egDailySpending,
-                    hintStyle: const TextStyle(color: Colors.black54, fontSize: 16),
+                    hintStyle: const TextStyle(
+                      color: Colors.black54,
+                      fontSize: 16,
+                    ),
                     contentPadding: const EdgeInsets.symmetric(
                       horizontal: 20,
                       vertical: 18,

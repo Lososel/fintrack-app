@@ -7,7 +7,7 @@ class DateFormatter {
       'Thursday',
       'Friday',
       'Saturday',
-      'Sunday'
+      'Sunday',
     ];
     final months = [
       'January',
@@ -21,9 +21,8 @@ class DateFormatter {
       'September',
       'October',
       'November',
-      'December'
+      'December',
     ];
     return '${weekdays[date.weekday - 1]}, ${months[date.month - 1]} ${date.day}, ${date.year}';
   }
 }
-

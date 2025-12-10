@@ -32,7 +32,8 @@ class PaymentMethodModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     return AppModal(
       title: localizations.selectPaymentMethod,
       child: ConstrainedBox(

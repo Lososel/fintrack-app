@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fintrack_app/components/button/primary_button.dart';
 import 'package:fintrack_app/components/button/secondary_button.dart';
+import 'package:fintrack_app/utils/app_localizations.dart';
 
 class TransactionActionButtons extends StatelessWidget {
   final VoidCallback onEdit;
@@ -14,20 +15,15 @@ class TransactionActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    
     return Column(
       children: [
-        PrimaryButton(
-          label: "Edit",
-          onPressed: onEdit,
-        ),
+        PrimaryButton(label: localizations.edit, onPressed: onEdit),
         const SizedBox(height: 16),
-        SecondaryButton(
-          label: "Delete",
-          onPressed: onDelete,
-
-        ),
+        SecondaryButton(label: localizations.delete, onPressed: onDelete),
       ],
     );
   }
 }
-

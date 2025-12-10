@@ -60,4 +60,3 @@ class TransactionDetailsCard extends StatelessWidget {
     );
   }
 }
-

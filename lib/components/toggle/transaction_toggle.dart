@@ -51,11 +51,15 @@ class TransactionToggle extends StatelessWidget {
                       child: Center(
                         child: Builder(
                           builder: (context) {
-                            final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+                            final localizations =
+                                AppLocalizations.of(context) ??
+                                AppLocalizations(const Locale('en'));
                             return AnimatedDefaultTextStyle(
                               duration: duration,
                               style: TextStyle(
-                                color: isExpense ? Colors.white : Color(0xff9CA3AF),
+                                color: isExpense
+                                    ? Colors.white
+                                    : Color(0xff9CA3AF),
                                 fontSize: 15,
                                 fontWeight: FontWeight.w900,
                               ),
@@ -73,7 +77,9 @@ class TransactionToggle extends StatelessWidget {
                       child: Center(
                         child: Builder(
                           builder: (context) {
-                            final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+                            final localizations =
+                                AppLocalizations.of(context) ??
+                                AppLocalizations(const Locale('en'));
                             return AnimatedDefaultTextStyle(
                               duration: duration,
                               style: TextStyle(

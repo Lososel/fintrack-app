@@ -5,10 +5,7 @@ import 'package:fintrack_app/models/transaction_model.dart';
 class BalanceCardSection extends StatelessWidget {
   final List<TransactionModel> transactions;
 
-  const BalanceCardSection({
-    super.key,
-    required this.transactions,
-  });
+  const BalanceCardSection({super.key, required this.transactions});
 
   @override
   Widget build(BuildContext context) {

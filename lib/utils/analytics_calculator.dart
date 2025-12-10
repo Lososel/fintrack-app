@@ -30,7 +30,9 @@ class AnalyticsCalculator {
     final endDate = DateTime(now.year, now.month, now.day, 23, 59, 59);
 
     final filteredTransactions = transactions.where((transaction) {
-      return transaction.date.isAfter(startDate.subtract(const Duration(days: 1))) &&
+      return transaction.date.isAfter(
+            startDate.subtract(const Duration(days: 1)),
+          ) &&
           transaction.date.isBefore(endDate.add(const Duration(days: 1)));
     }).toList();
 
@@ -45,11 +47,6 @@ class AnalyticsCalculator {
       }
     }
 
-    return {
-      'income': income,
-      'expense': expense,
-      'total': income - expense,
-    };
+    return {'income': income, 'expense': expense, 'total': income - expense};
   }
 }
-

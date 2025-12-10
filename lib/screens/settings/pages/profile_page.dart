@@ -54,22 +54,22 @@ class _ProfilePageState extends State<ProfilePage> {
       }
     }
 
-    return {
-      'income': income,
-      'expense': expense,
-      'total': income - expense,
-    };
+    return {'income': income, 'expense': expense, 'total': income - expense};
   }
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final totals = _calculateTotals();
     final transactionCount = _transactionService.transactions.length;
     final cards = _cardService.cards;
-    
+
     // Calculate total balance from all cards (sum of all card balances)
-    final totalBalance = cards.fold<double>(0.0, (sum, card) => sum + card.balance);
+    final totalBalance = cards.fold<double>(
+      0.0,
+      (sum, card) => sum + card.balance,
+    );
 
     return Scaffold(
       backgroundColor: const Color(0xffF6F6F9),
@@ -84,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.black),
+                    icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
                     onPressed: () => Navigator.pop(context),
                   ),
                   const SizedBox(width: 8),
@@ -160,7 +160,10 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.edit_outlined, color: Colors.black),
+                      icon: const Icon(
+                        Icons.edit_outlined,
+                        color: Colors.black,
+                      ),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -179,7 +182,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 12,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(12),
@@ -209,7 +215,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 12,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(12),
@@ -239,7 +248,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 12,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(12),
@@ -310,20 +322,22 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 20),
               // Bank Cards List
-              ...cards.map((card) => Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: BankCardWidget(
-                      card: card,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditCardPage(card: card),
-                          ),
-                        );
-                      },
-                    ),
-                  )),
+              ...cards.map(
+                (card) => Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: BankCardWidget(
+                    card: card,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditCardPage(card: card),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
               const SizedBox(height: 20),
               // Action Buttons
               SizedBox(

@@ -42,11 +42,13 @@ class SpendingCalculator {
 
     // Convert to list and calculate percentages
     final List<CategorySpending> spendingByCategory = categoryTotals.entries
-        .map((entry) => CategorySpending(
-              category: entry.key,
-              amount: entry.value,
-              percentage: (entry.value / totalSpending) * 100,
-            ))
+        .map(
+          (entry) => CategorySpending(
+            category: entry.key,
+            amount: entry.value,
+            percentage: (entry.value / totalSpending) * 100,
+          ),
+        )
         .toList();
 
     // Sort by amount descending
@@ -55,4 +57,3 @@ class SpendingCalculator {
     return spendingByCategory;
   }
 }
-

@@ -38,11 +38,7 @@ class CategoryItem extends StatelessWidget {
               color: color.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(
-              icon,
-              color: color,
-              size: 24,
-            ),
+            child: Icon(icon, color: color, size: 24),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -59,10 +55,7 @@ class CategoryItem extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   "${percentage.toStringAsFixed(1)}% of total",
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Colors.black54,
-                  ),
+                  style: const TextStyle(fontSize: 13, color: Colors.black54),
                 ),
               ],
             ),
@@ -103,4 +96,3 @@ class CategoryItem extends StatelessWidget {
     );
   }
 }
-

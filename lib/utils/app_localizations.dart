@@ -15,6 +15,7 @@ class AppLocalizations {
   // Translation maps
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
+      'allTransactions': 'All Transactions',
       'settings': 'Settings',
       'manageYourPreferences': 'Manage your preferences',
       'profile': 'Profile',
@@ -60,6 +61,14 @@ class AppLocalizations {
       'income': 'Income',
       'expense': 'Expense',
       'addTransaction': 'Add Transaction',
+      'editTransaction': 'Edit Transaction',
+      'transactionDetails': 'Transaction Details',
+      'transactionNotFound': 'Transaction not found',
+      'edit': 'Edit',
+      'delete': 'Delete',
+      'deleteTransaction': 'Delete Transaction',
+      'deleteTransactionConfirmation': 'Are you sure you want to delete this transaction?',
+      'transactionDeleted': 'Transaction deleted successfully',
       'viewAll': 'View all',
       'spendingOverview': 'Spending Overview',
       'monthlyComparison': 'Monthly Comparison',
@@ -131,11 +140,13 @@ class AppLocalizations {
       'cardUpdatedSuccessfully': 'Card updated successfully',
       'areYouSureYouWantToLogout': 'Are you sure you want to logout?',
       'transactions': 'Transactions',
+      'allTransactions': 'All Transactions',
       'selectCurrency': 'Select Currency',
       'selectCategory': 'Select Category',
       'selectPaymentMethod': 'Select Payment Method',
     },
     'ru': {
+      'allTransactions': 'Все транзакции',
       'settings': 'Настройки',
       'manageYourPreferences': 'Управляйте своими настройками',
       'profile': 'Профиль',
@@ -181,6 +192,14 @@ class AppLocalizations {
       'income': 'Доход',
       'expense': 'Расход',
       'addTransaction': 'Добавить транзакцию',
+      'editTransaction': 'Редактировать транзакцию',
+      'transactionDetails': 'Детали транзакции',
+      'transactionNotFound': 'Транзакция не найдена',
+      'edit': 'Редактировать',
+      'delete': 'Удалить',
+      'deleteTransaction': 'Удалить транзакцию',
+      'deleteTransactionConfirmation': 'Вы уверены, что хотите удалить эту транзакцию?',
+      'transactionDeleted': 'Транзакция успешно удалена',
       'viewAll': 'Посмотреть все',
       'spendingOverview': 'Обзор расходов',
       'monthlyComparison': 'Месячное сравнение',
@@ -252,11 +271,13 @@ class AppLocalizations {
       'cardUpdatedSuccessfully': 'Карта успешно обновлена',
       'areYouSureYouWantToLogout': 'Вы уверены, что хотите выйти?',
       'transactions': 'Транзакции',
+      'allTransactions': 'Все транзакции',
       'selectCurrency': 'Выберите валюту',
       'selectCategory': 'Выберите категорию',
       'selectPaymentMethod': 'Выберите способ оплаты',
     },
     'kk': {
+      'allTransactions': 'Барлық транзакциялар',
       'settings': 'Баптаулар',
       'manageYourPreferences': 'Баптауларыңызды басқарыңыз',
       'profile': 'Профиль',
@@ -302,6 +323,14 @@ class AppLocalizations {
       'income': 'Кіріс',
       'expense': 'Шығын',
       'addTransaction': 'Транзакция қосу',
+      'editTransaction': 'Транзакцияны өңдеу',
+      'transactionDetails': 'Транзакция мәліметтері',
+      'transactionNotFound': 'Транзакция табылмады',
+      'edit': 'Өңдеу',
+      'delete': 'Жою',
+      'deleteTransaction': 'Транзакцияны жою',
+      'deleteTransactionConfirmation': 'Сіз бұл транзакцияны жойғыңыз келетініне сенімдісіз бе?',
+      'transactionDeleted': 'Транзакция сәтті жойылды',
       'viewAll': 'Барлығын көру',
       'spendingOverview': 'Шығындарға шолу',
       'monthlyComparison': 'Айлық салыстыру',
@@ -323,7 +352,8 @@ class AppLocalizations {
       'manageYourMoneyWisely': 'Ақшаңызды дана басқарыңыз',
       'emailAddress': 'Электрондық пошта мекенжайы',
       'password': 'Құпия сөз',
-      'pleaseEnterEmailAndPassword': 'Электрондық пошта мен құпия сөзді енгізіңіз',
+      'pleaseEnterEmailAndPassword':
+          'Электрондық пошта мен құпия сөзді енгізіңіз',
       'createAccount': 'Тіркелгі құру',
       'createAnAccount': 'Тіркелгі құру',
       'fullName': 'Толық аты',
@@ -373,6 +403,7 @@ class AppLocalizations {
       'cardUpdatedSuccessfully': 'Карта сәтті жаңартылды',
       'areYouSureYouWantToLogout': 'Шынымен шығуды қалайсыз ба?',
       'transactions': 'Транзакциялар',
+      'allTransactions': 'Барлық транзакциялар',
       'selectCurrency': 'Валютаны таңдаңыз',
       'selectCategory': 'Категорияны таңдаңыз',
       'selectPaymentMethod': 'Төлем әдісін таңдаңыз',
@@ -399,7 +430,8 @@ class AppLocalizations {
   String get goodAfternoon => translate('goodAfternoon');
   String get goodEvening => translate('goodEvening');
   String get goodNight => translate('goodNight');
-  String get yourPersonalFinanceManager => translate('yourPersonalFinanceManager');
+  String get yourPersonalFinanceManager =>
+      translate('yourPersonalFinanceManager');
   String get home => translate('home');
   String get analytics => translate('analytics');
   String get budget => translate('budget');
@@ -428,6 +460,14 @@ class AppLocalizations {
   String get income => translate('income');
   String get expense => translate('expense');
   String get addTransaction => translate('addTransaction');
+  String get editTransaction => translate('editTransaction');
+  String get transactionDetails => translate('transactionDetails');
+  String get transactionNotFound => translate('transactionNotFound');
+  String get edit => translate('edit');
+  String get delete => translate('delete');
+  String get deleteTransaction => translate('deleteTransaction');
+  String get deleteTransactionConfirmation => translate('deleteTransactionConfirmation');
+  String get transactionDeleted => translate('transactionDeleted');
   String get viewAll => translate('viewAll');
   String get spendingOverview => translate('spendingOverview');
   String get monthlyComparison => translate('monthlyComparison');
@@ -438,7 +478,8 @@ class AppLocalizations {
   String get incomeExpenseTrend => translate('incomeExpenseTrend');
   String get expensesBreakdown => translate('expensesBreakdown');
   String get user => translate('user');
-  String get trackYourFinancialInsights => translate('trackYourFinancialInsights');
+  String get trackYourFinancialInsights =>
+      translate('trackYourFinancialInsights');
   String get totalSavings => translate('totalSavings');
   String get day => translate('day');
   String get week => translate('week');
@@ -448,7 +489,8 @@ class AppLocalizations {
   String get manageYourMoneyWisely => translate('manageYourMoneyWisely');
   String get emailAddress => translate('emailAddress');
   String get password => translate('password');
-  String get pleaseEnterEmailAndPassword => translate('pleaseEnterEmailAndPassword');
+  String get pleaseEnterEmailAndPassword =>
+      translate('pleaseEnterEmailAndPassword');
   String get createAccount => translate('createAccount');
   String get createAnAccount => translate('createAnAccount');
   String get fullName => translate('fullName');
@@ -467,10 +509,12 @@ class AppLocalizations {
   String get egDailySpending => translate('egDailySpending');
   String get cardNameRequired => translate('cardNameRequired');
   String get last4DigitsRequiredError => translate('last4DigitsRequiredError');
-  String get pleaseEnterExactly4Digits => translate('pleaseEnterExactly4Digits');
+  String get pleaseEnterExactly4Digits =>
+      translate('pleaseEnterExactly4Digits');
   String get balanceRequired => translate('balanceRequired');
   String get pleaseEnterValidNumber => translate('pleaseEnterValidNumber');
-  String get primaryPurposeRequiredError => translate('primaryPurposeRequiredError');
+  String get primaryPurposeRequiredError =>
+      translate('primaryPurposeRequiredError');
   String get cardAddedSuccessfully => translate('cardAddedSuccessfully');
   String get editCard => translate('editCard');
   String get summary => translate('summary');
@@ -496,13 +540,16 @@ class AppLocalizations {
   String get checkingAccount => translate('checkingAccount');
   String get languageChangedTo => translate('languageChangedTo');
   String get cardUpdatedSuccessfully => translate('cardUpdatedSuccessfully');
-  String get areYouSureYouWantToLogout => translate('areYouSureYouWantToLogout');
+  String get areYouSureYouWantToLogout =>
+      translate('areYouSureYouWantToLogout');
   String get transactions => translate('transactions');
+  String get allTransactions => translate('allTransactions');
   String get selectCurrency => translate('selectCurrency');
   String get selectPaymentMethod => translate('selectPaymentMethod');
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override

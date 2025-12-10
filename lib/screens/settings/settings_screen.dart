@@ -35,8 +35,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
-    
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+
     return Scaffold(
       backgroundColor: const Color(0xffF6F6F9),
       bottomNavigationBar: const HomeBottomNav(currentIndex: 3),

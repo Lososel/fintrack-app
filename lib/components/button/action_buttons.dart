@@ -13,8 +13,9 @@ class ActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
-    
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+
     return Row(
       children: [
         Expanded(

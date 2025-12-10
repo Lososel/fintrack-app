@@ -17,8 +17,9 @@ class CreateAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
-    
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -57,7 +58,10 @@ class CreateAccountScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 40),
 
-                      InputField(hint: localizations.fullName, controller: nameController),
+                      InputField(
+                        hint: localizations.fullName,
+                        controller: nameController,
+                      ),
                       const SizedBox(height: 16),
 
                       InputField(

@@ -24,11 +24,7 @@ class SettingsItemWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(
-              icon,
-              size: 24,
-              color: Colors.grey.shade700,
-            ),
+            Icon(icon, size: 24, color: Colors.grey.shade700),
             const SizedBox(width: 16),
             Expanded(
               child: Text(
@@ -40,15 +36,10 @@ class SettingsItemWidget extends StatelessWidget {
                 ),
               ),
             ),
-            Icon(
-              Icons.chevron_right,
-              size: 20,
-              color: Colors.grey.shade600,
-            ),
+            Icon(Icons.chevron_right, size: 20, color: Colors.grey.shade600),
           ],
         ),
       ),
     );
   }
 }
-

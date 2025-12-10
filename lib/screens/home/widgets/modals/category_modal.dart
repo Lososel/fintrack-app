@@ -17,7 +17,8 @@ class CategorySelectModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final localizations =
+        AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     return AppModal(
       title: localizations.selectCategory,
       child: ConstrainedBox(
