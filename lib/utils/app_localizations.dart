@@ -204,6 +204,16 @@ class AppLocalizations {
       'aboutDescription': 'Your trusted companion for managing personal finances and achieving financial freedom.',
       'madeWithLove': 'Made with Love',
       'github': 'GitHub',
+      'errorTitle': 'Oops! Something went wrong',
+      'errorMessage': 'We encountered an unexpected error. Please try again later.',
+      'noConnectionTitle': 'No Internet Connection',
+      'noConnectionMessage': 'Please check your internet connection and try again.',
+      'retry': 'Retry',
+      'searchTransactions': 'Search transactions...',
+      'searchHint': 'Search by title, category, description, or amount',
+      'noSearchResults': 'No results found',
+      'tryDifferentKeywords': 'Try different keywords or check your spelling',
+      'searchResultsCount': 'Found {count} result(s)',
     },
     'ru': {
       'allTransactions': 'Все транзакции',
@@ -395,6 +405,16 @@ class AppLocalizations {
       'aboutDescription': 'Ваш надежный помощник в управлении личными финансами и достижении финансовой свободы.',
       'madeWithLove': 'Сделано с любовью',
       'github': 'GitHub',
+      'errorTitle': 'Упс! Что-то пошло не так',
+      'errorMessage': 'Произошла непредвиденная ошибка. Пожалуйста, попробуйте позже.',
+      'noConnectionTitle': 'Нет подключения к интернету',
+      'noConnectionMessage': 'Пожалуйста, проверьте подключение к интернету и попробуйте снова.',
+      'retry': 'Повторить',
+      'searchTransactions': 'Поиск транзакций...',
+      'searchHint': 'Поиск по названию, категории, описанию или сумме',
+      'noSearchResults': 'Результаты не найдены',
+      'tryDifferentKeywords': 'Попробуйте другие ключевые слова или проверьте правописание',
+      'searchResultsCount': 'Найдено результатов: {count}',
     },
     'kk': {
       'allTransactions': 'Барлық транзакциялар',
@@ -587,6 +607,16 @@ class AppLocalizations {
       'aboutDescription': 'Жеке қаржыны басқару және қаржылық еркіндікке қол жеткізу үшін сенімді серіктесіңіз.',
       'madeWithLove': 'Махаббатпен жасалған',
       'github': 'GitHub',
+      'errorTitle': 'Ой! Бір нәрсе дұрыс болмады',
+      'errorMessage': 'Күтпеген қате орын алды. Кейінірек қайталап көріңіз.',
+      'noConnectionTitle': 'Интернет байланысы жоқ',
+      'noConnectionMessage': 'Интернет байланысыңызды тексеріп, қайталап көріңіз.',
+      'retry': 'Қайталау',
+      'searchTransactions': 'Транзакцияларды іздеу...',
+      'searchHint': 'Атау, категория, сипаттама немесе сома бойынша іздеу',
+      'noSearchResults': 'Нәтижелер табылмады',
+      'tryDifferentKeywords': 'Басқа кілт сөздерді пайдаланып көріңіз немесе орфографияны тексеріңіз',
+      'searchResultsCount': 'Табылған нәтижелер: {count}',
     },
   };
 
@@ -790,6 +820,16 @@ class AppLocalizations {
   String get aboutDescription => translate('aboutDescription');
   String get madeWithLove => translate('madeWithLove');
   String get github => translate('github');
+  String get errorTitle => translate('errorTitle');
+  String get errorMessage => translate('errorMessage');
+  String get noConnectionTitle => translate('noConnectionTitle');
+  String get noConnectionMessage => translate('noConnectionMessage');
+  String get retry => translate('retry');
+  String get searchTransactions => translate('searchTransactions');
+  String get searchHint => translate('searchHint');
+  String get noSearchResults => translate('noSearchResults');
+  String get tryDifferentKeywords => translate('tryDifferentKeywords');
+  String searchResultsCount(int count) => translate('searchResultsCount').replaceAll('{count}', count.toString());
 }
 
 class _AppLocalizationsDelegate

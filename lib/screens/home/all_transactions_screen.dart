@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fintrack_app/components/transaction/swipeable_transaction_item.dart';
 import 'package:fintrack_app/models/transaction_model.dart';
 import 'package:fintrack_app/screens/analytics/widgets/time_period_selector.dart';
+import 'package:fintrack_app/screens/search/search_results_screen.dart';
 import 'package:fintrack_app/services/transaction_service.dart';
 import 'package:fintrack_app/utils/app_localizations.dart';
 
@@ -93,13 +94,26 @@ class _AllTransactionsScreenState extends State<AllTransactionsScreen> {
                         onPressed: () => Navigator.pop(context),
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        localizations.allTransactions,
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.black,
+                      Expanded(
+                        child: Text(
+                          localizations.allTransactions,
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.black,
+                          ),
                         ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.search, color: Colors.black),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SearchResultsScreen(),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fintrack_app/services/user_service.dart';
+import 'package:fintrack_app/screens/search/search_results_screen.dart';
 import 'package:fintrack_app/utils/app_localizations.dart';
-import 'package:geolocator/geolocator.dart';
 
 class HomeHeader extends StatefulWidget {
   const HomeHeader({super.key});
@@ -33,7 +33,6 @@ class _HomeHeaderState extends State<HomeHeader> {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final now = DateTime.now();
-    final hour = now.hour;
 
     // Adjust for user's timezone if location is available
     DateTime localTime = now;
@@ -62,9 +61,31 @@ class _HomeHeaderState extends State<HomeHeader> {
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final name = _userService.name ?? localizations.user;
     final greeting = _getTimeBasedGreeting(context);
-    return Text(
-      "$greeting, $name.",
-      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final iconColor = isDark ? Colors.white : Colors.black;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Text(
+            "$greeting, $name.",
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+          ),
+        ),
+        IconButton(
+          icon: Icon(Icons.search, color: iconColor),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SearchResultsScreen(),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

@@ -16,6 +16,55 @@ class TransactionService {
     return sorted;
   }
 
+  List<TransactionModel> searchTransactions(String query) {
+    if (query.trim().isEmpty) {
+      return [];
+    }
+
+    final lowerQuery = query.toLowerCase().trim();
+    final results = <TransactionModel>[];
+
+    // Try to parse as number for amount search
+    final amountQuery = double.tryParse(lowerQuery);
+
+    for (final transaction in _transactions) {
+      bool matches = false;
+
+      // Search in title
+      if (transaction.title.toLowerCase().contains(lowerQuery)) {
+        matches = true;
+      }
+      // Search in category
+      else if (transaction.category.toLowerCase().contains(lowerQuery)) {
+        matches = true;
+      }
+      // Search in description
+      else if (transaction.description != null &&
+          transaction.description!.toLowerCase().contains(lowerQuery)) {
+        matches = true;
+      }
+      // Search in payment method
+      else if (transaction.paymentMethod != null &&
+          transaction.paymentMethod!.toLowerCase().contains(lowerQuery)) {
+        matches = true;
+      }
+      // Search by amount (if query is a number)
+      else if (amountQuery != null &&
+          transaction.amount.toString().contains(lowerQuery)) {
+        matches = true;
+      }
+
+      if (matches) {
+        results.add(transaction);
+      }
+    }
+
+    // Sort by date (most recent first)
+    results.sort((a, b) => b.date.compareTo(a.date));
+
+    return results;
+  }
+
   void addTransaction(TransactionModel transaction) {
     _transactions.insert(0, transaction);
     notifyListeners();

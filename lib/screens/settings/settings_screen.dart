@@ -9,6 +9,7 @@ import 'package:fintrack_app/screens/settings/pages/help_faq_page.dart';
 import 'package:fintrack_app/screens/settings/pages/privacy_policy_page.dart';
 import 'package:fintrack_app/screens/settings/pages/about_page.dart';
 import 'package:fintrack_app/screens/settings/widgets/settings_item_widget.dart';
+import 'package:fintrack_app/screens/error/error_screen.dart';
 import 'package:fintrack_app/services/user_service.dart';
 import 'package:fintrack_app/utils/app_localizations.dart';
 
@@ -172,6 +173,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => const AboutPage(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 8),
+              // Test Error Screen - Remove this in production
+              SettingsItemWidget(
+                icon: Icons.error_outline,
+                title: 'Test Error Screen',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ErrorScreen(
+                        isNoConnection: true,
+                        onRetry: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 8),
+              // Test Generic Error Screen
+              SettingsItemWidget(
+                icon: Icons.bug_report,
+                title: 'Test Generic Error',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ErrorScreen(
+                        isNoConnection: false,
+                        onRetry: () {
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
                   );
                 },
