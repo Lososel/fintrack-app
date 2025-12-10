@@ -156,7 +156,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.black),
+                    icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
                     onPressed: () {
                       _saveProfile();
                     },

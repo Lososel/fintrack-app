@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final recentTransactions = _transactionService.recentTransactions;
+    final recentTransactions = _transactionService.recentTransactions.take(5).toList();
     final allTransactions = _transactionService.transactions;
 
     final userName = _userService.name ?? widget.name ?? "User";

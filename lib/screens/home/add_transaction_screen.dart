@@ -20,23 +20,61 @@ import 'widgets/transaction_form_validator.dart';
 import 'transaction_details_screen.dart';
 
 class AddTransactionScreen extends StatefulWidget {
-  const AddTransactionScreen({super.key});
+  final TransactionModel? transactionToEdit;
+
+  const AddTransactionScreen({super.key, this.transactionToEdit});
 
   @override
   State<AddTransactionScreen> createState() => _AddTransactionScreenState();
 }
 
 class _AddTransactionScreenState extends State<AddTransactionScreen> {
-  bool isExpense = true;
+  late bool isExpense;
+  late final TextEditingController amountController;
+  late final TextEditingController descriptionController;
+  late String? selectedCategory;
+  late String selectedPayment;
+  late Currency selectedCurrency;
+  late DateTime selectedDate;
 
-  final TextEditingController amountController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
+  TransactionModel? _originalTransaction;
 
-  String? selectedCategory;
-  String selectedPayment = "Cash";
-  Currency selectedCurrency = Currency.dollar;
+  @override
+  void initState() {
+    super.initState();
+    _originalTransaction = widget.transactionToEdit;
+    
+    if (_originalTransaction != null) {
+      // Edit mode - pre-populate fields
+      isExpense = !_originalTransaction!.isIncome;
+      amountController = TextEditingController(
+        text: _originalTransaction!.amount.toString(),
+      );
+      descriptionController = TextEditingController(
+        text: _originalTransaction!.description ?? _originalTransaction!.title,
+      );
+      selectedCategory = _originalTransaction!.category;
+      selectedPayment = _originalTransaction!.paymentMethod ?? "Cash";
+      selectedCurrency = _originalTransaction!.currency;
+      selectedDate = _originalTransaction!.date;
+    } else {
+      // Add mode - initialize with defaults
+      isExpense = true;
+      amountController = TextEditingController();
+      descriptionController = TextEditingController();
+      selectedCategory = null;
+      selectedPayment = "Cash";
+      selectedCurrency = Currency.dollar;
+      selectedDate = DateTime.now();
+    }
+  }
 
-  DateTime selectedDate = DateTime.now();
+  @override
+  void dispose() {
+    amountController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
 
   void _openCategorySheet() {
     ModalHelper.showSmoothModal(
@@ -114,7 +152,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
         ? "No description"
         : descriptionController.text.trim();
 
-    // Create and save transaction
+    // Create transaction
     final transaction = TransactionModel(
       title: description,
       category: selectedCategory!,
@@ -126,24 +164,35 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
       currency: selectedCurrency,
     );
 
-    // Save transaction
-    TransactionService().addTransaction(transaction);
+    final transactionService = TransactionService();
 
-    // Navigate to transaction details screen
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => TransactionDetailsScreen(
-          category: selectedCategory!,
-          amount: amount,
-          date: selectedDate,
-          isExpense: isExpense,
-          paymentMethod: selectedPayment,
-          description: description,
-          currency: selectedCurrency,
+    // Save or update transaction
+    if (_originalTransaction != null) {
+      // Edit mode - update existing transaction
+      transactionService.updateTransaction(_originalTransaction!, transaction);
+      Navigator.pop(context);
+    } else {
+      // Add mode - create new transaction
+      transactionService.addTransaction(transaction);
+
+      // Navigate to transaction details screen with the transaction
+      // The transaction we just added is at index 0
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TransactionDetailsScreen(
+            category: selectedCategory!,
+            amount: amount,
+            date: selectedDate,
+            isExpense: isExpense,
+            paymentMethod: selectedPayment,
+            description: description,
+            currency: selectedCurrency,
+            transaction: transaction,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   @override
@@ -163,12 +212,14 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
               Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.black),
+                    icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
                     onPressed: () => Navigator.pop(context),
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    localizations.addTransaction,
+                    _originalTransaction != null
+                        ? localizations.editTransaction
+                        : localizations.addTransaction,
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w900,
@@ -257,7 +308,9 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                       const SizedBox(height: 40),
 
                       PrimaryButton(
-                        label: localizations.addTransaction,
+                        label: _originalTransaction != null
+                            ? localizations.saveChanges
+                            : localizations.addTransaction,
                         onPressed: () {
                           _validateAndSubmit();
                         },
