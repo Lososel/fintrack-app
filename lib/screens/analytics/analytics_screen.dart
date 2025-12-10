@@ -41,10 +41,6 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
     final theme = Theme.of(context);
     final textColor = theme.brightness == Brightness.dark ? Colors.white : Colors.black;
-    final totals = AnalyticsCalculator.calculatePeriodTotals(
-      _transactionService.transactions,
-      _selectedPeriod,
-    );
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -83,12 +79,24 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 },
               ),
               const SizedBox(height: 20),
-              BalanceCard(
-                totalBalance: totals['total']!,
-                income: totals['income']!,
-                expense: totals['expense']!,
-                title: localizations.totalSavings,
-                showSavingsPercentage: true,
+              FutureBuilder<Map<String, double>>(
+                future: AnalyticsCalculator.calculatePeriodTotals(
+                  _transactionService.transactions,
+                  _selectedPeriod,
+                ),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  final totals = snapshot.data ?? {'income': 0.0, 'expense': 0.0, 'total': 0.0};
+                  return BalanceCard(
+                    totalBalance: totals['total']!,
+                    income: totals['income']!,
+                    expense: totals['expense']!,
+                    title: localizations.totalSavings,
+                    showSavingsPercentage: true,
+                  );
+                },
               ),
               const SizedBox(height: 30),
 

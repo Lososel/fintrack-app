@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fintrack_app/components/nav/bottom_nav.dart';
+import 'package:fintrack_app/components/cards/balance_card.dart';
 import 'package:fintrack_app/services/transaction_service.dart';
 import 'package:fintrack_app/services/user_service.dart';
 import 'package:fintrack_app/services/card_service.dart';
+import 'package:fintrack_app/services/currency_conversion_service.dart';
 import 'package:fintrack_app/screens/settings/pages/edit_profile_page.dart';
 import 'package:fintrack_app/screens/settings/pages/add_card_page.dart';
 import 'package:fintrack_app/screens/settings/pages/manage_cards_page.dart';
@@ -42,15 +44,20 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() {});
   }
 
-  Map<String, double> _calculateTotals() {
+  Future<Map<String, double>> _calculateTotals() async {
+    final conversionService = CurrencyConversionService();
     double income = 0;
     double expense = 0;
 
     for (var transaction in _transactionService.transactions) {
+      final convertedAmount = await conversionService.convertToBase(
+        transaction.amount,
+        transaction.currency,
+      );
       if (transaction.isIncome) {
-        income += transaction.amount;
+        income += convertedAmount;
       } else {
-        expense += transaction.amount;
+        expense += convertedAmount;
       }
     }
 
@@ -61,7 +68,6 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
-    final totals = _calculateTotals();
     final transactionCount = _transactionService.transactions.length;
     final cards = _cardService.cards;
 
@@ -118,12 +124,16 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 60,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Colors.grey.shade300,
+                        color: theme.brightness == Brightness.dark
+                            ? Colors.grey.shade800
+                            : Colors.grey.shade300,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.person,
                         size: 40,
-                        color: Colors.grey,
+                        color: theme.brightness == Brightness.dark
+                            ? Colors.grey.shade400
+                            : Colors.grey,
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -146,9 +156,11 @@ class _ProfilePageState extends State<ProfilePage> {
                             },
                             child: Text(
                               _userService.email ?? "email@example.com",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 14,
-                                color: Colors.grey,
+                                color: theme.brightness == Brightness.dark
+                                    ? Colors.grey.shade400
+                                    : Colors.grey,
                                 decoration: TextDecoration.underline,
                               ),
                             ),
@@ -156,9 +168,11 @@ class _ProfilePageState extends State<ProfilePage> {
                           const SizedBox(height: 4),
                           Text(
                             _userService.location ?? "Unknown",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
-                              color: Colors.grey,
+                              color: theme.brightness == Brightness.dark
+                                  ? Colors.grey.shade400
+                                  : Colors.grey,
                             ),
                           ),
                         ],
@@ -210,9 +224,11 @@ class _ProfilePageState extends State<ProfilePage> {
                           const SizedBox(height: 4),
                           Text(
                             localizations.recentTransactions,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
-                              color: Colors.grey,
+                              color: theme.brightness == Brightness.dark
+                                  ? Colors.grey.shade400
+                                  : Colors.grey,
                             ),
                           ),
                         ],
@@ -220,116 +236,110 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 16,
-                        horizontal: 12,
-                      ),
-                      decoration: BoxDecoration(
-                        color: theme.brightness == Brightness.dark 
-                            ? Colors.grey.shade800 
-                            : Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            "\$${totals['income']!.toStringAsFixed(0)}",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              color: textColor,
-                            ),
+                  FutureBuilder<Map<String, double>>(
+                    future: _calculateTotals(),
+                    builder: (context, snapshot) {
+                      final totals = snapshot.data ?? {'income': 0.0, 'expense': 0.0};
+                      return Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16,
+                            horizontal: 12,
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            localizations.income,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
+                          decoration: BoxDecoration(
+                            color: theme.brightness == Brightness.dark 
+                                ? Colors.grey.shade800 
+                                : Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                        ],
-                      ),
-                    ),
+                          child: Column(
+                            children: [
+                              Text(
+                                snapshot.connectionState == ConnectionState.waiting
+                                    ? "..."
+                                    : "\$${totals['income']!.toStringAsFixed(0)}",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: textColor,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                localizations.income,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: theme.brightness == Brightness.dark
+                                      ? Colors.grey.shade400
+                                      : Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(width: 12),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 16,
-                        horizontal: 12,
-                      ),
-                      decoration: BoxDecoration(
-                        color: theme.brightness == Brightness.dark 
-                            ? Colors.grey.shade800 
-                            : Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            "\$${totals['expense']!.toStringAsFixed(0)}",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              color: textColor,
-                            ),
+                  FutureBuilder<Map<String, double>>(
+                    future: _calculateTotals(),
+                    builder: (context, snapshot) {
+                      final totals = snapshot.data ?? {'income': 0.0, 'expense': 0.0};
+                      return Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16,
+                            horizontal: 12,
                           ),
-                          const SizedBox(height: 4),
-                          Text(
-                            localizations.expense,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
+                          decoration: BoxDecoration(
+                            color: theme.brightness == Brightness.dark 
+                                ? Colors.grey.shade800 
+                                : Colors.grey.shade200,
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                        ],
-                      ),
-                    ),
+                          child: Column(
+                            children: [
+                              Text(
+                                snapshot.connectionState == ConnectionState.waiting
+                                    ? "..."
+                                    : "\$${totals['expense']!.toStringAsFixed(0)}",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: textColor,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                localizations.expense,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: theme.brightness == Brightness.dark
+                                      ? Colors.grey.shade400
+                                      : Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
               const SizedBox(height: 16),
               // Total Balance Card
-              Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      localizations.totalBalance,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "\$${totalBalance.toStringAsFixed(2)}",
-                      style: const TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      "Across ${cards.length} card${cards.length != 1 ? 's' : ''}/account${cards.length != 1 ? 's' : ''}",
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
+              FutureBuilder<Map<String, double>>(
+                future: _calculateTotals(),
+                builder: (context, snapshot) {
+                  final totals = snapshot.data ?? {'income': 0.0, 'expense': 0.0, 'total': 0.0};
+                  return BalanceCard(
+                    totalBalance: totalBalance,
+                    income: totals['income']!,
+                    expense: totals['expense']!,
+                    title: localizations.totalBalance,
+                  );
+                },
               ),
               const SizedBox(height: 20),
               // Bank Cards List
@@ -363,7 +373,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
+                    backgroundColor: theme.brightness == Brightness.dark
+                        ? const Color(0xFF181820)
+                        : Colors.black,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -392,7 +404,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
+                    backgroundColor: theme.brightness == Brightness.dark
+                        ? const Color(0xFF181820)
+                        : Colors.black,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

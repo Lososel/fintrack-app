@@ -1,11 +1,12 @@
 import 'package:fintrack_app/models/transaction_model.dart';
 import 'package:fintrack_app/screens/analytics/widgets/time_period_selector.dart';
+import 'package:fintrack_app/services/currency_conversion_service.dart';
 
 class AnalyticsCalculator {
-  static Map<String, double> calculatePeriodTotals(
+  static Future<Map<String, double>> calculatePeriodTotals(
     List<TransactionModel> transactions,
     TimePeriod period,
-  ) {
+  ) async {
     final now = DateTime.now();
     DateTime startDate;
 
@@ -36,14 +37,21 @@ class AnalyticsCalculator {
           transaction.date.isBefore(endDate.add(const Duration(days: 1)));
     }).toList();
 
+    final conversionService = CurrencyConversionService();
     double income = 0;
     double expense = 0;
 
     for (var transaction in filteredTransactions) {
+      // Convert to base currency (USD) before summing
+      final convertedAmount = await conversionService.convertToBase(
+        transaction.amount,
+        transaction.currency,
+      );
+      
       if (transaction.isIncome) {
-        income += transaction.amount;
+        income += convertedAmount;
       } else {
-        expense += transaction.amount;
+        expense += convertedAmount;
       }
     }
 

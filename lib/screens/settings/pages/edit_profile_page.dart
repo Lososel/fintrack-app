@@ -4,6 +4,7 @@ import 'package:fintrack_app/components/nav/bottom_nav.dart';
 import 'package:fintrack_app/services/transaction_service.dart';
 import 'package:fintrack_app/services/user_service.dart';
 import 'package:fintrack_app/services/card_service.dart';
+import 'package:fintrack_app/services/currency_conversion_service.dart';
 import 'package:fintrack_app/screens/settings/pages/manage_cards_page.dart';
 import 'package:fintrack_app/screens/settings/pages/edit_card_page.dart';
 import 'package:fintrack_app/screens/settings/widgets/bank_card_widget.dart';
@@ -83,15 +84,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
   }
 
-  Map<String, double> _calculateTotals() {
+  Future<Map<String, double>> _calculateTotals() async {
+    final conversionService = CurrencyConversionService();
     double income = 0;
     double expense = 0;
 
     for (var transaction in _transactionService.transactions) {
+      final convertedAmount = await conversionService.convertToBase(
+        transaction.amount,
+        transaction.currency,
+      );
       if (transaction.isIncome) {
-        income += transaction.amount;
+        income += convertedAmount;
       } else {
-        expense += transaction.amount;
+        expense += convertedAmount;
       }
     }
 
@@ -140,8 +146,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Widget build(BuildContext context) {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
-    final totals = _calculateTotals();
-    final totalBalance = totals['total']!;
+    // Note: totals calculation moved to FutureBuilder where it's used
 
     return Scaffold(
       backgroundColor: const Color(0xffF6F6F9),
@@ -338,14 +343,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: Text(
-                      "${localizations.totalBalance}: \$${totalBalance.toStringAsFixed(2)}",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                      ),
-                      overflow: TextOverflow.ellipsis,
+                    child: FutureBuilder<Map<String, double>>(
+                      future: _calculateTotals(),
+                      builder: (context, snapshot) {
+                        final totalBalance = snapshot.data?['total'] ?? 0.0;
+                        return Text(
+                          "${localizations.totalBalance}: \$${totalBalance.toStringAsFixed(2)}",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        );
+                      },
                     ),
                   ),
                   const SizedBox(width: 8),

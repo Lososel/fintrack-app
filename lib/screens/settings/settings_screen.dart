@@ -5,6 +5,9 @@ import 'package:fintrack_app/screens/settings/pages/currency_page.dart';
 import 'package:fintrack_app/screens/settings/pages/language_page.dart';
 import 'package:fintrack_app/screens/settings/pages/notifications_page.dart';
 import 'package:fintrack_app/screens/settings/pages/theme_page.dart';
+import 'package:fintrack_app/screens/settings/pages/help_faq_page.dart';
+import 'package:fintrack_app/screens/settings/pages/privacy_policy_page.dart';
+import 'package:fintrack_app/screens/settings/pages/about_page.dart';
 import 'package:fintrack_app/screens/settings/widgets/settings_item_widget.dart';
 import 'package:fintrack_app/services/user_service.dart';
 import 'package:fintrack_app/utils/app_localizations.dart';
@@ -139,7 +142,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 icon: Icons.help_outline,
                 title: localizations.helpAndFAQ,
                 onTap: () {
-                  // TODO: Navigate to help and FAQ screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HelpFAQPage(),
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 8),
@@ -147,7 +155,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 icon: Icons.privacy_tip_outlined,
                 title: localizations.privacyPolicy,
                 onTap: () {
-                  // TODO: Navigate to privacy policy screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PrivacyPolicyPage(),
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 8),
@@ -155,7 +168,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 icon: Icons.info_outline,
                 title: localizations.about,
                 onTap: () {
-                  // TODO: Navigate to about screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AboutPage(),
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 40),

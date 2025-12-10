@@ -29,12 +29,15 @@ class CardItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.grey.shade200,
+          color: isDark ? const Color(0xFF181820) : Colors.grey.shade200,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
@@ -48,7 +51,7 @@ class CardItemWidget extends StatelessWidget {
                   height: 48,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.grey.shade100,
+                    color: isDark ? Colors.grey.shade800 : Colors.grey.shade100,
                   ),
                   child: card.assetPath.isNotEmpty
                       ? ClipOval(
@@ -56,17 +59,17 @@ class CardItemWidget extends StatelessWidget {
                             card.assetPath,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
-                              return const Icon(
+                              return Icon(
                                 Icons.account_balance,
-                                color: Colors.grey,
+                                color: isDark ? Colors.grey.shade400 : Colors.grey,
                                 size: 24,
                               );
                             },
                           ),
                         )
-                      : const Icon(
+                      : Icon(
                           Icons.account_balance,
-                          color: Colors.grey,
+                          color: isDark ? Colors.grey.shade400 : Colors.grey,
                           size: 24,
                         ),
                 ),
@@ -77,10 +80,10 @@ class CardItemWidget extends StatelessWidget {
                       Flexible(
                         child: Text(
                           card.bankName,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
-                            color: Colors.black,
+                            color: isDark ? Colors.white : Colors.black,
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -88,9 +91,9 @@ class CardItemWidget extends StatelessWidget {
                       const SizedBox(width: 8),
                       Text(
                         ".... ${card.cardNumber}",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
-                          color: Colors.black87,
+                          color: isDark ? Colors.white70 : Colors.black87,
                         ),
                       ),
                     ],
@@ -98,10 +101,10 @@ class CardItemWidget extends StatelessWidget {
                 ),
                 Text(
                   _getAccountTypeDisplay(card.accountType, context),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: Colors.black87,
+                    color: isDark ? Colors.white70 : Colors.black87,
                   ),
                 ),
               ],
@@ -113,21 +116,21 @@ class CardItemWidget extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       "Balance",
                       style: TextStyle(
                         fontSize: 12,
-                        color: Colors.grey,
+                        color: isDark ? Colors.grey.shade400 : Colors.grey,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       "\$${card.balance.toStringAsFixed(2)}",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
-                        color: Colors.black,
+                        color: isDark ? Colors.white : Colors.black,
                       ),
                     ),
                   ],
@@ -137,19 +140,19 @@ class CardItemWidget extends StatelessWidget {
                   children: [
                     Text(
                       localizations.purpose,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
-                        color: Colors.grey,
+                        color: isDark ? Colors.grey.shade400 : Colors.grey,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       card.category,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
-                        color: Colors.black,
+                        color: isDark ? Colors.white : Colors.black,
                       ),
                     ),
                   ],

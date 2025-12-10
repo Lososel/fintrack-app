@@ -127,6 +127,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
     );
   }
 
+
   void _validateAndSubmit() {
     // Validate amount
     final amountError = TransactionFormValidator.validateAmount(

@@ -18,6 +18,8 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final color = CategoryColors.getColor(categorySpending.category);
     final icon = TransactionIcons.getCategoryIcon(categorySpending.category);
     final percentage = (categorySpending.amount / totalSpending) * 100;
@@ -26,7 +28,7 @@ class CategoryItem extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xFF181820) : Colors.white,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
@@ -47,15 +49,19 @@ class CategoryItem extends StatelessWidget {
               children: [
                 Text(
                   categorySpending.category,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
+                    color: isDark ? Colors.white : Colors.black,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   "${percentage.toStringAsFixed(1)}% of total",
-                  style: const TextStyle(fontSize: 13, color: Colors.black54),
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: isDark ? Colors.grey.shade400 : Colors.black54,
+                  ),
                 ),
               ],
             ),
@@ -65,9 +71,10 @@ class CategoryItem extends StatelessWidget {
             children: [
               Text(
                 CurrencyHelper.formatAmount(categorySpending.amount, currency),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w900,
+                  color: isDark ? Colors.white : Colors.black,
                 ),
               ),
               const SizedBox(height: 4),
@@ -75,7 +82,7 @@ class CategoryItem extends StatelessWidget {
                 width: 60,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: Colors.grey[200],
+                  color: isDark ? Colors.grey.shade800 : Colors.grey[200],
                   borderRadius: BorderRadius.circular(2),
                 ),
                 child: FractionallySizedBox(

@@ -36,17 +36,24 @@ class TimePeriodSelector extends StatelessWidget {
     String label,
     TimePeriod period,
   ) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final isSelected = selectedPeriod == period;
+    
     return Expanded(
       child: GestureDetector(
         onTap: () => onPeriodChanged(period),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xff1e1e1e) : Colors.white,
+            color: isSelected
+                ? (isDark ? Colors.white.withOpacity(0.15) : const Color(0xff1e1e1e))
+                : (isDark ? const Color(0xFF181820) : Colors.white),
             borderRadius: BorderRadius.circular(30),
             border: Border.all(
-              color: isSelected ? Colors.transparent : Colors.grey.shade300,
+              color: isSelected
+                  ? Colors.transparent
+                  : (isDark ? Colors.grey.shade700 : Colors.grey.shade300),
               width: 1,
             ),
           ),
@@ -56,7 +63,9 @@ class TimePeriodSelector extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: isSelected ? Colors.white : Colors.black87,
+                color: isSelected
+                    ? Colors.white
+                    : (isDark ? Colors.white : Colors.black87),
               ),
             ),
           ),

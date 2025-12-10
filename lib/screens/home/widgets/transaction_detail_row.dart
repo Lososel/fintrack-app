@@ -18,10 +18,17 @@ class TransactionDetailRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(icon, size: 28, color: Colors.black38),
+        Icon(
+          icon,
+          size: 28,
+          color: isDark ? Colors.grey.shade400 : Colors.black38,
+        ),
         const SizedBox(width: 16),
         Expanded(
           child: Column(
@@ -29,9 +36,9 @@ class TransactionDetailRow extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
-                  color: Colors.black54,
+                  color: isDark ? Colors.grey.shade400 : Colors.black54,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -40,16 +47,20 @@ class TransactionDetailRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   if (showValueIcon && valueIcon != null) ...[
-                    Icon(valueIcon, size: 24, color: Colors.black87),
+                    Icon(
+                      valueIcon,
+                      size: 24,
+                      color: isDark ? Colors.white70 : Colors.black87,
+                    ),
                     const SizedBox(width: 8),
                   ],
                   Expanded(
                     child: Text(
                       value,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                        color: isDark ? Colors.white : Colors.black87,
                       ),
                     ),
                   ),

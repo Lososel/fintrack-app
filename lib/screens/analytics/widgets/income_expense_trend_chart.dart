@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fintrack_app/utils/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:fintrack_app/models/transaction_model.dart';
+import 'package:fintrack_app/services/currency_conversion_service.dart';
 import 'package:fintrack_app/screens/analytics/widgets/time_period_selector.dart';
 
 class IncomeExpenseTrendChart extends StatefulWidget {
@@ -40,7 +41,7 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
     }
   }
 
-  void _calculateData() {
+  Future<void> _calculateData() async {
     final now = DateTime.now();
     DateTime startDate;
     int numberOfPoints;
@@ -82,7 +83,9 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
     final expenseData = List<double>.filled(numberOfPoints, 0.0);
     final labels = <String>[];
 
-    // Group transactions by time period
+    final conversionService = CurrencyConversionService();
+
+    // Group transactions by time period with currency conversion
     for (var transaction in filteredTransactions) {
       int index;
 
@@ -102,10 +105,15 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
       }
 
       if (index >= 0 && index < numberOfPoints) {
+        // Convert to base currency before summing
+        final convertedAmount = await conversionService.convertToBase(
+          transaction.amount,
+          transaction.currency,
+        );
         if (transaction.isIncome) {
-          incomeData[index] += transaction.amount;
+          incomeData[index] += convertedAmount;
         } else {
-          expenseData[index] += transaction.amount;
+          expenseData[index] += convertedAmount;
         }
       }
     }
@@ -204,6 +212,13 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : Colors.black;
+    final secondaryTextColor = isDark ? Colors.grey.shade400 : Colors.black54;
+    final gridColor = isDark ? Colors.grey.shade700 : const Color(0xFFAAA6A6);
+    final borderColor = isDark ? Colors.grey.shade700 : const Color(0xFFAAA6A6);
+    
     if (_incomeSpots == null || _expenseSpots == null || _xAxisLabels == null) {
       return const SizedBox.shrink();
     }
@@ -213,7 +228,7 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
         width: double.infinity,
         padding: const EdgeInsets.all(30),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: isDark ? const Color(0xFF181820) : Colors.white,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Center(
@@ -224,7 +239,10 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
                   AppLocalizations(const Locale('en'));
               return Text(
                 localizations.noTransactionsYet,
-                style: const TextStyle(fontSize: 12, color: Colors.black54),
+                style: TextStyle(
+                  fontSize: 12,
+                  color: secondaryTextColor,
+                ),
               );
             },
           ),
@@ -248,10 +266,10 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
                   AppLocalizations(const Locale('en'));
               return Text(
                 localizations.incomeExpenseTrend,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w900,
-                  color: Colors.black,
+                  color: textColor,
                 ),
               );
             },
@@ -268,7 +286,7 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
                   horizontalInterval: yAxisInterval,
                   getDrawingHorizontalLine: (value) {
                     return FlLine(
-                      color: const Color(0xFFAAA6A6),
+                      color: gridColor,
                       strokeWidth: 1,
                     );
                   },
@@ -313,8 +331,8 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
                               width: labelWidth,
                               child: Text(
                                 _xAxisLabels![index],
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: secondaryTextColor,
                                   fontSize: 9,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -347,8 +365,8 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
                           padding: const EdgeInsets.only(right: 4.0),
                           child: Text(
                             formattedValue,
-                            style: const TextStyle(
-                              color: Color.fromARGB(255, 0, 0, 0),
+                            style: TextStyle(
+                              color: secondaryTextColor,
                               fontSize: 9,
                               fontWeight: FontWeight.w500,
                             ),
@@ -361,7 +379,7 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
                 ),
                 borderData: FlBorderData(
                   show: true,
-                  border: Border.all(color: const Color(0xFFAAA6A6), width: 1),
+                  border: Border.all(color: borderColor, width: 1),
                 ),
                 clipData: FlClipData(
                   top: false,
@@ -433,6 +451,10 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
   }
 
   Widget _buildLegendItem(String label, Color color) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : Colors.black87;
+    
     return Row(
       children: [
         Container(
@@ -443,9 +465,9 @@ class _IncomeExpenseTrendChartState extends State<IncomeExpenseTrendChart> {
         const SizedBox(width: 6),
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 11,
-            color: Colors.black87,
+            color: textColor,
             fontWeight: FontWeight.w500,
           ),
         ),

@@ -21,13 +21,15 @@ class BalanceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final displayTitle = title ?? localizations.totalBalance;
     final savingsPercentage = income > 0 ? (totalBalance / income) * 100 : 0.0;
 
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xff1e1e1e),
+        color: isDark ? const Color(0xFF181820) : const Color(0xff1e1e1e),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(

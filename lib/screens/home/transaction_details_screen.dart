@@ -148,11 +148,13 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
   Widget build(BuildContext context) {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     
     final displayTx = _displayTransaction;
     
     return Scaffold(
-      backgroundColor: const Color(0xffF4F4F7),
+      backgroundColor: isDark ? const Color(0xFF0D0D10) : const Color(0xffF4F4F7),
       body: SafeArea(
         child: Column(
           children: [
@@ -166,16 +168,19 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
                     Row(
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+                          icon: Icon(
+                            Icons.arrow_back_ios,
+                            color: isDark ? Colors.white : Colors.black,
+                          ),
                           onPressed: () => Navigator.pop(context),
                         ),
                         const SizedBox(width: 8),
                         Text(
                           localizations.transactionDetails,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.w900,
-                            color: Colors.black,
+                            color: isDark ? Colors.white : Colors.black,
                           ),
                         ),
                       ],
@@ -250,13 +255,13 @@ class _TransactionDetailsScreenState extends State<TransactionDetailsScreen> {
             // Bottom Navigation
             Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              decoration: const BoxDecoration(
-                color: Colors.white,
+              decoration: BoxDecoration(
+                color: isDark ? const Color(0xFF181820) : Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black12,
+                    color: isDark ? Colors.black.withOpacity(0.3) : Colors.black12,
                     blurRadius: 4,
-                    offset: Offset(0, -2),
+                    offset: const Offset(0, -2),
                   ),
                 ],
               ),

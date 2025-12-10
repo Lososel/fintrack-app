@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:fintrack_app/models/transaction_model.dart';
 import 'package:fintrack_app/services/transaction_service.dart';
+import 'package:fintrack_app/services/currency_conversion_service.dart';
 import 'package:fintrack_app/utils/app_localizations.dart';
 
 class MonthlyComparison extends StatefulWidget {
@@ -30,20 +31,26 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
     setState(() {});
   }
 
-  Map<String, double> _calculateMonthTotals(
+  Future<Map<String, double>> _calculateMonthTotals(
     List<TransactionModel> transactions,
     int year,
     int month,
-  ) {
+  ) async {
+    final conversionService = CurrencyConversionService();
     double income = 0;
     double expense = 0;
 
     for (var transaction in transactions) {
       if (transaction.date.year == year && transaction.date.month == month) {
+        // Convert to base currency before summing
+        final convertedAmount = await conversionService.convertToBase(
+          transaction.amount,
+          transaction.currency,
+        );
         if (transaction.isIncome) {
-          income += transaction.amount;
+          income += convertedAmount;
         } else {
-          expense += transaction.amount;
+          expense += convertedAmount;
         }
       }
     }
@@ -87,251 +94,273 @@ class _MonthlyComparisonState extends State<MonthlyComparison> {
 
     final transactions = _transactionService.transactions;
 
-    final currentMonthData = _calculateMonthTotals(
-      transactions,
-      currentYear,
-      currentMonth,
-    );
-    final previousMonthData = _calculateMonthTotals(
-      transactions,
-      previousYear,
-      previousMonth,
-    );
-
-    final currentIncome = currentMonthData['income']!;
-    final currentExpense = currentMonthData['expense']!;
-    final previousIncome = previousMonthData['income']!;
-    final previousExpense = previousMonthData['expense']!;
-
-    final maxValue = [
-      currentIncome,
-      currentExpense,
-      previousIncome,
-      previousExpense,
-    ].reduce((a, b) => a > b ? a : b);
-
-    final maxY = maxValue * 1.2; // Add 20% padding
-    final yAxisInterval = maxY / 4; // Show 4 intervals
-
-    if (maxValue == 0 && transactions.isEmpty) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            localizations.monthlyComparison,
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w900,
-              color: textColor,
-            ),
-          ),
-          const SizedBox(height: 5),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Text(
-              localizations.noTransactionsYet,
-              style: TextStyle(color: secondaryTextColor),
-            ),
-          ),
-        ],
-      );
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          localizations.monthlyComparison,
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w900,
-            color: textColor,
-          ),
-        ),
-        const SizedBox(height: 16),
-        Container(
-          width: double.infinity,
-
-          child: Column(
+    return FutureBuilder<Map<String, Map<String, double>>>(
+      future: Future.wait([
+        _calculateMonthTotals(transactions, currentYear, currentMonth),
+        _calculateMonthTotals(transactions, previousYear, previousMonth),
+      ]).then((results) => {
+        'current': results[0],
+        'previous': results[1],
+      }),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 250,
-                child: BarChart(
-                  BarChartData(
-                    alignment: BarChartAlignment.spaceAround,
-                    maxY: maxY < 100 ? 100 : maxY,
-                    barTouchData: BarTouchData(
-                      enabled: true,
-                      touchTooltipData: BarTouchTooltipData(
-                        getTooltipColor: (group) => isDark ? Colors.grey.shade800 : Colors.white,
-                        tooltipRoundedRadius: 8,
-                        tooltipPadding: const EdgeInsets.all(8),
-                        tooltipMargin: 8,
-                        getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                          final monthIndex = group.x.toInt();
-                          final monthName = monthIndex == 0
-                              ? _getMonthAbbreviation(previousMonth)
-                              : _getMonthAbbreviation(currentMonth);
-                          final isIncome = rodIndex == 0;
-                          final value = rod.toY;
-                          final localizations =
-                              AppLocalizations.of(context) ??
-                              AppLocalizations(const Locale('en'));
-                          return BarTooltipItem(
-                            '$monthName\n${isIncome ? localizations.income : localizations.expense} : \$${value.toStringAsFixed(2)}',
-                            TextStyle(
-                              color: isIncome ? Colors.green : Colors.red,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    titlesData: FlTitlesData(
-                      show: true,
-                      rightTitles: const AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      topTitles: const AxisTitles(
-                        sideTitles: SideTitles(showTitles: false),
-                      ),
-                      bottomTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          getTitlesWidget: (value, meta) {
-                            final index = value.toInt();
-                            if (index == 0) {
-                              return Text(
-                                _getMonthAbbreviation(previousMonth),
-                                style: TextStyle(
-                                  color: textColor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              );
-                            } else if (index == 1) {
-                              return Text(
-                                _getMonthAbbreviation(currentMonth),
-                                style: TextStyle(
-                                  color: textColor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              );
-                            }
-                            return const Text('');
-                          },
-                        ),
-                      ),
-                      leftTitles: AxisTitles(
-                        sideTitles: SideTitles(
-                          showTitles: true,
-                          reservedSize: 50,
-                          interval: yAxisInterval,
-                          getTitlesWidget: (value, meta) {
-                            if (value >= 1000) {
-                              return Text(
-                                '\$${(value / 1000).toStringAsFixed(value >= 10000 ? 0 : 1)}k',
-                                style: TextStyle(
-                                  color: secondaryTextColor,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              );
-                            }
-                            return Text(
-                              '\$${value.toStringAsFixed(0)}',
-                              style: TextStyle(
-                                color: secondaryTextColor,
-                                fontSize: 10,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    gridData: FlGridData(
-                      show: true,
-                      drawVerticalLine: false,
-                      horizontalInterval: yAxisInterval,
-                      getDrawingHorizontalLine: (value) {
-                        return FlLine(
-                          color: isDark ? Colors.grey.shade700 : const Color(0xFFAAA6A6),
-                          strokeWidth: 1,
-                        );
-                      },
-                    ),
-                    borderData: FlBorderData(
-                      show: true,
-                      border: Border.all(
-                        color: isDark ? Colors.grey.shade700 : const Color(0xFFAAA6A6),
-                        width: 1,
-                      ),
-                    ),
-                    barGroups: [
-                      BarChartGroupData(
-                        x: 0,
-                        barRods: [
-                          BarChartRodData(
-                            toY: previousIncome,
-                            color: Colors.green,
-                            width: 65,
-                            borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(4),
-                            ),
-                          ),
-                          BarChartRodData(
-                            toY: previousExpense,
-                            color: Colors.red,
-                            width: 65,
-                            borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(4),
-                            ),
-                          ),
-                        ],
-                        barsSpace: 8,
-                      ),
-                      BarChartGroupData(
-                        x: 1,
-                        barRods: [
-                          BarChartRodData(
-                            toY: currentIncome,
-                            color: Colors.green,
-                            width: 65,
-                            borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(4),
-                            ),
-                          ),
-                          BarChartRodData(
-                            toY: currentExpense,
-                            color: Colors.red,
-                            width: 65,
-                            borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(4),
-                            ),
-                          ),
-                        ],
-                        barsSpace: 8,
-                      ),
-                    ],
-                  ),
+              Text(
+                localizations.monthlyComparison,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900,
+                  color: textColor,
                 ),
               ),
               const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buildLegendItem(localizations.income, Colors.green),
-                  const SizedBox(width: 24),
-                  _buildLegendItem(localizations.expense, Colors.red),
-                ],
+              const Center(child: CircularProgressIndicator()),
+            ],
+          );
+        }
+
+        final data = snapshot.data ?? {
+          'current': {'income': 0.0, 'expense': 0.0},
+          'previous': {'income': 0.0, 'expense': 0.0},
+        };
+
+        final currentIncome = data['current']!['income']!;
+        final currentExpense = data['current']!['expense']!;
+        final previousIncome = data['previous']!['income']!;
+        final previousExpense = data['previous']!['expense']!;
+
+        final maxValue = [
+          currentIncome,
+          currentExpense,
+          previousIncome,
+          previousExpense,
+        ].reduce((a, b) => a > b ? a : b);
+
+        final maxY = maxValue * 1.2; // Add 20% padding
+        final yAxisInterval = maxY / 4; // Show 4 intervals
+
+        if (maxValue == 0 && transactions.isEmpty) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                localizations.monthlyComparison,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900,
+                  color: textColor,
+                ),
+              ),
+              const SizedBox(height: 5),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Text(
+                  localizations.noTransactionsYet,
+                  style: TextStyle(color: secondaryTextColor),
+                ),
               ),
             ],
-          ),
-        ),
-      ],
+          );
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              localizations.monthlyComparison,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w900,
+                color: textColor,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Container(
+              width: double.infinity,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 250,
+                    child: BarChart(
+                      BarChartData(
+                        alignment: BarChartAlignment.spaceAround,
+                        maxY: maxY < 100 ? 100 : maxY,
+                        barTouchData: BarTouchData(
+                          enabled: true,
+                          touchTooltipData: BarTouchTooltipData(
+                            getTooltipColor: (group) => isDark ? Colors.grey.shade800 : Colors.white,
+                            tooltipRoundedRadius: 8,
+                            tooltipPadding: const EdgeInsets.all(8),
+                            tooltipMargin: 8,
+                            getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                              final monthIndex = group.x.toInt();
+                              final monthName = monthIndex == 0
+                                  ? _getMonthAbbreviation(previousMonth)
+                                  : _getMonthAbbreviation(currentMonth);
+                              final isIncome = rodIndex == 0;
+                              final value = rod.toY;
+                              final localizations =
+                                  AppLocalizations.of(context) ??
+                                  AppLocalizations(const Locale('en'));
+                              return BarTooltipItem(
+                                '$monthName\n${isIncome ? localizations.income : localizations.expense} : \$${value.toStringAsFixed(2)}',
+                                TextStyle(
+                                  color: isIncome ? Colors.green : Colors.red,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        titlesData: FlTitlesData(
+                          show: true,
+                          rightTitles: const AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
+                          topTitles: const AxisTitles(
+                            sideTitles: SideTitles(showTitles: false),
+                          ),
+                          bottomTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                              showTitles: true,
+                              getTitlesWidget: (value, meta) {
+                                final index = value.toInt();
+                                if (index == 0) {
+                                  return Text(
+                                    _getMonthAbbreviation(previousMonth),
+                                    style: TextStyle(
+                                      color: textColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  );
+                                } else if (index == 1) {
+                                  return Text(
+                                    _getMonthAbbreviation(currentMonth),
+                                    style: TextStyle(
+                                      color: textColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  );
+                                }
+                                return const Text('');
+                              },
+                            ),
+                          ),
+                          leftTitles: AxisTitles(
+                            sideTitles: SideTitles(
+                              showTitles: true,
+                              reservedSize: 50,
+                              interval: yAxisInterval,
+                              getTitlesWidget: (value, meta) {
+                                if (value >= 1000) {
+                                  return Text(
+                                    '\$${(value / 1000).toStringAsFixed(value >= 10000 ? 0 : 1)}k',
+                                    style: TextStyle(
+                                      color: secondaryTextColor,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  );
+                                }
+                                return Text(
+                                  '\$${value.toStringAsFixed(0)}',
+                                  style: TextStyle(
+                                    color: secondaryTextColor,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        gridData: FlGridData(
+                          show: true,
+                          drawVerticalLine: false,
+                          horizontalInterval: yAxisInterval,
+                          getDrawingHorizontalLine: (value) {
+                            return FlLine(
+                              color: isDark ? Colors.grey.shade700 : const Color(0xFFAAA6A6),
+                              strokeWidth: 1,
+                            );
+                          },
+                        ),
+                        borderData: FlBorderData(
+                          show: true,
+                          border: Border.all(
+                            color: isDark ? Colors.grey.shade700 : const Color(0xFFAAA6A6),
+                            width: 1,
+                          ),
+                        ),
+                        barGroups: [
+                          BarChartGroupData(
+                            x: 0,
+                            barRods: [
+                              BarChartRodData(
+                                toY: previousIncome,
+                                color: Colors.green,
+                                width: 65,
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(4),
+                                ),
+                              ),
+                              BarChartRodData(
+                                toY: previousExpense,
+                                color: Colors.red,
+                                width: 65,
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(4),
+                                ),
+                              ),
+                            ],
+                            barsSpace: 8,
+                          ),
+                          BarChartGroupData(
+                            x: 1,
+                            barRods: [
+                              BarChartRodData(
+                                toY: currentIncome,
+                                color: Colors.green,
+                                width: 65,
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(4),
+                                ),
+                              ),
+                              BarChartRodData(
+                                toY: currentExpense,
+                                color: Colors.red,
+                                width: 65,
+                                borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(4),
+                                ),
+                              ),
+                            ],
+                            barsSpace: 8,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildLegendItem(localizations.income, Colors.green),
+                      const SizedBox(width: 24),
+                      _buildLegendItem(localizations.expense, Colors.red),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

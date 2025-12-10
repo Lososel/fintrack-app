@@ -15,12 +15,16 @@ class BankCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final cardBgColor = backgroundColor ?? (isDark ? const Color(0xFF181820) : Colors.white);
+    
     return GestureDetector(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: backgroundColor ?? Colors.white,
+          color: cardBgColor,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
@@ -30,7 +34,7 @@ class BankCardWidget extends StatelessWidget {
               height: 48,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.grey.shade100,
+                color: isDark ? Colors.grey.shade800 : Colors.grey.shade100,
               ),
               child: card.assetPath.isNotEmpty
                   ? ClipOval(
@@ -38,14 +42,17 @@ class BankCardWidget extends StatelessWidget {
                         card.assetPath,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
-                          return const Icon(
+                          return Icon(
                             Icons.account_balance,
-                            color: Colors.grey,
+                            color: isDark ? Colors.grey.shade400 : Colors.grey,
                           );
                         },
                       ),
                     )
-                  : const Icon(Icons.account_balance, color: Colors.grey),
+                  : Icon(
+                      Icons.account_balance,
+                      color: isDark ? Colors.grey.shade400 : Colors.grey,
+                    ),
             ),
             const SizedBox(width: 16),
             Expanded(
@@ -57,10 +64,10 @@ class BankCardWidget extends StatelessWidget {
                       Flexible(
                         child: Text(
                           card.bankName,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
-                            color: Colors.black,
+                            color: isDark ? Colors.white : Colors.black,
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -68,9 +75,9 @@ class BankCardWidget extends StatelessWidget {
                       const SizedBox(width: 8),
                       Text(
                         "... ${card.cardNumber}",
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
-                          color: Colors.grey,
+                          color: isDark ? Colors.grey.shade400 : Colors.grey,
                         ),
                       ),
                     ],
@@ -78,21 +85,21 @@ class BankCardWidget extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     card.category,
-                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: isDark ? Colors.grey.shade400 : Colors.grey,
+                    ),
                   ),
                 ],
               ),
             ),
-            Flexible(
-              child: Text(
-                "\$${card.balance.toStringAsFixed(2)}",
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
-                ),
-                textAlign: TextAlign.right,
-                overflow: TextOverflow.ellipsis,
+            const SizedBox(width: 12),
+            Text(
+              "\$${card.balance.toStringAsFixed(2)}",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: isDark ? Colors.white : Colors.black,
               ),
             ),
           ],

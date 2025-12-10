@@ -91,50 +91,65 @@ class _SpendingOverviewState extends State<SpendingOverview> {
       widget.selectedPeriod,
     );
 
-    final spendingByCategory = SpendingCalculator.calculateSpendingByCategory(
-      filteredTransactions,
-    );
-
-    if (spendingByCategory.isEmpty) {
-      return const SpendingEmptyState();
-    }
-
-    final totalSpending = spendingByCategory.fold<double>(
-      0.0,
-      (sum, item) => sum + item.amount,
-    );
-    final currency = _getCurrency(filteredTransactions);
-
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          localizations.spendingOverview,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
-        ),
-        const SizedBox(height: 30),
-        Center(
-          child: SpendingPieChart(
-            spendingByCategory: spendingByCategory,
-            currency: currency,
-            totalSpending: totalSpending,
-            size: 250,
-            centerSpaceRadius: 70,
-            baseRadius: 70,
-            touchedRadius: 75,
-            showCategoryDetails: true,
-          ),
-        ),
-        const SizedBox(height: 30),
-        CategoryBreakdownList(
-          spendingByCategory: spendingByCategory,
-          currency: currency,
-          totalSpending: totalSpending,
-        ),
-      ],
+    return FutureBuilder<List<CategorySpending>>(
+      future: SpendingCalculator.calculateSpendingByCategory(
+        filteredTransactions,
+      ),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final spendingByCategory = snapshot.data ?? [];
+
+        if (spendingByCategory.isEmpty) {
+          return const SpendingEmptyState();
+        }
+
+        final totalSpending = spendingByCategory.fold<double>(
+          0.0,
+          (sum, item) => sum + item.amount,
+        );
+
+        final theme = Theme.of(context);
+        final isDark = theme.brightness == Brightness.dark;
+        
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              localizations.spendingOverview,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w900,
+                color: isDark ? Colors.white : Colors.black,
+              ),
+            ),
+            const SizedBox(height: 30),
+            Center(
+              child: SpendingPieChart(
+                spendingByCategory: spendingByCategory,
+                currency: Currency.dollar, // Always use dollar after conversion
+                totalSpending: totalSpending,
+                size: 250,
+                centerSpaceRadius: 70,
+                baseRadius: 70,
+                touchedRadius: 75,
+                showCategoryDetails: true,
+              ),
+            ),
+            const SizedBox(height: 30),
+            CategoryBreakdownList(
+              spendingByCategory: spendingByCategory,
+              currency: Currency.dollar, // Always use dollar after conversion
+              totalSpending: totalSpending,
+            ),
+          ],
+        );
+      },
     );
   }
 }

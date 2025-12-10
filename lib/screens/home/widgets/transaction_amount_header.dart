@@ -15,6 +15,9 @@ class TransactionAmountHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
     return Row(
       children: [
         Container(
@@ -22,8 +25,8 @@ class TransactionAmountHeader extends StatelessWidget {
           height: 60,
           decoration: BoxDecoration(
             color: isExpense
-                ? const Color(0xffFDE7E7)
-                : const Color(0xffDBF4F0),
+                ? (isDark ? Colors.red.withOpacity(0.2) : const Color(0xffFDE7E7))
+                : (isDark ? Colors.green.withOpacity(0.2) : const Color(0xffDBF4F0)),
             shape: BoxShape.circle,
           ),
           child: Icon(
@@ -39,9 +42,9 @@ class TransactionAmountHeader extends StatelessWidget {
             children: [
               Text(
                 isExpense ? "Expense" : "Income",
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
-                  color: Colors.black54,
+                  color: isDark ? Colors.grey.shade400 : Colors.black54,
                   fontWeight: FontWeight.w700,
                 ),
               ),

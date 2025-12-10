@@ -124,11 +124,15 @@ class _CurrencyPageState extends State<CurrencyPage> {
   Widget build(BuildContext context) {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : Colors.black;
+    final secondaryTextColor = isDark ? Colors.grey.shade400 : Colors.black87;
     final convertedAmount = _getConvertedAmount();
     final currentRate = _getExchangeRate(_fromCurrency, _toCurrency);
 
     return Scaffold(
-      backgroundColor: const Color(0xffF6F6F9),
+      backgroundColor: isDark ? const Color(0xFF0D0D10) : const Color(0xffF6F6F9),
       bottomNavigationBar: const HomeBottomNav(currentIndex: 3),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -140,17 +144,20 @@ class _CurrencyPageState extends State<CurrencyPage> {
               Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: isDark ? Colors.white : Colors.black,
+                    ),
                     onPressed: () => Navigator.pop(context),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       localizations.currencyConverter,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w900,
-                        color: Colors.black,
+                        color: textColor,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -163,7 +170,7 @@ class _CurrencyPageState extends State<CurrencyPage> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: isDark ? const Color(0xFF181820) : Colors.black,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Column(
@@ -203,10 +210,10 @@ class _CurrencyPageState extends State<CurrencyPage> {
               // From Section
               Text(
                 localizations.from,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: Colors.black87,
+                  color: secondaryTextColor,
                 ),
               ),
               const SizedBox(height: 8),
@@ -218,23 +225,25 @@ class _CurrencyPageState extends State<CurrencyPage> {
                     vertical: 18,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isDark ? const Color(0xFF181820) : Colors.white,
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.black26),
+                    border: Border.all(
+                      color: isDark ? Colors.grey.shade700 : Colors.black26,
+                    ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         _getCurrencyDisplay(_fromCurrency),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
-                          color: Colors.black,
+                          color: textColor,
                         ),
                       ),
-                      const Icon(
+                      Icon(
                         Icons.keyboard_arrow_down,
-                        color: Colors.black54,
+                        color: isDark ? Colors.grey.shade400 : Colors.black54,
                       ),
                     ],
                   ),
@@ -246,11 +255,11 @@ class _CurrencyPageState extends State<CurrencyPage> {
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                style: const TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 16, color: textColor),
                 decoration: InputDecoration(
                   hintText: "0",
-                  hintStyle: const TextStyle(
-                    color: Colors.black54,
+                  hintStyle: TextStyle(
+                    color: isDark ? Colors.grey.shade400 : Colors.black54,
                     fontSize: 16,
                   ),
                   contentPadding: const EdgeInsets.symmetric(
@@ -258,18 +267,24 @@ class _CurrencyPageState extends State<CurrencyPage> {
                     vertical: 18,
                   ),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: isDark ? const Color(0xFF181820) : Colors.white,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(color: Colors.black26),
+                    borderSide: BorderSide(
+                      color: isDark ? Colors.grey.shade700 : Colors.black26,
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(color: Colors.black26),
+                    borderSide: BorderSide(
+                      color: isDark ? Colors.grey.shade700 : Colors.black26,
+                    ),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
-                    borderSide: const BorderSide(color: Colors.black),
+                    borderSide: BorderSide(
+                      color: isDark ? Colors.white : Colors.black,
+                    ),
                   ),
                 ),
               ),
@@ -281,8 +296,8 @@ class _CurrencyPageState extends State<CurrencyPage> {
                   child: Container(
                     width: 48,
                     height: 48,
-                    decoration: const BoxDecoration(
-                      color: Colors.black,
+                    decoration: BoxDecoration(
+                      color: isDark ? const Color(0xFF181820) : Colors.black,
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
@@ -297,10 +312,10 @@ class _CurrencyPageState extends State<CurrencyPage> {
               // To Section
               Text(
                 localizations.to,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: Colors.black87,
+                  color: secondaryTextColor,
                 ),
               ),
               const SizedBox(height: 8),
@@ -312,23 +327,25 @@ class _CurrencyPageState extends State<CurrencyPage> {
                     vertical: 18,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: isDark ? const Color(0xFF181820) : Colors.white,
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.black26),
+                    border: Border.all(
+                      color: isDark ? Colors.grey.shade700 : Colors.black26,
+                    ),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         _getCurrencyDisplay(_toCurrency),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
-                          color: Colors.black,
+                          color: textColor,
                         ),
                       ),
-                      const Icon(
+                      Icon(
                         Icons.keyboard_arrow_down,
-                        color: Colors.black54,
+                        color: isDark ? Colors.grey.shade400 : Colors.black54,
                       ),
                     ],
                   ),
@@ -341,18 +358,20 @@ class _CurrencyPageState extends State<CurrencyPage> {
                   vertical: 18,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: isDark ? const Color(0xFF181820) : Colors.white,
                   borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: Colors.black26),
+                  border: Border.all(
+                    color: isDark ? Colors.grey.shade700 : Colors.black26,
+                  ),
                 ),
                 child: Row(
                   children: [
                     Expanded(
                       child: Text(
                         convertedAmount.toStringAsFixed(2),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
-                          color: Colors.black54,
+                          color: isDark ? Colors.grey.shade400 : Colors.black54,
                         ),
                       ),
                     ),
@@ -363,17 +382,17 @@ class _CurrencyPageState extends State<CurrencyPage> {
               // Conversion Details
               Text(
                 localizations.conversionDetails,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
-                  color: Colors.black,
+                  color: textColor,
                 ),
               ),
               const SizedBox(height: 16),
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: isDark ? const Color(0xFF181820) : Colors.white,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Column(
@@ -383,18 +402,18 @@ class _CurrencyPageState extends State<CurrencyPage> {
                       children: [
                         Text(
                           localizations.youSend,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey,
+                            color: isDark ? Colors.grey.shade400 : Colors.grey,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         Text(
                           "${_fromCurrency.symbol}${_formatAmount(double.tryParse(_fromAmountController.text) ?? 0.0)}",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                            color: textColor,
                           ),
                         ),
                       ],
@@ -405,9 +424,9 @@ class _CurrencyPageState extends State<CurrencyPage> {
                       children: [
                         Text(
                           localizations.theyReceive,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey,
+                            color: isDark ? Colors.grey.shade400 : Colors.grey,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -427,17 +446,17 @@ class _CurrencyPageState extends State<CurrencyPage> {
                       children: [
                         Text(
                           localizations.exchangeRate,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey,
+                            color: isDark ? Colors.grey.shade400 : Colors.grey,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         Text(
                           "1 ${_fromCurrency.code} = ${currentRate.toStringAsFixed(4)} ${_toCurrency.code}",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey,
+                            color: isDark ? Colors.grey.shade400 : Colors.grey,
                             fontWeight: FontWeight.w400,
                           ),
                         ),

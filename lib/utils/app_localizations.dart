@@ -167,6 +167,43 @@ class AppLocalizations {
       'adjustFontSize': 'Adjust font size',
       'small': 'Small',
       'large': 'Large',
+      'gettingStarted': 'Getting started',
+      'howDoIAddMyFirstTransaction': 'How do I add my first transaction?',
+      'howDoIAddMyFirstTransactionAnswer': 'Tap the "+" button on the dashboard or go to the Transactions tab and select "Add Transaction". Fill in the amount, category, description, and date, then save.',
+      'howDoICreateABudget': 'How do I create a budget?',
+      'howDoICreateABudgetAnswer': 'Navigate to the Budgets tab, tap "Create Budget", select a category, set your budget amount and period (monthly/yearly), then save.',
+      'features': 'Features',
+      'howDoesTheCurrencyConverterWork': 'How does the currency converter work?',
+      'howDoesTheCurrencyConverterWorkAnswer': 'The currency converter uses real-time exchange rates to convert between different currencies. Access it from Settings > Currency Converter.',
+      'categories': 'Categories',
+      'canICreateCustomCategories': 'Can I create custom categories?',
+      'canICreateCustomCategoriesAnswer': 'Absolutely! Go to the Categories tab and tap "Add Category". Choose a name, icon, color, and whether it\'s for income or expenses.',
+      'howDoIEditOrDeleteACategory': 'How do I edit or delete a category?',
+      'howDoIEditOrDeleteACategoryAnswer': 'Tap on any category to view its details. From there, you can edit the category information or delete it if it\'s no longer needed.',
+      'analyticsSection': 'Analytics',
+      'whatReportsAreAvailable': 'What reports are available?',
+      'whatReportsAreAvailableAnswer': 'You can view Monthly Reports, Category Reports, and Comparison Reports. Access them from the Analytics tab to get insights into your spending patterns.',
+      'security': 'Security',
+      'isMyFinancialDataSecure': 'Is my financial data secure?',
+      'isMyFinancialDataSecureAnswer': 'Yes! All your data is stored locally on your device using browser localStorage. We don\'t send your data to any external servers.',
+      'canIPasswordProtectTheApp': 'Can I password protect the app?',
+      'canIPasswordProtectTheAppAnswer': 'Currently, password protection is not available, but we\'re working on adding this feature in a future update.',
+      'contactUs': 'Contact us',
+      'contactUsEmail': 'support@spendly.kz',
+      'informationWeCollect': 'Information We Collect',
+      'informationWeCollectContent': 'Personal Finance Manager only collects information that you explicitly provide, such as your name, email (for authentication), and the financial data you enter (transactions, budgets, categories). This information is stored locally on your device.',
+      'howWeUseYourInformation': 'How We Use Your Information',
+      'howWeUseYourInformationContent': 'Your information is used solely to provide the app\'s functionality - tracking your finances, generating reports, and helping you manage your budget. We do not use your data for any other purpose.',
+      'dataStorage': 'Data Storage',
+      'dataStorageContent': 'All data is stored in your browser\'s local storage. This means your data stays on your device and is not transmitted to any servers. If you clear your browser data or uninstall the app, your financial data will be removed.',
+      'dataSecurity': 'Data Security',
+      'dataSecurityContent': 'We take security seriously. While we use local storage which is generally secure, we recommend using the app on trusted devices and enabling device-level security features like passwords or biometric authentication.',
+      'thirdPartyServices': 'Third-Party Services',
+      'thirdPartyServicesContent': 'The Currency Converter feature may use external APIs to fetch real-time exchange rates. These API calls do not include any of your personal or financial data - only currency codes and amounts for conversion.',
+      'personalFinanceManager': 'Personal Finance Manager',
+      'aboutDescription': 'Your trusted companion for managing personal finances and achieving financial freedom.',
+      'madeWithLove': 'Made with Love',
+      'github': 'GitHub',
     },
     'ru': {
       'allTransactions': 'Все транзакции',
@@ -321,6 +358,43 @@ class AppLocalizations {
       'adjustFontSize': 'Настроить размер шрифта',
       'small': 'Маленький',
       'large': 'Большой',
+      'gettingStarted': 'Начало работы',
+      'howDoIAddMyFirstTransaction': 'Как добавить мою первую транзакцию?',
+      'howDoIAddMyFirstTransactionAnswer': 'Нажмите кнопку "+" на главной странице или перейдите на вкладку "Транзакции" и выберите "Добавить транзакцию". Заполните сумму, категорию, описание и дату, затем сохраните.',
+      'howDoICreateABudget': 'Как создать бюджет?',
+      'howDoICreateABudgetAnswer': 'Перейдите на вкладку "Бюджет", нажмите "Создать бюджет", выберите категорию, установите сумму бюджета и период (месячный/годовой), затем сохраните.',
+      'features': 'Функции',
+      'howDoesTheCurrencyConverterWork': 'Как работает конвертер валют?',
+      'howDoesTheCurrencyConverterWorkAnswer': 'Конвертер валют использует актуальные обменные курсы для конвертации между различными валютами. Доступен в Настройки > Конвертер валют.',
+      'categories': 'Категории',
+      'canICreateCustomCategories': 'Могу ли я создать собственные категории?',
+      'canICreateCustomCategoriesAnswer': 'Конечно! Перейдите на вкладку "Категории" и нажмите "Добавить категорию". Выберите название, иконку, цвет и укажите, для доходов или расходов она предназначена.',
+      'howDoIEditOrDeleteACategory': 'Как редактировать или удалить категорию?',
+      'howDoIEditOrDeleteACategoryAnswer': 'Нажмите на любую категорию, чтобы просмотреть её детали. Оттуда вы можете редактировать информацию о категории или удалить её, если она больше не нужна.',
+      'analyticsSection': 'Аналитика',
+      'whatReportsAreAvailable': 'Какие отчеты доступны?',
+      'whatReportsAreAvailableAnswer': 'Вы можете просматривать месячные отчеты, отчеты по категориям и сравнительные отчеты. Доступны на вкладке "Аналитика" для получения информации о ваших расходах.',
+      'security': 'Безопасность',
+      'isMyFinancialDataSecure': 'Безопасны ли мои финансовые данные?',
+      'isMyFinancialDataSecureAnswer': 'Да! Все ваши данные хранятся локально на вашем устройстве с использованием localStorage браузера. Мы не отправляем ваши данные на внешние серверы.',
+      'canIPasswordProtectTheApp': 'Могу ли я защитить приложение паролем?',
+      'canIPasswordProtectTheAppAnswer': 'В настоящее время защита паролем недоступна, но мы работаем над добавлением этой функции в будущем обновлении.',
+      'contactUs': 'Свяжитесь с нами',
+      'contactUsEmail': 'support@spendly.kz',
+      'informationWeCollect': 'Информация, которую мы собираем',
+      'informationWeCollectContent': 'Менеджер личных финансов собирает только ту информацию, которую вы явно предоставляете, такую как ваше имя, email (для аутентификации) и финансовые данные, которые вы вводите (транзакции, бюджеты, категории). Эта информация хранится локально на вашем устройстве.',
+      'howWeUseYourInformation': 'Как мы используем вашу информацию',
+      'howWeUseYourInformationContent': 'Ваша информация используется исключительно для обеспечения функциональности приложения - отслеживания ваших финансов, создания отчетов и помощи в управлении бюджетом. Мы не используем ваши данные для каких-либо других целей.',
+      'dataStorage': 'Хранение данных',
+      'dataStorageContent': 'Все данные хранятся в локальном хранилище вашего браузера. Это означает, что ваши данные остаются на вашем устройстве и не передаются на какие-либо серверы. Если вы очистите данные браузера или удалите приложение, ваши финансовые данные будут удалены.',
+      'dataSecurity': 'Безопасность данных',
+      'dataSecurityContent': 'Мы серьезно относимся к безопасности. Хотя мы используем локальное хранилище, которое обычно безопасно, мы рекомендуем использовать приложение на доверенных устройствах и включать функции безопасности на уровне устройства, такие как пароли или биометрическая аутентификация.',
+      'thirdPartyServices': 'Сторонние сервисы',
+      'thirdPartyServicesContent': 'Функция конвертера валют может использовать внешние API для получения актуальных обменных курсов. Эти вызовы API не включают никаких ваших личных или финансовых данных - только коды валют и суммы для конвертации.',
+      'personalFinanceManager': 'Менеджер личных финансов',
+      'aboutDescription': 'Ваш надежный помощник в управлении личными финансами и достижении финансовой свободы.',
+      'madeWithLove': 'Сделано с любовью',
+      'github': 'GitHub',
     },
     'kk': {
       'allTransactions': 'Барлық транзакциялар',
@@ -476,6 +550,43 @@ class AppLocalizations {
       'adjustFontSize': 'Қаріп өлшемін реттеу',
       'small': 'Кіші',
       'large': 'Үлкен',
+      'gettingStarted': 'Бастау',
+      'howDoIAddMyFirstTransaction': 'Менің бірінші транзакциямды қалай қосам?',
+      'howDoIAddMyFirstTransactionAnswer': 'Басты беттегі "+" батырмасын басыңыз немесе "Транзакциялар" қойыншасына өтіп "Транзакция қосу" таңдаңыз. Сома, категория, сипаттама және күнді толтырып, содан кейін сақтаңыз.',
+      'howDoICreateABudget': 'Бюджетті қалай құрамын?',
+      'howDoICreateABudgetAnswer': '"Бюджет" қойыншасына өтіп, "Бюджет құру" батырмасын басыңыз, категорияны таңдаңыз, бюджет сомасын және мерзімін (айлық/жылдық) орнатып, содан кейін сақтаңыз.',
+      'features': 'Функциялар',
+      'howDoesTheCurrencyConverterWork': 'Валюта конвертері қалай жұмыс істейді?',
+      'howDoesTheCurrencyConverterWorkAnswer': 'Валюта конвертері әртүрлі валюталар арасында конвертация үшін нақты уақыттағы айырбас бағамын пайдаланады. Баптаулар > Валюта конвертерінен қолжетімді.',
+      'categories': 'Категориялар',
+      'canICreateCustomCategories': 'Мен жеке категорияларды құра аламын ба?',
+      'canICreateCustomCategoriesAnswer': 'Әрине! "Категориялар" қойыншасына өтіп "Категория қосу" батырмасын басыңыз. Атау, белгіше, түс таңдап, кіріс немесе шығын үшін екенін көрсетіңіз.',
+      'howDoIEditOrDeleteACategory': 'Категорияны қалай өңдей немесе жоямын?',
+      'howDoIEditOrDeleteACategoryAnswer': 'Кез келген категорияны басып, оның мәліметтерін көріңіз. Одан категория ақпаратын өңдеуге немесе ол қажет емес болса жоюға болады.',
+      'analyticsSection': 'Аналитика',
+      'whatReportsAreAvailable': 'Қандай есептер қолжетімді?',
+      'whatReportsAreAvailableAnswer': 'Сіз айлық есептерді, категория бойынша есептерді және салыстырмалы есептерді көре аласыз. Шығындар үлгілері туралы ақпарат алу үшін "Аналитика" қойыншасынан қолжетімді.',
+      'security': 'Қауіпсіздік',
+      'isMyFinancialDataSecure': 'Менің қаржылық деректерім қауіпсіз бе?',
+      'isMyFinancialDataSecureAnswer': 'Иә! Сіздің барлық деректеріңіз браузердің localStorage арқылы құрылғыңызда жергілікті түрде сақталады. Біз сіздің деректеріңізді сыртқы серверлерге жібермейміз.',
+      'canIPasswordProtectTheApp': 'Мен қолданбаны құпия сөзбен қорғай аламын ба?',
+      'canIPasswordProtectTheAppAnswer': 'Қазіргі уақытта құпия сөзбен қорғау қолжетімсіз, бірақ біз бұл функцияны болашақ жаңартуға қосуға жұмыс істеп жатырмыз.',
+      'contactUs': 'Бізбен байланысыңыз',
+      'contactUsEmail': 'support@spendly.kz',
+      'informationWeCollect': 'Біз жинайтын ақпарат',
+      'informationWeCollectContent': 'Жеке қаржы менеджері тек сіз анық көрсеткен ақпаратты жинайды, мысалы, атыңыз, электрондық пошта (аутентификация үшін) және сіз енгізген қаржылық деректер (транзакциялар, бюджеттер, категориялар). Бұл ақпарат сіздің құрылғыңызда жергілікті түрде сақталады.',
+      'howWeUseYourInformation': 'Біз сіздің ақпаратыңызды қалай пайдаланамыз',
+      'howWeUseYourInformationContent': 'Сіздің ақпаратыңыз тек қолданбаның функционалдығын қамтамасыз ету үшін пайдаланылады - қаржыңызды бақылау, есептер жасау және бюджетті басқаруға көмектесу. Біз сіздің деректеріңізді басқа мақсаттарға пайдаланбаймыз.',
+      'dataStorage': 'Деректерді сақтау',
+      'dataStorageContent': 'Барлық деректер браузеріңіздің жергілікті сақтау орнында сақталады. Бұл сіздің деректеріңіз құрылғыңызда қалады және ешқандай серверлерге жіберілмейді дегенді білдіреді. Егер сіз браузер деректерін тазаласаңыз немесе қолданбаны жойсаңыз, сіздің қаржылық деректеріңіз жойылады.',
+      'dataSecurity': 'Деректер қауіпсіздігі',
+      'dataSecurityContent': 'Біз қауіпсіздікке байсалды түрде қараймыз. Біз жалпы қауіпсіз болып табылатын жергілікті сақтауды пайдалансақ та, біз қолданбаны сенімді құрылғыларда пайдалануды және құрылғы деңгейіндегі қауіпсіздік функцияларын, мысалы, құпия сөздер немесе биометриялық аутентификацияны қосуға ұсынамыз.',
+      'thirdPartyServices': 'Үшінші тарап сервистері',
+      'thirdPartyServicesContent': 'Валюта конвертері функциясы нақты уақыттағы айырбас бағамын алу үшін сыртқы API-ларды пайдалануы мүмкін. Бұл API шақырулары сіздің жеке немесе қаржылық деректеріңіздің ешқайсысын қамтымайды - тек валюта кодтары мен конвертация үшін сомалар.',
+      'personalFinanceManager': 'Жеке қаржы менеджері',
+      'aboutDescription': 'Жеке қаржыны басқару және қаржылық еркіндікке қол жеткізу үшін сенімді серіктесіңіз.',
+      'madeWithLove': 'Махаббатпен жасалған',
+      'github': 'GitHub',
     },
   };
 
@@ -642,6 +753,43 @@ class AppLocalizations {
   String get adjustFontSize => translate('adjustFontSize');
   String get small => translate('small');
   String get large => translate('large');
+  String get gettingStarted => translate('gettingStarted');
+  String get howDoIAddMyFirstTransaction => translate('howDoIAddMyFirstTransaction');
+  String get howDoIAddMyFirstTransactionAnswer => translate('howDoIAddMyFirstTransactionAnswer');
+  String get howDoICreateABudget => translate('howDoICreateABudget');
+  String get howDoICreateABudgetAnswer => translate('howDoICreateABudgetAnswer');
+  String get features => translate('features');
+  String get howDoesTheCurrencyConverterWork => translate('howDoesTheCurrencyConverterWork');
+  String get howDoesTheCurrencyConverterWorkAnswer => translate('howDoesTheCurrencyConverterWorkAnswer');
+  String get categories => translate('categories');
+  String get canICreateCustomCategories => translate('canICreateCustomCategories');
+  String get canICreateCustomCategoriesAnswer => translate('canICreateCustomCategoriesAnswer');
+  String get howDoIEditOrDeleteACategory => translate('howDoIEditOrDeleteACategory');
+  String get howDoIEditOrDeleteACategoryAnswer => translate('howDoIEditOrDeleteACategoryAnswer');
+  String get analyticsSection => translate('analyticsSection');
+  String get whatReportsAreAvailable => translate('whatReportsAreAvailable');
+  String get whatReportsAreAvailableAnswer => translate('whatReportsAreAvailableAnswer');
+  String get security => translate('security');
+  String get isMyFinancialDataSecure => translate('isMyFinancialDataSecure');
+  String get isMyFinancialDataSecureAnswer => translate('isMyFinancialDataSecureAnswer');
+  String get canIPasswordProtectTheApp => translate('canIPasswordProtectTheApp');
+  String get canIPasswordProtectTheAppAnswer => translate('canIPasswordProtectTheAppAnswer');
+  String get contactUs => translate('contactUs');
+  String get contactUsEmail => translate('contactUsEmail');
+  String get informationWeCollect => translate('informationWeCollect');
+  String get informationWeCollectContent => translate('informationWeCollectContent');
+  String get howWeUseYourInformation => translate('howWeUseYourInformation');
+  String get howWeUseYourInformationContent => translate('howWeUseYourInformationContent');
+  String get dataStorage => translate('dataStorage');
+  String get dataStorageContent => translate('dataStorageContent');
+  String get dataSecurity => translate('dataSecurity');
+  String get dataSecurityContent => translate('dataSecurityContent');
+  String get thirdPartyServices => translate('thirdPartyServices');
+  String get thirdPartyServicesContent => translate('thirdPartyServicesContent');
+  String get personalFinanceManager => translate('personalFinanceManager');
+  String get aboutDescription => translate('aboutDescription');
+  String get madeWithLove => translate('madeWithLove');
+  String get github => translate('github');
 }
 
 class _AppLocalizationsDelegate

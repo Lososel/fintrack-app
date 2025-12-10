@@ -41,98 +41,108 @@ class _SpendingOverviewState extends State<SpendingOverview> {
     final isDark = theme.brightness == Brightness.dark;
     final textColor = isDark ? Colors.white : Colors.black;
     final secondaryTextColor = isDark ? Colors.grey.shade400 : Colors.black54;
-    final spendingByCategory = SpendingCalculator.calculateSpendingByCategory(
-      _transactionService.transactions,
-    );
 
-    if (spendingByCategory.isEmpty) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            localizations.spendingOverview,
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w900,
-              color: textColor,
-            ),
-          ),
-          const SizedBox(height: 20),
-          Column(
+    return FutureBuilder<List<CategorySpending>>(
+      future: SpendingCalculator.calculateSpendingByCategory(
+        _transactionService.transactions,
+      ),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final spendingByCategory = snapshot.data ?? [];
+
+        if (spendingByCategory.isEmpty) {
+          return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                localizations.noExpensesYet,
+                localizations.spendingOverview,
                 style: TextStyle(
-                  fontSize: 14,
-                  color: secondaryTextColor,
-                ),
-              ),
-            ],
-          ),
-        ],
-      );
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              localizations.spendingOverview,
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w900,
-                color: textColor,
-              ),
-            ),
-
-            GestureDetector(
-              onTap: () {
-                // Navigate to analytics screen
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AnalyticsScreen(),
-                  ),
-                );
-              },
-              child: Text(
-                "${localizations.viewDetails} →",
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w900,
                   color: textColor,
                 ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 40),
-        Center(
-          child: Column(
-            children: [
-              // Pie Chart
-              SpendingPieChart(
-                spendingByCategory: spendingByCategory,
-                currency: _getCurrency(),
-                size: 180,
-                centerSpaceRadius: 50,
-                baseRadius: 60,
-                touchedRadius: 65,
-              ),
               const SizedBox(height: 20),
-              // Legend
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: _buildLegend(spendingByCategory),
+                children: [
+                  Text(
+                    localizations.noExpensesYet,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: secondaryTextColor,
+                    ),
+                  ),
+                ],
               ),
             ],
-          ),
-        ),
-      ],
+          );
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  localizations.spendingOverview,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w900,
+                    color: textColor,
+                  ),
+                ),
+
+                GestureDetector(
+                  onTap: () {
+                    // Navigate to analytics screen
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AnalyticsScreen(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "${localizations.viewDetails} →",
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                      color: textColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 40),
+            Center(
+              child: Column(
+                children: [
+                  // Pie Chart
+                  SpendingPieChart(
+                    spendingByCategory: spendingByCategory,
+                    currency: Currency.dollar, // Always use dollar after conversion
+                    size: 180,
+                    centerSpaceRadius: 50,
+                    baseRadius: 60,
+                    touchedRadius: 65,
+                  ),
+                  const SizedBox(height: 20),
+                  // Legend
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: _buildLegend(spendingByCategory),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 

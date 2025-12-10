@@ -19,11 +19,14 @@ class TransactionDetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDark ? const Color(0xFF181820) : Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(

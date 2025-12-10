@@ -170,7 +170,7 @@ class _CreateBudgetModalState extends State<CreateBudgetModal> {
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: _isTotalBudget
-                            ? const Color(0xff1e1e1e)
+                            ? (isDark ? Colors.white.withOpacity(0.15) : const Color(0xff1e1e1e))
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
@@ -198,7 +198,7 @@ class _CreateBudgetModalState extends State<CreateBudgetModal> {
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: !_isTotalBudget
-                            ? const Color(0xff1e1e1e)
+                            ? (isDark ? Colors.white.withOpacity(0.15) : const Color(0xff1e1e1e))
                             : Colors.transparent,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(

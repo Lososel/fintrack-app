@@ -20,13 +20,19 @@ class CategoryBreakdownList extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations =
         AppLocalizations.of(context) ?? AppLocalizations(const Locale('en'));
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           localizations.expensesBreakdown,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w800,
+            color: isDark ? Colors.white : Colors.black,
+          ),
         ),
         const SizedBox(height: 16),
         ...spendingByCategory.map((categorySpending) {

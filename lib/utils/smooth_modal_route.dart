@@ -37,6 +37,9 @@ class SmoothModalRoute<T> extends ModalRoute<T> {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
   ) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
@@ -49,9 +52,9 @@ class SmoothModalRoute<T> extends ModalRoute<T> {
               constraints: BoxConstraints(
                 maxHeight: MediaQuery.of(context).size.height * 0.9,
               ),
-              decoration: const BoxDecoration(
-                color: Color(0xffF4F4F7),
-                borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+              decoration: BoxDecoration(
+                color: isDark ? const Color(0xFF181820) : const Color(0xffF4F4F7),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
               ),
               child: ClipRRect(
                 borderRadius: const BorderRadius.vertical(

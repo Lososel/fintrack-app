@@ -3,6 +3,7 @@ import 'package:fintrack_app/components/nav/bottom_nav.dart';
 import 'package:fintrack_app/components/button/primary_button.dart';
 import 'package:fintrack_app/services/budget_service.dart';
 import 'package:fintrack_app/services/transaction_service.dart';
+import 'package:fintrack_app/services/currency_conversion_service.dart';
 import 'package:fintrack_app/utils/currency.dart';
 import 'package:fintrack_app/screens/budget/widgets/total_budget_card.dart';
 import 'package:fintrack_app/screens/budget/widgets/swipeable_category_budget_item.dart';
@@ -37,44 +38,55 @@ class _BudgetScreenState extends State<BudgetScreen> {
     setState(() {});
   }
 
-  double _calculateCategorySpending(String category) {
+  Future<double> _calculateCategorySpending(String category) async {
     final now = DateTime.now();
     final startOfMonth = DateTime(now.year, now.month, 1);
     final endOfMonth = DateTime(now.year, now.month + 1, 0, 23, 59, 59);
 
-    return _transactionService.transactions
+    final filteredTransactions = _transactionService.transactions
         .where((t) =>
             !t.isIncome &&
             t.category == category &&
             t.date.isAfter(startOfMonth.subtract(const Duration(days: 1))) &&
             t.date.isBefore(endOfMonth.add(const Duration(days: 1))))
-        .fold<double>(0.0, (sum, t) => sum + t.amount);
+        .toList();
+
+    final conversionService = CurrencyConversionService();
+    double total = 0.0;
+    for (var transaction in filteredTransactions) {
+      final convertedAmount = await conversionService.convertToBase(
+        transaction.amount,
+        transaction.currency,
+      );
+      total += convertedAmount;
+    }
+    return total;
   }
 
-  double _calculateTotalSpending() {
+  Future<double> _calculateTotalSpending() async {
     final now = DateTime.now();
     final startOfMonth = DateTime(now.year, now.month, 1);
     final endOfMonth = DateTime(now.year, now.month + 1, 0, 23, 59, 59);
 
-    return _transactionService.transactions
+    final filteredTransactions = _transactionService.transactions
         .where((t) =>
             !t.isIncome &&
             t.date.isAfter(startOfMonth.subtract(const Duration(days: 1))) &&
             t.date.isBefore(endOfMonth.add(const Duration(days: 1))))
-        .fold<double>(0.0, (sum, t) => sum + t.amount);
+        .toList();
+
+    final conversionService = CurrencyConversionService();
+    double total = 0.0;
+    for (var transaction in filteredTransactions) {
+      final convertedAmount = await conversionService.convertToBase(
+        transaction.amount,
+        transaction.currency,
+      );
+      total += convertedAmount;
+    }
+    return total;
   }
 
-  Currency _getCurrency() {
-    final transactions = _transactionService.transactions;
-    if (transactions.isEmpty) {
-      return Currency.dollar;
-    }
-    final expense = transactions.firstWhere(
-      (t) => !t.isIncome,
-      orElse: () => transactions.first,
-    );
-    return expense.currency;
-  }
 
   void _openCreateBudgetModal() {
     showModalBottomSheet(
@@ -95,8 +107,6 @@ class _BudgetScreenState extends State<BudgetScreen> {
     final isDark = theme.brightness == Brightness.dark;
     final textColor = isDark ? Colors.white : Colors.black;
     final secondaryTextColor = isDark ? Colors.grey.shade400 : Colors.black54;
-    final currency = _getCurrency();
-    final totalSpending = _calculateTotalSpending();
     final totalBudget = _budgetService.totalBudget;
     final categoryBudgets = _budgetService.categoryBudgets;
 
@@ -119,26 +129,32 @@ class _BudgetScreenState extends State<BudgetScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              GestureDetector(
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) => CreateBudgetModal(
-                      isTotalBudget: true,
-                      existingTotalBudget: totalBudget,
-                      onBudgetCreated: () {
-                        setState(() {});
-                      },
+              FutureBuilder<double>(
+                future: _calculateTotalSpending(),
+                builder: (context, snapshot) {
+                  final totalSpending = snapshot.data ?? 0.0;
+                  return GestureDetector(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) => CreateBudgetModal(
+                          isTotalBudget: true,
+                          existingTotalBudget: totalBudget,
+                          onBudgetCreated: () {
+                            setState(() {});
+                          },
+                        ),
+                      );
+                    },
+                    child: TotalBudgetCard(
+                      totalSpending: totalSpending,
+                      totalBudget: totalBudget,
+                      currency: Currency.dollar, // Always use dollar after conversion
                     ),
                   );
                 },
-                child: TotalBudgetCard(
-                  totalSpending: totalSpending,
-                  totalBudget: totalBudget,
-                  currency: currency,
-                ),
               ),
               const SizedBox(height: 30),
               Text(
@@ -163,15 +179,20 @@ class _BudgetScreenState extends State<BudgetScreen> {
                 )
               else
                 ...categoryBudgets.map((budget) {
-                  final spending = _calculateCategorySpending(budget.category);
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: SwipeableCategoryBudgetItem(
-                      budget: budget,
-                      spending: spending,
-                      currency: currency,
-                      onBudgetChanged: _refresh,
-                    ),
+                  return FutureBuilder<double>(
+                    future: _calculateCategorySpending(budget.category),
+                    builder: (context, snapshot) {
+                      final spending = snapshot.data ?? 0.0;
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: SwipeableCategoryBudgetItem(
+                          budget: budget,
+                          spending: spending,
+                          currency: Currency.dollar, // Always use dollar after conversion
+                          onBudgetChanged: _refresh,
+                        ),
+                      );
+                    },
                   );
                 }),
               const SizedBox(height: 20),

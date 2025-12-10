@@ -1,4 +1,5 @@
 import 'package:fintrack_app/models/transaction_model.dart';
+import 'package:fintrack_app/services/currency_conversion_service.dart';
 
 class CategorySpending {
   final String category;
@@ -13,9 +14,9 @@ class CategorySpending {
 }
 
 class SpendingCalculator {
-  static List<CategorySpending> calculateSpendingByCategory(
+  static Future<List<CategorySpending>> calculateSpendingByCategory(
     List<TransactionModel> transactions,
-  ) {
+  ) async {
     // Filter only expenses (not income)
     final expenses = transactions.where((t) => !t.isIncome).toList();
 
@@ -23,21 +24,31 @@ class SpendingCalculator {
       return [];
     }
 
-    // Calculate total spending
-    final totalSpending = expenses.fold<double>(
-      0.0,
-      (sum, transaction) => sum + transaction.amount,
-    );
+    final conversionService = CurrencyConversionService();
+    
+    // Calculate total spending with currency conversion
+    double totalSpending = 0.0;
+    for (var transaction in expenses) {
+      final convertedAmount = await conversionService.convertToBase(
+        transaction.amount,
+        transaction.currency,
+      );
+      totalSpending += convertedAmount;
+    }
 
     if (totalSpending == 0) {
       return [];
     }
 
-    // Group by category and sum amounts
+    // Group by category and sum amounts (converted to base currency)
     final Map<String, double> categoryTotals = {};
     for (var transaction in expenses) {
+      final convertedAmount = await conversionService.convertToBase(
+        transaction.amount,
+        transaction.currency,
+      );
       categoryTotals[transaction.category] =
-          (categoryTotals[transaction.category] ?? 0) + transaction.amount;
+          (categoryTotals[transaction.category] ?? 0) + convertedAmount;
     }
 
     // Convert to list and calculate percentages

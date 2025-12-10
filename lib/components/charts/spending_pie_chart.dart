@@ -38,6 +38,9 @@ class _SpendingPieChartState extends State<SpendingPieChart> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
     // Handle empty data
     if (widget.spendingByCategory.isEmpty) {
       return Center(
@@ -48,7 +51,10 @@ class _SpendingPieChartState extends State<SpendingPieChart> {
                 AppLocalizations(const Locale('en'));
             return Text(
               localizations.noExpensesYet,
-              style: const TextStyle(fontSize: 14, color: Colors.black54),
+              style: TextStyle(
+                fontSize: 14,
+                color: isDark ? Colors.grey.shade400 : Colors.black54,
+              ),
             );
           },
         ),
@@ -109,7 +115,11 @@ class _SpendingPieChartState extends State<SpendingPieChart> {
   }
 
   Widget _buildTouchedContent(double totalSpending) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final categorySpending = widget.spendingByCategory[_touchedIndex!];
+    final textColor = isDark ? Colors.white : Colors.black;
+    final secondaryTextColor = isDark ? Colors.grey.shade400 : Colors.black54;
 
     if (widget.showCategoryDetails) {
       return Column(
@@ -117,7 +127,11 @@ class _SpendingPieChartState extends State<SpendingPieChart> {
         children: [
           Text(
             categorySpending.category,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: textColor,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
@@ -125,12 +139,19 @@ class _SpendingPieChartState extends State<SpendingPieChart> {
               categorySpending.amount,
               widget.currency,
             ),
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w900,
+              color: textColor,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
             "${categorySpending.percentage.toStringAsFixed(1)}%",
-            style: const TextStyle(fontSize: 14, color: Colors.black54),
+            style: TextStyle(
+              fontSize: 14,
+              color: secondaryTextColor,
+            ),
           ),
         ],
       );
@@ -140,7 +161,11 @@ class _SpendingPieChartState extends State<SpendingPieChart> {
         children: [
           Text(
             categorySpending.category,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: textColor,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
@@ -148,7 +173,11 @@ class _SpendingPieChartState extends State<SpendingPieChart> {
               categorySpending.amount,
               widget.currency,
             ),
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w900,
+              color: textColor,
+            ),
           ),
         ],
       );
@@ -156,25 +185,40 @@ class _SpendingPieChartState extends State<SpendingPieChart> {
   }
 
   Widget _buildDefaultContent(double totalSpending) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : Colors.black;
+    final secondaryTextColor = isDark ? Colors.grey.shade400 : Colors.black54;
+    
     if (widget.showCategoryDetails) {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
+          Text(
             'Total',
-            style: TextStyle(fontSize: 14, color: Colors.black54),
+            style: TextStyle(
+              fontSize: 14,
+              color: secondaryTextColor,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
             CurrencyHelper.formatAmount(totalSpending, widget.currency),
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w900,
+              color: textColor,
+            ),
           ),
         ],
       );
     } else {
-      return const Text(
+      return Text(
         'Tap',
-        style: TextStyle(fontSize: 12, color: Colors.black54),
+        style: TextStyle(
+          fontSize: 12,
+          color: secondaryTextColor,
+        ),
         textAlign: TextAlign.center,
       );
     }
