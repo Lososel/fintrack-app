@@ -35,7 +35,6 @@ class AppLocalizations {
       'home': 'Home',
       'analytics': 'Analytics',
       'budget': 'Budget',
-      'settings': 'Settings',
       'totalBalance': 'Total balance',
       'addNewCard': 'Add new card',
       'manageCards': 'Manage cards',
@@ -79,7 +78,6 @@ class AppLocalizations {
       'incomeExpenseTrend': 'Income & Expense Trend',
       'expensesBreakdown': 'Expenses Breakdown',
       'user': 'User',
-      'analytics': 'Analytics',
       'trackYourFinancialInsights': 'Track your financial insights',
       'totalSavings': 'Total Savings',
       'day': 'Day',
@@ -140,10 +138,27 @@ class AppLocalizations {
       'cardUpdatedSuccessfully': 'Card updated successfully',
       'areYouSureYouWantToLogout': 'Are you sure you want to logout?',
       'transactions': 'Transactions',
-      'allTransactions': 'All Transactions',
       'selectCurrency': 'Select Currency',
-      'selectCategory': 'Select Category',
       'selectPaymentMethod': 'Select Payment Method',
+      'pushNotifications': 'Push Notifications',
+      'receiveAlertsOnYourDevice': 'Receive alerts on your device',
+      'emailNotifications': 'Email Notifications',
+      'receiveUpdatesViaEmail': 'Receive updates via email',
+      'smsAlerts': 'SMS Alerts',
+      'getTextMessageNotifications': 'Get text message notifications',
+      'notificationTypes': 'Notification Types',
+      'transactionAlerts': 'Transaction Alerts',
+      'whenTransactionIsAdded': 'When transaction is added',
+      'budgetWarnings': 'Budget Warnings',
+      'whenApproachingBudgetLimits': 'When approaching budget limits',
+      'savingsGoals': 'Savings Goals',
+      'updatesOnYourSavingsProgress': 'Updates on your savings progress',
+      'monthlyReports': 'Monthly Reports',
+      'receiveFinancialSummaries': 'Receive financial summaries',
+      'billReminders': 'Bill Reminders',
+      'neverMissAPaymentDeadline': 'Never miss a payment deadline',
+      'doNotDisturb': 'Do Not Disturb',
+      'silenceNotificationsDuringSpecificHours': 'Silence notifications during specific hours',
     },
     'ru': {
       'allTransactions': 'Все транзакции',
@@ -166,7 +181,6 @@ class AppLocalizations {
       'home': 'Главная',
       'analytics': 'Аналитика',
       'budget': 'Бюджет',
-      'settings': 'Настройки',
       'totalBalance': 'Общий баланс',
       'addNewCard': 'Добавить новую карту',
       'manageCards': 'Управление картами',
@@ -210,7 +224,6 @@ class AppLocalizations {
       'incomeExpenseTrend': 'Тренд доходов и расходов',
       'expensesBreakdown': 'Разбивка расходов',
       'user': 'Пользователь',
-      'analytics': 'Аналитика',
       'trackYourFinancialInsights': 'Отслеживайте свои финансовые показатели',
       'totalSavings': 'Общие сбережения',
       'day': 'День',
@@ -271,10 +284,27 @@ class AppLocalizations {
       'cardUpdatedSuccessfully': 'Карта успешно обновлена',
       'areYouSureYouWantToLogout': 'Вы уверены, что хотите выйти?',
       'transactions': 'Транзакции',
-      'allTransactions': 'Все транзакции',
       'selectCurrency': 'Выберите валюту',
-      'selectCategory': 'Выберите категорию',
       'selectPaymentMethod': 'Выберите способ оплаты',
+      'pushNotifications': 'Push-уведомления',
+      'receiveAlertsOnYourDevice': 'Получать уведомления на вашем устройстве',
+      'emailNotifications': 'Email-уведомления',
+      'receiveUpdatesViaEmail': 'Получать обновления по электронной почте',
+      'smsAlerts': 'SMS-уведомления',
+      'getTextMessageNotifications': 'Получать текстовые уведомления',
+      'notificationTypes': 'Типы уведомлений',
+      'transactionAlerts': 'Уведомления о транзакциях',
+      'whenTransactionIsAdded': 'Когда транзакция добавлена',
+      'budgetWarnings': 'Предупреждения о бюджете',
+      'whenApproachingBudgetLimits': 'При приближении к лимитам бюджета',
+      'savingsGoals': 'Цели накоплений',
+      'updatesOnYourSavingsProgress': 'Обновления о вашем прогрессе накоплений',
+      'monthlyReports': 'Месячные отчеты',
+      'receiveFinancialSummaries': 'Получать финансовые сводки',
+      'billReminders': 'Напоминания о счетах',
+      'neverMissAPaymentDeadline': 'Никогда не пропускайте срок оплаты',
+      'doNotDisturb': 'Не беспокоить',
+      'silenceNotificationsDuringSpecificHours': 'Отключать уведомления в определенные часы',
     },
     'kk': {
       'allTransactions': 'Барлық транзакциялар',
@@ -297,7 +327,6 @@ class AppLocalizations {
       'home': 'Басты',
       'analytics': 'Аналитика',
       'budget': 'Бюджет',
-      'settings': 'Баптаулар',
       'totalBalance': 'Жалпы баланс',
       'addNewCard': 'Жаңа карта қосу',
       'manageCards': 'Карталарды басқару',
@@ -341,7 +370,6 @@ class AppLocalizations {
       'incomeExpenseTrend': 'Кіріс пен шығыс тренді',
       'expensesBreakdown': 'Шығындардың бөлінуі',
       'user': 'Пайдаланушы',
-      'analytics': 'Аналитика',
       'trackYourFinancialInsights': 'Қаржылық көрсеткіштеріңізді бақылаңыз',
       'totalSavings': 'Жалпы жинақ',
       'day': 'Күн',
@@ -403,10 +431,27 @@ class AppLocalizations {
       'cardUpdatedSuccessfully': 'Карта сәтті жаңартылды',
       'areYouSureYouWantToLogout': 'Шынымен шығуды қалайсыз ба?',
       'transactions': 'Транзакциялар',
-      'allTransactions': 'Барлық транзакциялар',
       'selectCurrency': 'Валютаны таңдаңыз',
-      'selectCategory': 'Категорияны таңдаңыз',
       'selectPaymentMethod': 'Төлем әдісін таңдаңыз',
+      'pushNotifications': 'Push-хабарландырулар',
+      'receiveAlertsOnYourDevice': 'Құрылғыңызда хабарландырулар алу',
+      'emailNotifications': 'Email-хабарландырулар',
+      'receiveUpdatesViaEmail': 'Электрондық пошта арқылы жаңартулар алу',
+      'smsAlerts': 'SMS-хабарландырулар',
+      'getTextMessageNotifications': 'Мәтіндік хабарландырулар алу',
+      'notificationTypes': 'Хабарландыру түрлері',
+      'transactionAlerts': 'Транзакция хабарландырулары',
+      'whenTransactionIsAdded': 'Транзакция қосылған кезде',
+      'budgetWarnings': 'Бюджет ескертулері',
+      'whenApproachingBudgetLimits': 'Бюджет лимиттеріне жақындағанда',
+      'savingsGoals': 'Жинақтау мақсаттары',
+      'updatesOnYourSavingsProgress': 'Жинақтау прогрессіңіз туралы жаңартулар',
+      'monthlyReports': 'Айлық есептер',
+      'receiveFinancialSummaries': 'Қаржылық қорытындылар алу',
+      'billReminders': 'Есеп ескертулері',
+      'neverMissAPaymentDeadline': 'Төлем мерзімін ешқашан жіберіп алмаңыз',
+      'doNotDisturb': 'Мазаламау',
+      'silenceNotificationsDuringSpecificHours': 'Белгілі бір сағаттарда хабарландыруларды өшіру',
     },
   };
 
@@ -546,6 +591,25 @@ class AppLocalizations {
   String get allTransactions => translate('allTransactions');
   String get selectCurrency => translate('selectCurrency');
   String get selectPaymentMethod => translate('selectPaymentMethod');
+  String get pushNotifications => translate('pushNotifications');
+  String get receiveAlertsOnYourDevice => translate('receiveAlertsOnYourDevice');
+  String get emailNotifications => translate('emailNotifications');
+  String get receiveUpdatesViaEmail => translate('receiveUpdatesViaEmail');
+  String get smsAlerts => translate('smsAlerts');
+  String get getTextMessageNotifications => translate('getTextMessageNotifications');
+  String get notificationTypes => translate('notificationTypes');
+  String get transactionAlerts => translate('transactionAlerts');
+  String get whenTransactionIsAdded => translate('whenTransactionIsAdded');
+  String get budgetWarnings => translate('budgetWarnings');
+  String get whenApproachingBudgetLimits => translate('whenApproachingBudgetLimits');
+  String get savingsGoals => translate('savingsGoals');
+  String get updatesOnYourSavingsProgress => translate('updatesOnYourSavingsProgress');
+  String get monthlyReports => translate('monthlyReports');
+  String get receiveFinancialSummaries => translate('receiveFinancialSummaries');
+  String get billReminders => translate('billReminders');
+  String get neverMissAPaymentDeadline => translate('neverMissAPaymentDeadline');
+  String get doNotDisturb => translate('doNotDisturb');
+  String get silenceNotificationsDuringSpecificHours => translate('silenceNotificationsDuringSpecificHours');
 }
 
 class _AppLocalizationsDelegate

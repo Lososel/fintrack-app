@@ -3,6 +3,7 @@ import 'package:fintrack_app/components/nav/bottom_nav.dart';
 import 'package:fintrack_app/screens/settings/pages/profile_page.dart';
 import 'package:fintrack_app/screens/settings/pages/currency_page.dart';
 import 'package:fintrack_app/screens/settings/pages/language_page.dart';
+import 'package:fintrack_app/screens/settings/pages/notifications_page.dart';
 import 'package:fintrack_app/screens/settings/widgets/settings_item_widget.dart';
 import 'package:fintrack_app/services/user_service.dart';
 import 'package:fintrack_app/utils/app_localizations.dart';
@@ -96,7 +97,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 icon: Icons.notifications_outlined,
                 title: localizations.notifications,
                 onTap: () {
-                  // TODO: Navigate to notifications screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NotificationsPage(),
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 8),
