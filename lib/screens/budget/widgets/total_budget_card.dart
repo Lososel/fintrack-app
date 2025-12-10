@@ -22,13 +22,15 @@ class TotalBudgetCard extends StatelessWidget {
     final budgetLimit = totalBudget?.limit ?? 0.0;
     final percentage = budgetLimit > 0 ? (totalSpending / budgetLimit) * 100 : 0.0;
 
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: cardColor,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
+    return SizedBox(
+      width: double.infinity,
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: cardColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
@@ -50,20 +52,18 @@ class TotalBudgetCard extends StatelessWidget {
           ),
           if (budgetLimit > 0) ...[
             const SizedBox(height: 4),
-            Text(
-              "of ${currency.symbol}${budgetLimit.toStringAsFixed(2)}",
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ],
-          if (budgetLimit > 0) ...[
-            const SizedBox(height: 16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Text(
+                  "of ${currency.symbol}${budgetLimit.toStringAsFixed(2)}",
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
                 Text(
                   "${percentage.toStringAsFixed(0)}% Used",
                   style: const TextStyle(
@@ -76,6 +76,7 @@ class TotalBudgetCard extends StatelessWidget {
             ),
           ],
         ],
+      ),
       ),
     );
   }

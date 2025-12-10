@@ -15,7 +15,7 @@ class TransactionItem extends StatelessWidget {
     final secondaryTextColor = isDark ? Colors.grey.shade400 : Colors.black54;
     
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.only(top: 12, bottom: 12, right: 16),
       child: Row(
         children: [
           Container(

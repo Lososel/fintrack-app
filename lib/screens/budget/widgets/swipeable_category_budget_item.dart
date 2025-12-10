@@ -31,14 +31,28 @@ class _SwipeableCategoryBudgetItemState
   final BudgetService _budgetService = BudgetService();
   double _dragOffset = 0.0;
   late AnimationController _controller;
+  late Animation<double> _animation;
+
+  static const double _actionButtonWidth = 60.0;
+  static const double _maxSwipeDistance = 120.0;
+  static const double _openThreshold = 60.0;
+  static const double _cornerRadius = 16.0;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 300),
     );
+    _animation = Tween<double>(begin: 0.0, end: -_maxSwipeDistance).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
+    );
+    _animation.addListener(() {
+      setState(() {
+        _dragOffset = _animation.value;
+      });
+    });
   }
 
   @override
@@ -51,32 +65,23 @@ class _SwipeableCategoryBudgetItemState
     setState(() {
       // Only allow swiping left (negative direction)
       if (details.primaryDelta != null) {
-        _dragOffset = (_dragOffset + details.primaryDelta!).clamp(-120.0, 0.0);
+        _dragOffset = (_dragOffset + details.primaryDelta!).clamp(-_maxSwipeDistance, 0.0);
       }
     });
   }
 
   void _onHorizontalDragEnd(DragEndDetails details) {
-    // If dragged more than 60 pixels, snap to open position
-    if (_dragOffset < -60) {
+    // If dragged more than threshold, snap to open position
+    if (_dragOffset < -_openThreshold) {
       _controller.forward();
-      setState(() {
-        _dragOffset = -120.0;
-      });
     } else {
       // Otherwise, snap back to closed position
       _controller.reverse();
-      setState(() {
-        _dragOffset = 0.0;
-      });
     }
   }
 
   void _closeActions() {
     _controller.reverse();
-    setState(() {
-      _dragOffset = 0.0;
-    });
   }
 
   void _handleEdit() {
@@ -135,106 +140,119 @@ class _SwipeableCategoryBudgetItemState
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final cardBackgroundColor = isDark ? theme.cardColor : Colors.white;
+
     return GestureDetector(
       onHorizontalDragUpdate: _onHorizontalDragUpdate,
       onHorizontalDragEnd: _onHorizontalDragEnd,
       child: Stack(
+        clipBehavior: Clip.hardEdge,
         children: [
-          // Action buttons (background)
+          // Action buttons (background layer) - rendered first
           Positioned.fill(
-            child: Container(
-              color: Colors.transparent,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  // Edit button
-                  Builder(
-                    builder: (context) {
-                      final localizations =
-                          AppLocalizations.of(context) ??
-                          AppLocalizations(const Locale('en'));
-                      return Container(
-                        width: 60,
-                        color: Colors.blue,
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: _handleEdit,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.edit, color: Colors.white, size: 24),
-                                const SizedBox(height: 4),
-                                Text(
-                                  localizations.edit,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Edit button - green, no rounded corners
+                Container(
+                  width: _actionButtonWidth,
+                  color: const Color(0xFF10B981), // Green #10B981
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: _handleEdit,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.edit, color: Colors.white, size: 24),
+                          const SizedBox(height: 4),
+                          Builder(
+                            builder: (context) {
+                              final localizations =
+                                  AppLocalizations.of(context) ??
+                                  AppLocalizations(const Locale('en'));
+                              return Text(
+                                localizations.edit,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                              ],
-                            ),
+                              );
+                            },
                           ),
-                        ),
-                      );
-                    },
+                        ],
+                      ),
+                    ),
                   ),
-                  // Delete button
-                  Builder(
-                    builder: (context) {
-                      final localizations =
-                          AppLocalizations.of(context) ??
-                          AppLocalizations(const Locale('en'));
-                      return Container(
-                        width: 60,
-                        color: Colors.red,
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: _handleDelete,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.delete, color: Colors.white, size: 24),
-                                const SizedBox(height: 4),
-                                Text(
+                ),
+                // Delete button - red, only right-side rounded corners
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(_cornerRadius),
+                    bottomRight: Radius.circular(_cornerRadius),
+                  ),
+                  child: Container(
+                    width: _actionButtonWidth,
+                    color: const Color(0xFFEF4444), // Red #EF4444
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: _handleDelete,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.delete, color: Colors.white, size: 24),
+                            const SizedBox(height: 4),
+                            Builder(
+                              builder: (context) {
+                                final localizations =
+                                    AppLocalizations.of(context) ??
+                                    AppLocalizations(const Locale('en'));
+                                return Text(
                                   localizations.delete,
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
-                                ),
-                              ],
+                                );
+                              },
                             ),
-                          ),
+                          ],
                         ),
-                      );
-                    },
+                      ),
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          // Budget item (foreground)
+          // White budget card (foreground layer) - always on top with all rounded corners
+          // This is rendered last so it has the highest z-index
           Transform.translate(
             offset: Offset(_dragOffset, 0),
-            child: Container(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: CategoryBudgetItem(
-                budget: widget.budget,
-                spending: widget.spending,
-                currency: widget.currency,
-                onTap: () {
-                  // Close any open swipe actions when tapping
-                  if (_dragOffset < 0) {
-                    _closeActions();
-                  } else {
-                    // Open edit modal if not swiped
-                    _handleEdit();
-                  }
-                },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(_cornerRadius),
+              child: Container(
+                color: cardBackgroundColor,
+                child: CategoryBudgetItem(
+                  budget: widget.budget,
+                  spending: widget.spending,
+                  currency: widget.currency,
+                  onTap: () {
+                    // Close any open swipe actions when tapping
+                    if (_dragOffset < 0) {
+                      _closeActions();
+                    } else {
+                      // Open edit modal if not swiped
+                      _handleEdit();
+                    }
+                  },
+                ),
               ),
             ),
           ),
@@ -243,4 +261,3 @@ class _SwipeableCategoryBudgetItemState
     );
   }
 }
-

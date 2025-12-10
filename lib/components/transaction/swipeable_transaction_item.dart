@@ -136,70 +136,32 @@ class _SwipeableTransactionItemState extends State<SwipeableTransactionItem>
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   // Edit button
-                  Builder(
-                    builder: (context) {
-                      final localizations =
-                          AppLocalizations.of(context) ??
-                          AppLocalizations(const Locale('en'));
-                      return Container(
-                        width: 60,
-                        color: Colors.blue,
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: _handleEdit,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.edit, color: Colors.white, size: 24),
-                                const SizedBox(height: 4),
-                                Text(
-                                  localizations.edit,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                  Container(
+                    width: 60,
+                    color: const Color(0xFF10B981), // Green #10B981
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: _handleEdit,
+                        child: const Center(
+                          child: Icon(Icons.edit, color: Colors.white, size: 24),
                         ),
-                      );
-                    },
+                      ),
+                    ),
                   ),
                   // Delete button
-                  Builder(
-                    builder: (context) {
-                      final localizations =
-                          AppLocalizations.of(context) ??
-                          AppLocalizations(const Locale('en'));
-                      return Container(
-                        width: 60,
-                        color: Colors.red,
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            onTap: _handleDelete,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.delete, color: Colors.white, size: 24),
-                                const SizedBox(height: 4),
-                                Text(
-                                  localizations.delete,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                  Container(
+                    width: 60,
+                    color: Colors.red,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: _handleDelete,
+                        child: const Center(
+                          child: Icon(Icons.delete, color: Colors.white, size: 24),
                         ),
-                      );
-                    },
+                      ),
+                    ),
                   ),
                 ],
               ),
