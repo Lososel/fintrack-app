@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fintrack_app/screens/home/homepage_screen.dart';
 import 'package:fintrack_app/screens/analytics/analytics_screen.dart';
+import 'package:fintrack_app/screens/budget/budget_screen.dart';
 import 'package:fintrack_app/screens/settings/settings_screen.dart';
 
 class HomeBottomNav extends StatelessWidget {
@@ -27,7 +28,11 @@ class HomeBottomNav extends StatelessWidget {
         );
         break;
       case 2:
-        // Budget - TODO: implement budget screen
+        // Budget - navigate to budget screen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const BudgetScreen()),
+        );
         break;
       case 3:
         // Settings - navigate to settings screen
