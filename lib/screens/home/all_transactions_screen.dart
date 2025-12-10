@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fintrack_app/components/transaction/transaction_item.dart';
+import 'package:fintrack_app/components/transaction/swipeable_transaction_item.dart';
 import 'package:fintrack_app/models/transaction_model.dart';
 import 'package:fintrack_app/screens/analytics/widgets/time_period_selector.dart';
-import 'package:fintrack_app/screens/home/add_transaction_screen.dart';
 import 'package:fintrack_app/services/transaction_service.dart';
 import 'package:fintrack_app/utils/app_localizations.dart';
 
@@ -135,20 +134,8 @@ class _AllTransactionsScreenState extends State<AllTransactionsScreen> {
                       itemCount: filteredTransactions.length,
                       itemBuilder: (context, index) {
                         final transaction = filteredTransactions[index];
-                        return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AddTransactionScreen(
-                                  transactionToEdit: transaction,
-                                ),
-                              ),
-                            );
-                          },
-                          child: TransactionItem(
-                            transaction: transaction,
-                          ),
+                        return SwipeableTransactionItem(
+                          transaction: transaction,
                         );
                       },
                     ),

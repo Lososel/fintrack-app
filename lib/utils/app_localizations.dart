@@ -66,6 +66,9 @@ class AppLocalizations {
       'transactionNotFound': 'Transaction not found',
       'edit': 'Edit',
       'delete': 'Delete',
+      'deleteTransaction': 'Delete Transaction',
+      'deleteTransactionConfirmation': 'Are you sure you want to delete this transaction?',
+      'transactionDeleted': 'Transaction deleted successfully',
       'viewAll': 'View all',
       'spendingOverview': 'Spending Overview',
       'monthlyComparison': 'Monthly Comparison',
@@ -194,6 +197,9 @@ class AppLocalizations {
       'transactionNotFound': 'Транзакция не найдена',
       'edit': 'Редактировать',
       'delete': 'Удалить',
+      'deleteTransaction': 'Удалить транзакцию',
+      'deleteTransactionConfirmation': 'Вы уверены, что хотите удалить эту транзакцию?',
+      'transactionDeleted': 'Транзакция успешно удалена',
       'viewAll': 'Посмотреть все',
       'spendingOverview': 'Обзор расходов',
       'monthlyComparison': 'Месячное сравнение',
@@ -322,6 +328,9 @@ class AppLocalizations {
       'transactionNotFound': 'Транзакция табылмады',
       'edit': 'Өңдеу',
       'delete': 'Жою',
+      'deleteTransaction': 'Транзакцияны жою',
+      'deleteTransactionConfirmation': 'Сіз бұл транзакцияны жойғыңыз келетініне сенімдісіз бе?',
+      'transactionDeleted': 'Транзакция сәтті жойылды',
       'viewAll': 'Барлығын көру',
       'spendingOverview': 'Шығындарға шолу',
       'monthlyComparison': 'Айлық салыстыру',
@@ -456,6 +465,9 @@ class AppLocalizations {
   String get transactionNotFound => translate('transactionNotFound');
   String get edit => translate('edit');
   String get delete => translate('delete');
+  String get deleteTransaction => translate('deleteTransaction');
+  String get deleteTransactionConfirmation => translate('deleteTransactionConfirmation');
+  String get transactionDeleted => translate('transactionDeleted');
   String get viewAll => translate('viewAll');
   String get spendingOverview => translate('spendingOverview');
   String get monthlyComparison => translate('monthlyComparison');

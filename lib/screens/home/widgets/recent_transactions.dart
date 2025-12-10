@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fintrack_app/models/transaction_model.dart';
-import 'package:fintrack_app/components/transaction/transaction_item.dart';
+import 'package:fintrack_app/components/transaction/swipeable_transaction_item.dart';
 import 'package:fintrack_app/utils/app_localizations.dart';
 
 class RecentTransactions extends StatelessWidget {
@@ -30,7 +30,7 @@ class RecentTransactions extends StatelessWidget {
             ),
           )
         else
-          for (var tx in transactions) TransactionItem(transaction: tx),
+          for (var tx in transactions) SwipeableTransactionItem(transaction: tx),
       ],
     );
   }
